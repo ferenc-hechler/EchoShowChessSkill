@@ -21,7 +21,12 @@
 		<groupId>com.alonsoruibal</groupId>
 		<artifactId>carballo-core</artifactId>
 		<version>1.7</version>
-		<!-- <type>pom</type> -->
+	</dependency>
+
+	<dependency>
+		<groupId>com.alonsoruibal</groupId>
+		<artifactId>carballo-jse</artifactId>
+		<version>1.7</version>
 	</dependency>
 
 	<dependency>
