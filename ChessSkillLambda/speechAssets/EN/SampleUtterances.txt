@@ -1,0 +1,38 @@
+NewGameIntent start a new game
+NewGameIntent I want to start a new game
+NewGameIntent please start a new game
+
+PlayerMoveIntent {slot}
+PlayerMoveIntent slot {slot}
+PlayerMoveIntent I throw in slot {slot}
+PlayerMoveIntent I throw into slot {slot}
+PlayerMoveIntent I throw a disc in slot {slot}
+PlayerMoveIntent I throw a disc into slot {slot}
+PlayerMoveIntent I throw my disc in slot {slot}
+PlayerMoveIntent I throw my disc into slot {slot}
+PlayerMoveIntent I put in slot {slot}
+PlayerMoveIntent I put into slot {slot}
+PlayerMoveIntent I put a disc in slot {slot}
+PlayerMoveIntent I put a disc into slot {slot}
+PlayerMoveIntent I put my disc in slot {slot}
+PlayerMoveIntent I put my disc into slot {slot}
+
+AIStartsIntent Your turn
+AIStartsIntent You may start
+AIStartsIntent You have the first move
+AIStartsIntent Make the first move
+
+ChangeAILevelIntent Set skill level to {aiLevel}
+ChangeAILevelIntent Set playing skill to {aiLevel}
+ChangeAILevelIntent Set playing skill level to {aiLevel}
+ChangeAILevelIntent Change skill level to {aiLevel}
+ChangeAILevelIntent Change playing skill to {aiLevel}
+ChangeAILevelIntent Change playing skill level to {aiLevel}
+
+AnimalConnectIntent I see a {animal}
+AnimalConnectIntent I see an {animal}
+AnimalConnectIntent I can see a {animal}
+AnimalConnectIntent I can see an {animal}
+
+AMAZON.StopIntent stop
+AMAZON.StopIntent cancel

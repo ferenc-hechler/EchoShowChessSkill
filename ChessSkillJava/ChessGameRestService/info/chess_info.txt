@@ -1,0 +1,32 @@
+Carballo Chess Engine:
+https://github.com/albertoruibal/carballo
+
+UCI: 
+http://www.shredderchess.de/schach-info/features/uci-universal-chess-interface.html
+
+uci
+> id name Carballo Chess Engine v1.7
+> id author Alberto Alonso Ruibal
+> option name Hash type spin default 64 min 16 max 1024
+> option name Ponder type check default true
+> option name OwnBook type check default true
+> option name UCI_Chess960 type check default false
+> option name Evaluator type combo default complete var simplified var complete var experimental
+> option name Contempt Factor type spin default 90 min -200 max 200
+> option name Elo type spin default 2100 min 500 max 2100
+> uciok
+
+isready
+> readyok
+
+position startpos
+go
+> bestmove e2e4
+
+stop
+position moves e2e4 d7d5
+go
+> bestmove g1f3
+stop
+
+...
