@@ -222,9 +222,10 @@ ConnectFourSkill.prototype.intentHandlers = {
 		doPlayerMove(intent, session, response);
 	},
     
-	"AIStartsIntent" : function(intent, session, response) {
-		doAIStarts(intent, session, response);
-	},
+	"AIStartsIntent" : doAIStarts,
+
+	"ActivateShowDisplayIntent" : doActivateShowDisplay,
+	"DeactivateShowDisplayIntent" : doDeactivateShowDisplay,
 
 	"ChangeAILevelIntent" : doChangeAILevel,
 	
@@ -334,6 +335,18 @@ function doAIStarts(intent, session, response) {
 			msg = speech.createMsg("INTERN", "AI_STARTS_NOT_ALLOWED");
 			execDisplayField(session, response, msg)
 		}
+	});
+}
+
+function doActivateShowDisplay(intent, session, response) {
+	initUserAndConnect(session, response, function successFunc() {
+		execSetOptShow(intent, session, response, true);
+	});
+}
+
+function doDeactivateShowDisplay(intent, session, response) {
+	initUserAndConnect(session, response, function successFunc() {
+		execSetOptShow(intent, session, response, false);
 	});
 }
 
@@ -613,6 +626,13 @@ function execChangeAILevel(intent, session, response) {
 	});
 }
 
+function execSetOptShow(intent, session, response, optShow) {
+	setUserOptShow(session, optShow);
+	var msg_code = (optShow) ? "OPT_SHOW_ACTIVATED" : "OPT_SHOW_DEACTIVATED";
+	var msg = speech.createMsg("INTERN", msg_code, optShow);
+	execDisplayField(session, response, msg);
+}
+
 function execAnimalConnect(intent, session, response) {
 	var animal = getMappedAnimal(intent);
 	send(session, response, getSessionGameId(session), "connectImage", animal, "", function successFunc(result) {
@@ -708,8 +728,9 @@ function createFieldDirectives(session, gameData, msg, lastAIMove, gameStatusInf
 		logObject("createFieldDirectives-session", session)
 		return undefined;
 	}
+	var optShow = getUserOptShow(session);
 	var hintMsg = createHintMsg(gameData.winner, lastAIMove);
-	var fieldText = createFieldText(gameData.fieldView.field);
+	var fieldText = createFieldText(gameData.fieldView.field, optShow);
 	var directives = [ {
 		"type" : "Display.RenderTemplate",
 		"template" : {
@@ -787,19 +808,23 @@ function createHintMsg(winner, lastAIMove) {
 	return msg;
 }
 
-function createFieldText(field) {
+function createFieldText(field, optShow) {
 	var fieldStr = "rnbqkbnr/pppppppp/11111111/11111111/11111111/11111111/PPPPPPPP/RNBQKBNR";
 	var result = "";
 	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
-//	result = result + addImageWH("space_3", 162, 64);
+	result = result + addImage("space_4", 4);
 //	result = result + addImage("frameset_top", 7);
-	result = result + addImage("space_5", 5);
-	result = result + addImage("space_5", 5);
-	
+	if (optShow) {
+		result = result + addImage("space_5", 5);
+	}
 	for (var y = 0; y < 8; y++) {
 		
-//		result = result + "<br/>";                 // this is the normal linebreak, but puts some extra pixels between the lines. 
-		result = result + addImage("space_5", 5);  // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
+		if (optShow) {
+			result = result + addImage("space_5", 5);  // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
+		}
+		else {
+			result = result + "<br/>";                 // this is the normal linebreak, but puts some extra pixels between the lines. 
+		}
 		
 		result = result + addImage("space_5", 5);
 		for (var x = 0; x < 8; x++) {
@@ -807,9 +832,6 @@ function createFieldText(field) {
 			var img = code2Img(code, x, y);
 			result = result + addImage(img, 1);
 		}
-//		for (var i = 0; i < y; i++) {
-//			result = result + addImage("00l", 1);
-//		}
 	}
 	result = result + "</font>";
 	return result;
@@ -1034,7 +1056,8 @@ function removeSessionRequest(session) {
 
 
 function hasEventDisplay(event) {
-	if (!event || (!event.context) || (!event.context.Display)) {
+	if (!event || (!event.context) || (!event.context.System) || (!event.context.System.device) 
+			|| (!event.context.System.device.supportedInterfaces) || (!event.context.System.device.supportedInterfaces.Display)) {
 		return false;
 	}
 	return true;
@@ -1140,12 +1163,19 @@ function getUserHadIntro(session, defaultValue) {
 	return getUserProperty(session, "hadIntro", defaultValue);
 }
 
+function getUserOptShow(session, defaultValue) {
+	return getUserProperty(session, "optShow", defaultValue);
+}
+
 function getUserAILevel(session, defaultValue) {
 	return getUserProperty(session, "aiLevel", defaultValue);
 }
 
 function setUserAILevel(session, value) {
 	return setUserProperty(session, "aiLevel", value);
+}
+function setUserOptShow(session, value) {
+	return setUserProperty(session, "optShow", value);
 }
 function setUserHadIntro(session, value) {
 	return setUserProperty(session, "hadIntro", value);

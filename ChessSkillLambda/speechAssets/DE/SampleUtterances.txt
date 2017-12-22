@@ -16,6 +16,14 @@ AIStartsIntent Du hast den ersten Zug
 ChangeAILevelIntent Setze die Spielstärke auf {aiLevel}
 ChangeAILevelIntent Ändere die Spielstärke auf {aiLevel}
 
+ActivateShowDisplayIntent Aktiviere die Anzeige für Echo Show
+ActivateShowDisplayIntent Aktiviere die optimierete Anzeige für Echo Show
+ActivateShowDisplayIntent Optimiere die Anzeige für Echo Show
+
+DeactivateShowDisplayIntent Deaktiviere die Anzeige für Echo Show
+DeactivateShowDisplayIntent Deaktiviere die optimierete Anzeige für Echo Show
+DeactivateShowDisplayIntent Verwende die standard Anzeige
+
 AnimalConnectIntent Ich sehe ein {animal}
 AnimalConnectIntent Ich sehe eine {animal}
 AnimalConnectIntent Ich sehe einen {animal}

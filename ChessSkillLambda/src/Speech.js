@@ -351,6 +351,14 @@ function set_locale(locale) {
 						speechOut: "Die Spielstärke wurde auf %1 gesetzt. In welche Reihe wirfst Du?",
 						display: "Die Spielstärke wurde auf %1 gesetzt. In welche Reihe wirfst Du?"
 					},
+					OPT_SHOW_ACTIVATED: {
+						speechOut: "Die Anzeige ist jetzt für die Darstellung auf dem Echo Show optimiert. In welche Reihe wirfst Du?",
+						display: "Anzeige für Echo Show. In welche Reihe wirfst Du?"
+					},
+					OPT_SHOW_DEACTIVATED: {
+						speechOut: "Anzeige auf Standard geschaltet. In welche Reihe wirfst Du?",
+						display: "Anzeige auf Standard geschaltet. In welche Reihe wirfst Du?"
+					},
 					ANIMAL_CONNECTED: {
 						speechOut: "Du hast Dich erfolgreich mit der Webseite verbunden. In welche Reihe wirfst Du?",
 						display: "Du hast Dich erfolgreich mit der Webseite verbunden. In welche Reihe wirfst Du?"
