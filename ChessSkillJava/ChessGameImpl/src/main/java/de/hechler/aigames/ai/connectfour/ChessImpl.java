@@ -30,17 +30,17 @@ import de.hechler.aigames.api.GetGameDataResult;
 import de.hechler.aigames.api.GetGameParameterResult;
 import de.hechler.aigames.api.NewGameResult;
 import de.hechler.aigames.api.ResultCodeEnum;
-import de.hechler.aigames.api.fieldview.ConnectFourFieldView;
-import de.hechler.aigames.api.move.ConnectFourMove;
+import de.hechler.aigames.api.fieldview.ChessFieldView;
+import de.hechler.aigames.api.move.ChessMove;
 
 
-public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFourMove> {
+public class ChessImpl implements GameAPI<ChessFieldView, ChessMove> {
 
-	private static GameRepository<ConnectFourGame> gameRepository = new GameRepository<ConnectFourGame>(ConnectFourGame.class);
+	private static GameRepository<ChessGame> gameRepository = new GameRepository<ChessGame>(ChessGame.class);
 	
 	@Override
 	public NewGameResult createNewGame(String userId, int aiLevel, boolean weak) {
-		GameState<ConnectFourGame> newGameState = gameRepository.createNewGame();
+		GameState<ChessGame> newGameState = gameRepository.createNewGame();
 		String gameId = newGameState.getGameId();
 		gameRepository.connectUser(gameId, userId);
 		newGameState.getGame().setAILevel(aiLevel);
@@ -51,7 +51,7 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 
 	@Override
 	public GenericResult setPlayerNames(String gameId, String player1Name, String player2Name) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
 			return new GenericResult(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
@@ -62,7 +62,7 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 
 	@Override
 	public GenericResult setAILevel(String gameId, int aiLevel) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
 			return new GenericResult(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
@@ -76,7 +76,7 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 
 	@Override
 	public GenericResult hasChanges(String gameId, int lastChange) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
 			return new GenericResult(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
@@ -87,13 +87,13 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 	}
 
 	@Override
-	public GetGameDataResult<ConnectFourFieldView> getGameData(String gameId) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+	public GetGameDataResult<ChessFieldView> getGameData(String gameId) {
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
-			return new GetGameDataResult<ConnectFourFieldView>(ResultCodeEnum.E_UNKNOWN_GAMEID);
+			return new GetGameDataResult<ChessFieldView>(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
-		ConnectFourGame game = gameState.getGame(); 
-		GetGameDataResult<ConnectFourFieldView> result = new GetGameDataResult<ConnectFourFieldView>(ResultCodeEnum.S_OK);
+		ChessGame game = gameState.getGame(); 
+		GetGameDataResult<ChessFieldView> result = new GetGameDataResult<ChessFieldView>(ResultCodeEnum.S_OK);
 		result.aiLevel = game.getAILevel();
 		result.player1Name = game.getPlayer1Name();
 		result.player2Name = game.getPlayer2Name();
@@ -104,20 +104,17 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 		result.gameId = gameState.getGameId();
 		result.movesCount = game.getMovesCount();
 		result.winner = game.getWinner();
-		if (result.winner > 0) {
-			markConnectedFour(result.fieldView.field);
-		}
 		return result;
 	}
 	
 	@Override
-	public GetGameDataResult<ConnectFourFieldView> getGameDataByUserId(String userId) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByUserId(userId);
+	public GetGameDataResult<ChessFieldView> getGameDataByUserId(String userId) {
+		GameState<ChessGame> gameState = gameRepository.getGameStateByUserId(userId);
 		if (gameState == null) {
-			return new GetGameDataResult<ConnectFourFieldView>(ResultCodeEnum.E_UNKNOWN_GAMEID);
+			return new GetGameDataResult<ChessFieldView>(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
-		ConnectFourGame game = gameState.getGame(); 
-		GetGameDataResult<ConnectFourFieldView> result = new GetGameDataResult<ConnectFourFieldView>(ResultCodeEnum.S_OK);
+		ChessGame game = gameState.getGame(); 
+		GetGameDataResult<ChessFieldView> result = new GetGameDataResult<ChessFieldView>(ResultCodeEnum.S_OK);
 		result.aiLevel = game.getAILevel();
 		result.player1Name = game.getPlayer1Name();
 		result.player2Name = game.getPlayer2Name();
@@ -128,78 +125,38 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 		result.gameId = gameState.getGameId();
 		result.movesCount = game.getMovesCount();
 		result.winner = game.getWinner();
-		if (result.winner > 0) {
-			markConnectedFour(result.fieldView.field);
-		}
 		return result;
 	}
 
 
 
-	void markConnectedFour(int[][] field) {
-		for (int y=0; y<6; y++) {
-			for (int x=0; x<7; x++) {
-				if (x<4) {
-					check(field, x,y, +1,  0 );
-				}
-				if (y<3) {
-					check(field, x,y,  0, +1 );
-				}
-				if ((x<4) && (y<3)) {
-					check(field, x,y, +1, +1 );
-				}
-				if ((x>2) && (y<3)) {
-					check(field, x,y, -1, +1 );
-				}
-			}
-		}
-	}
-
-	private void check(int[][] field, int x, int y, int dx, int dy) {
-		int p = trunc(field[y][x]); 
-		if ((p > 0) && 
-			(p == trunc(field[y+  dy][x+  dx])) &&
-			(p == trunc(field[y+2*dy][x+2*dx])) &&
-			(p == trunc(field[y+3*dy][x+3*dx]))) 
-		{
-			field[y     ][x     ] = p + 2;
-			field[y+  dy][x+  dx] = p + 2;
-			field[y+2*dy][x+2*dx] = p + 2;
-			field[y+3*dy][x+3*dx] = p + 2;
-		}
-	}
-
-	private int trunc(int p) {
-		return (p > 2) ? (p-2) : p;
-	}
-
 	@Override
-	public DoMoveResult<ConnectFourMove> doMove(String gameId, ConnectFourMove move) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+	public DoMoveResult<ChessMove> doMove(String gameId, ChessMove move) {
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
-			return new DoMoveResult<ConnectFourMove>(ResultCodeEnum.E_UNKNOWN_GAMEID);
+			return new DoMoveResult<ChessMove>(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
-		DoMoveResult<ConnectFourMove> result = gameState.getGame().doMove(move);
+		DoMoveResult<ChessMove> result = gameState.getGame().doMove(move);
 		gameState.update();
 		return result;
 	}
 
 	@Override
-	public DoMoveResult<ConnectFourMove> doAIMove(String gameId) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+	public DoMoveResult<ChessMove> doAIMove(String gameId) {
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
-			return new DoMoveResult<ConnectFourMove>(ResultCodeEnum.E_UNKNOWN_GAMEID);
+			return new DoMoveResult<ChessMove>(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
-		DoMoveResult<ConnectFourMove> result = gameState.getGame().doAIMove();
+		DoMoveResult<ChessMove> result = gameState.getGame().doAIMove();
 		gameState.update();
 		return result;
 	}
 
 	@Override
 	public GenericResult switchPlayers(String gameId) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
-			return new DoMoveResult<ConnectFourMove>(ResultCodeEnum.E_UNKNOWN_GAMEID);
+			return new DoMoveResult<ChessMove>(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
 		boolean ok = gameState.getGame().switchPlayers();
 		if (!ok) {
@@ -211,7 +168,7 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 
 	@Override
 	public GenericResult restart(String gameId) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
 			return new GenericResult(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
@@ -222,7 +179,7 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 
 	@Override
 	public GenericResult closeGame(String gameId) {
-		GameState<ConnectFourGame> gameState = gameRepository.getGameStateByGameId(gameId);
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
 		if (gameState == null) {
 			return new GenericResult(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
@@ -237,7 +194,7 @@ public class ConnectFourImpl implements GameAPI<ConnectFourFieldView, ConnectFou
 	}
 
 
-	public GameState<ConnectFourGame> findGameId(String gameId) {
+	public GameState<ChessGame> findGameId(String gameId) {
 		return gameRepository.getGameStateByGameId(gameId);
 	}
 

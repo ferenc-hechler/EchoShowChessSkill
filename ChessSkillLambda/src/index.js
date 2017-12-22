@@ -569,7 +569,7 @@ function execDoNewGame(intent, session, response) {
 
 function execDoMove(intent, session, response) {
 	send(session, response, getSessionGameId(session), "doMove",
-			getSlot(intent), "", function successFunc(result) {
+			getMove(intent), "", function successFunc(result) {
 				if (result.code === "S_OK") {
 					execDoAIMove(session, response);
 				} else {
@@ -730,7 +730,7 @@ function createFieldDirectives(session, gameData, msg, lastAIMove, gameStatusInf
 	}
 	var optShow = getUserOptShow(session);
 	var hintMsg = createHintMsg(gameData.winner, lastAIMove);
-	var fieldText = createFieldText(gameData.fieldView.field, optShow);
+	var fieldText = createFieldText(gameData.fieldView.fen, optShow);
 	var directives = [ {
 		"type" : "Display.RenderTemplate",
 		"template" : {
@@ -808,8 +808,7 @@ function createHintMsg(winner, lastAIMove) {
 	return msg;
 }
 
-function createFieldText(field, optShow) {
-	var fieldStr = "rnbqkbnr/pppppppp/11111111/11111111/11111111/11111111/PPPPPPPP/RNBQKBNR";
+function createFieldText(fieldStr, optShow) {
 	var result = "";
 	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
 	result = result + addImage("space_4", 4);
@@ -893,8 +892,12 @@ function addImageWH(imgName, width, height) {
 /* INTENT-ACCESS */
 /* ============= */
 
-function getSlot(intent) {
-	return getFromIntent(intent, "slot", "?");
+function getMove(intent) {
+	var from_col = getFromIntent(intent, "from_col", "?");
+	var from_row = getFromIntent(intent, "from_row", 0);
+	var to_col = getFromIntent(intent, "from_col", "?");
+	var to_row = getFromIntent(intent, "to_row", 0);
+	return from_col + "." + from_row + "-" + to_col + "." + to_row;
 }
 
 function getAILevel(intent) {

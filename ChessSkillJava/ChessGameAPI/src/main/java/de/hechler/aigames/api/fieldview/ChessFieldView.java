@@ -17,18 +17,18 @@
  * Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
  * Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
  */
-package de.hechler.aigames.api.move;
+package de.hechler.aigames.api.fieldview;
 
-import de.hechler.aigames.api.Move;
+import de.hechler.aigames.api.FieldView;
 
-public class ConnectFourMove extends Move {
-	public int slot;
-	public ConnectFourMove(int slot) {
-		this.slot = slot;
+public class ChessFieldView extends FieldView {
+
+	public String fen;
+	public String lastMove;
+
+	public ChessFieldView(String fen, String lastMove) {
+		this.fen = fen;
+		this.lastMove = lastMove;
 	}
-	
-	@Override
-	public String toString() {
-		return "slot="+slot;
-	}
+
 }

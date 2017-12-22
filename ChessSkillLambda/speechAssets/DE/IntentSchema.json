@@ -9,7 +9,19 @@
       "intent": "PlayerMoveIntent",
       "slots": [
         {
-          "name": "slot",
+          "name": "from_col",
+          "type": "LIST_OF_COLS"
+        },
+        {
+          "name": "from_row",
+          "type": "AMAZON.NUMBER"
+        },
+        {
+          "name": "to_col",
+          "type": "LIST_OF_COLS"
+        },
+        {
+          "name": "to_row",
           "type": "AMAZON.NUMBER"
         }
       ]

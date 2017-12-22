@@ -36,33 +36,35 @@ import com.google.gson.Gson;
 
 import de.hechler.aigames.ai.AIGame;
 import de.hechler.aigames.ai.GameRepository;
-import de.hechler.aigames.ai.connectfour.ConnectFourField;
-import de.hechler.aigames.ai.connectfour.ConnectFourGame;
-import de.hechler.aigames.ai.connectfour.ConnectFourImpl;
+import de.hechler.aigames.ai.connectfour.ChessField;
+import de.hechler.aigames.ai.connectfour.ChessGame;
+import de.hechler.aigames.ai.connectfour.ChessImpl;
 import de.hechler.aigames.api.GenericResult;
 import de.hechler.aigames.api.GetGameDataResult;
 import de.hechler.aigames.api.GetGameParameterResult;
 import de.hechler.aigames.api.NewGameResult;
 import de.hechler.aigames.api.ResultCodeEnum;
-import de.hechler.aigames.api.fieldview.ConnectFourFieldView;
-import de.hechler.aigames.api.move.ConnectFourMove;
+import de.hechler.aigames.api.fieldview.ChessFieldView;
+import de.hechler.aigames.api.move.ChessMove;
 import de.hechler.aigames.rest.ImageRegistry.ImageEnum;
 import de.hechler.aigames.rest.ImageRegistry.SessionEntry;
 import de.hechler.utils.RandUtils;
 import de.hechler.utils.TemporaryStore;
 
 //@WebServlet(urlPatterns = "/main", loadOnStartup = 1) 
-public class ConnectFourRestService extends HttpServlet {
+public class ChessRestService extends HttpServlet {
 	
+	private static final String RX_MOVE = "^([^.]*)[.]([^-]*)-([^.]*)[.](.*)$";
+
 	/** the svuid */ private static final long serialVersionUID = -3679002890645814953L;
 
-	private final static Logger logger = Logger.getLogger(ConnectFourRestService.class.getName());
+	private final static Logger logger = Logger.getLogger(ChessRestService.class.getName());
 
 	private static final int DEFAULT_AI_LEVEL = 2;
 
-	private static boolean debugloggingEnabled = Boolean.getBoolean("cfrest.debugging");
+	private static boolean debugloggingEnabled = Boolean.getBoolean("chessrest.debugging");
 	
-	public static ConnectFourImpl connectFourImpl = new ConnectFourImpl();
+	public static ChessImpl chessImpl = new ChessImpl();
 
 	public static TemporaryStore<String, String> tempGameResult = new TemporaryStore<>(10000); 
 	
@@ -220,10 +222,10 @@ public class ConnectFourRestService extends HttpServlet {
 		if (initParams.matches("SEED[(]([0-9]+)[)]")) {
 			long seed = Long.parseLong(initParams.replaceFirst("SEED[(]([0-9]+)[)]", "$1"));
 			System.out.println("setPRNG("+seed+")");
-			connectFourImpl.shutdown();
+			chessImpl.shutdown();
 			RandUtils.setPRNG(seed);
-			ConnectFourField.testRandom = RandUtils.createPRNG(seed);
-			ConnectFourGame.testRandom = RandUtils.createPRNG(seed);
+			ChessField.testRandom = RandUtils.createPRNG(seed);
+			ChessGame.testRandom = RandUtils.createPRNG(seed);
 			AIGame.testRandom = RandUtils.createPRNG(seed);
 			GameRepository.testRandom = RandUtils.createPRNG(seed);
 			String rand9999 = Integer.toString(RandUtils.randomInt(10000));
@@ -233,13 +235,13 @@ public class ConnectFourRestService extends HttpServlet {
 	}
 	
 	private String restartGame(String gameId) {
-		return gson.toJson(connectFourImpl.restart(gameId)); 
+		return gson.toJson(chessImpl.restart(gameId)); 
 	}
 
 	private String closeGame(String gameId) {
-		String lastGameData = gson.toJson(connectFourImpl.getGameData(gameId));
+		String lastGameData = gson.toJson(chessImpl.getGameData(gameId));
 		tempGameResult.put(gameId, lastGameData);
-		return gson.toJson(connectFourImpl.closeGame(gameId));
+		return gson.toJson(chessImpl.closeGame(gameId));
 	}
 
 	private String clearSession(HttpSession session) {
@@ -297,31 +299,43 @@ public class ConnectFourRestService extends HttpServlet {
 	}
 
 	private String setPlayerNames(String gameId, String player1Name, String player2Name) {
-		return gson.toJson(connectFourImpl.setPlayerNames(gameId, player1Name, player2Name));
+		return gson.toJson(chessImpl.setPlayerNames(gameId, player1Name, player2Name));
 	}
 
 	private String setAILevel(String gameId, String aiLevelName) {
 		try { 
 			int aiLevel = Integer.parseInt(aiLevelName);
-			return gson.toJson(connectFourImpl.setAILevel(gameId, aiLevel));
+			return gson.toJson(chessImpl.setAILevel(gameId, aiLevel));
 		}
 		catch (NumberFormatException e) {
 			return gson.toJson(GenericResult.genericInvalidParameterResult);
 		} 
 	}
 
-	private String doMove(String gameId, String slotName) {
+	private String doMove(String gameId, String moveText) {
 		try { 
-			int slot = Integer.parseInt(slotName);
-			return gson.toJson(connectFourImpl.doMove(gameId, new ConnectFourMove(slot)));
+			String move = parseMoveText(moveText);
+			return gson.toJson(chessImpl.doMove(gameId, new ChessMove(move)));
 		}
-		catch (NumberFormatException e) {
+		catch (RuntimeException e) {
 			return gson.toJson(GenericResult.genericInvalidParameterResult);
 		}
 	}
 
+	private String parseMoveText(String moveText) {
+		if (!moveText.matches(RX_MOVE)) {
+			return null;
+		}
+		String from_col = moveText.replaceFirst(RX_MOVE, "$1?").toLowerCase();
+		String from_row = moveText.replaceFirst(RX_MOVE, "$2?");
+		String to_col = moveText.replaceFirst(RX_MOVE, "$3?").toLowerCase();
+		String to_row = moveText.replaceFirst(RX_MOVE, "$4?");
+		String result = from_col.substring(0, 1) + from_row.substring(0, 1)+to_col.substring(0, 1) + to_row.substring(0, 1); 
+		return result;
+	}
+
 	private String doAIMove(String gameId) {
-		return gson.toJson(connectFourImpl.doAIMove(gameId));
+		return gson.toJson(chessImpl.doAIMove(gameId));
 	}
 
 	private String hasChanges(HttpSession session, String versionStr) {
@@ -346,7 +360,7 @@ public class ConnectFourRestService extends HttpServlet {
 		if (tempGameResult.containsKey(entry.gameId)) {
 			return gson.toJson(GenericResult.genericChangesExistResult);
 		}
-		return gson.toJson(connectFourImpl.hasChanges(entry.gameId, version));
+		return gson.toJson(chessImpl.hasChanges(entry.gameId, version));
 
 	}
 	
@@ -367,11 +381,11 @@ public class ConnectFourRestService extends HttpServlet {
 			tempGameResult.remove(entry.gameId);
 			return result;
 		}
-		return gson.toJson(connectFourImpl.getGameData(entry.gameId));
+		return gson.toJson(chessImpl.getGameData(entry.gameId));
 	}
 
 	private String getGameData(String gameId) {
-		return gson.toJson(connectFourImpl.getGameData(gameId));
+		return gson.toJson(chessImpl.getGameData(gameId));
 	}
 
 	private String connect(String userId, String aiLevelStr) {
@@ -379,16 +393,16 @@ public class ConnectFourRestService extends HttpServlet {
 		if ((aiLevelStr!=null) && aiLevelStr.matches("[1-7]")) {
 			aiLevel = Integer.parseInt(aiLevelStr);
 		}
-		GetGameDataResult<ConnectFourFieldView> getGameDataResult = connectFourImpl.getGameDataByUserId(userId);
+		GetGameDataResult<ChessFieldView> getGameDataResult = chessImpl.getGameDataByUserId(userId);
 		if (getGameDataResult.code != ResultCodeEnum.S_OK) {
-			NewGameResult newGameResult = connectFourImpl.createNewGame(userId, aiLevel, true);
+			NewGameResult newGameResult = chessImpl.createNewGame(userId, aiLevel, true);
 			String gameId = newGameResult.gameId;
-			getGameDataResult = connectFourImpl.getGameData(gameId);
+			getGameDataResult = chessImpl.getGameData(gameId);
 		}
 		else {
 			String gameId = getGameDataResult.gameId;
 			if (aiLevel != getGameDataResult.aiLevel) {
-				connectFourImpl.setAILevel(gameId, aiLevel);
+				chessImpl.setAILevel(gameId, aiLevel);
 				getGameDataResult.aiLevel = aiLevel;
 			}
 		}

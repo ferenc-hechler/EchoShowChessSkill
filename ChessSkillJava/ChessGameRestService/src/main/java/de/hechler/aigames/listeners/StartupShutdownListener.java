@@ -22,18 +22,18 @@ package de.hechler.aigames.listeners;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import de.hechler.aigames.rest.ConnectFourRestService;;
+import de.hechler.aigames.rest.ChessRestService;;
 
 public class StartupShutdownListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		ConnectFourRestService.connectFourImpl.startup();
+		ChessRestService.chessImpl.startup();
 	}
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		ConnectFourRestService.connectFourImpl.shutdown();
+		ChessRestService.chessImpl.shutdown();
 	}
 	
 	

@@ -25,19 +25,19 @@ import org.junit.Test;
 
 import de.hechler.aigames.ai.GameRepository;
 import de.hechler.aigames.ai.GameRepository.GameState;
-import de.hechler.aigames.ai.connectfour.ConnectFourGame;
+import de.hechler.aigames.ai.connectfour.ChessGame;
 
 public class GameRepositoryTest {
 
 	@Test
 	public void testGameRepository() {
-		GameRepository<ConnectFourGame> repo = new GameRepository<ConnectFourGame>(ConnectFourGame.class);
-		GameState<ConnectFourGame> gameState1 = repo.createNewGame();
-		GameState<ConnectFourGame> gameState2 = repo.createNewGame();
+		GameRepository<ChessGame> repo = new GameRepository<ChessGame>(ChessGame.class);
+		GameState<ChessGame> gameState1 = repo.createNewGame();
+		GameState<ChessGame> gameState2 = repo.createNewGame();
 		String game1Id = gameState1.getGameId();
 		String game2Id = gameState2.getGameId();
 		assertNotEquals(game1Id, game2Id);
-		GameState<ConnectFourGame> actual = repo.getGameStateByGameId(game2Id);
+		GameState<ChessGame> actual = repo.getGameStateByGameId(game2Id);
 		assertEquals(gameState2, actual);
 		actual = repo.getGameStateByGameId(game1Id);
 		assertEquals(gameState1, actual);
@@ -57,13 +57,13 @@ public class GameRepositoryTest {
 
 	@Test
 	public void testRepoTimeout() {
-		GameRepository<ConnectFourGame> repo = new GameRepository<ConnectFourGame>(ConnectFourGame.class);
-		GameState<ConnectFourGame> gameState1 = repo.createNewGame(-1000);
-		GameState<ConnectFourGame> gameState2 = repo.createNewGame();
+		GameRepository<ChessGame> repo = new GameRepository<ChessGame>(ChessGame.class);
+		GameState<ChessGame> gameState1 = repo.createNewGame(-1000);
+		GameState<ChessGame> gameState2 = repo.createNewGame();
 		String game1Id = gameState1.getGameId();
 		String game2Id = gameState2.getGameId();
 		assertNotEquals(game1Id, game2Id);
-		GameState<ConnectFourGame> actual = repo.getGameStateByGameId(game2Id);
+		GameState<ChessGame> actual = repo.getGameStateByGameId(game2Id);
 		assertEquals(gameState2, actual);
 		actual = repo.getGameStateByGameId(game1Id);
 		assertNull(actual);
@@ -74,13 +74,13 @@ public class GameRepositoryTest {
 
 	@Test
 	public void testRepoClose() {
-		GameRepository<ConnectFourGame> repo = new GameRepository<ConnectFourGame>(ConnectFourGame.class);
-		GameState<ConnectFourGame> gameState1 = repo.createNewGame();
-		GameState<ConnectFourGame> gameState2 = repo.createNewGame();
+		GameRepository<ChessGame> repo = new GameRepository<ChessGame>(ChessGame.class);
+		GameState<ChessGame> gameState1 = repo.createNewGame();
+		GameState<ChessGame> gameState2 = repo.createNewGame();
 		String game1Id = gameState1.getGameId();
 		String game2Id = gameState2.getGameId();
 		repo.close();
-		GameState<ConnectFourGame> actual = repo.getGameStateByGameId(game1Id);
+		GameState<ChessGame> actual = repo.getGameStateByGameId(game1Id);
 		assertNull(actual);
 		actual = repo.getGameStateByGameId(game2Id);
 		assertNull(actual);

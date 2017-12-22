@@ -19,11 +19,11 @@
  */
 package de.hechler.aigames.api;
 
-import de.hechler.aigames.api.fieldview.ConnectFourFieldView;
+import de.hechler.aigames.api.fieldview.ChessFieldView;
 
 public enum GameTypeEnum {
 
-	CONNECTFOUR(ConnectFourFieldView.class);
+	CHESS(ChessFieldView.class);
 
 	Class<? extends FieldView> fieldViewClazz;
 	
