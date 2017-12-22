@@ -33,8 +33,8 @@ var speech = require('./Speech');
 var http = require('http');
 var querystring = require("querystring");
 
-var imgBaseUrl = "https://calcbox.de/c4imgs/64px/";
-var imgBaseSize = 64;
+var imgBaseUrl = "https://calcbox.de/chsimgs/48px/";
+var imgBaseSize = 48;
 var leftTopSpacer = "spacer_162x64";
 var leftTopSpacerWidth = 162;
 
@@ -788,6 +788,58 @@ function createHintMsg(winner, lastAIMove) {
 }
 
 function createFieldText(field) {
+	var fieldStr = "rnbqkbnr/pppppppp/11111111/11111111/11111111/11111111/PPPPPPPP/RNBQKBNR";
+	var result = "";
+	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
+//	result = result + addImageWH("space_3", 162, 64);
+//	result = result + addImage("frameset_top", 7);
+	result = result + addImage("space_5", 5);
+	result = result + addImage("space_5", 5);
+	
+	for (var y = 0; y < 8; y++) {
+		
+//		result = result + "<br/>";                 // this is the normal linebreak, but puts some extra pixels between the lines. 
+		result = result + addImage("space_5", 5);  // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
+		
+		result = result + addImage("space_5", 5);
+		for (var x = 0; x < 8; x++) {
+			var code = fieldStr.charAt(y*9+x);
+			var img = code2Img(code, x, y);
+			result = result + addImage(img, 1);
+		}
+//		for (var i = 0; i < y; i++) {
+//			result = result + addImage("00l", 1);
+//		}
+	}
+	result = result + "</font>";
+	return result;
+}
+
+function code2Img(code, x, y) {
+	var img;
+	if (code == '1') {
+		img = "00";
+	} 
+	else {
+		var lowerCase = code.toLowerCase();
+		if (lowerCase === code) {
+			img = "b"+lowerCase;  
+		}
+		else {
+			img = "w"+lowerCase;  
+		}
+	}
+	var odd = ((x+y) % 2 === 1);
+	if (odd) {
+		img = img + "l";
+	}
+	else {
+		img = img + "d";
+	}
+	return img;
+}
+
+function createFieldTextOLD(field) {
 	var result = "";
 	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
 	result = result + addImageWH("space_162x64", 162, 64);
