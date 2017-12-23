@@ -777,7 +777,7 @@ function createGameStatusInfo(gameData) {
 function createStatusMsg(winner, lastAIMove) {
 	var msg;
 	var status = !lastAIMove ? "STATUS" : "STATUS_AIMOVE";
-	var lastMoveText = move2text(lastMove);
+	var lastMoveText = move2text(lastAIMove);
 	if ((winner === 1) || (winner === 2)) {
 		if (!lastAIMove) {
 			msg = speech.createMsg(status, "PLAYER_WINS", lastMoveText);
@@ -905,9 +905,9 @@ function addImageWH(imgName, width, height) {
 function getMove(intent) {
 	var from_col = getFromIntent(intent, "from_col", "?");
 	var from_row = getFromIntent(intent, "from_row", 0);
-	var to_col = getFromIntent(intent, "from_col", "?");
+	var to_col = getFromIntent(intent, "to_col", "?");
 	var to_row = getFromIntent(intent, "to_row", 0);
-	return from_col + "." + from_row + "-" + to_col + "." + to_row;
+	return from_col + "-" + from_row + ":" + to_col + "-" + to_row;
 }
 
 function getAILevel(intent) {

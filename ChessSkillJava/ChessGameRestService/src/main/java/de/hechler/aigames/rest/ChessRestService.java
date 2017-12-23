@@ -54,7 +54,7 @@ import de.hechler.utils.TemporaryStore;
 //@WebServlet(urlPatterns = "/main", loadOnStartup = 1) 
 public class ChessRestService extends HttpServlet {
 	
-	private static final String RX_MOVE = "^([^.]*)[.]([^-]*)-([^.]*)[.](.*)$";
+	private static final String RX_MOVE = "^([^-]*)-([^:]*):([^-]*)-(.*)$";
 
 	/** the svuid */ private static final long serialVersionUID = -3679002890645814953L;
 
