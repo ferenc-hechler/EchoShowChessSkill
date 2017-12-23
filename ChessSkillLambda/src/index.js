@@ -683,7 +683,7 @@ function createTextDirective(session, msg, token) {
 			"token" : token,
 			"title" : msg.title,
 			"image": {
-				"sources": [ { "url": "https://calcbox.de/c4imgs/help/viergewinnt_help-340.png" } ]
+				"sources": [ { "url": "https://calcbox.de/chsimgs/help/chess_help-340.png" } ]
 			},
 			"textContent" : {
 				"primaryText" : {
