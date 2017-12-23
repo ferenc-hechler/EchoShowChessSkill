@@ -474,8 +474,8 @@ function set_locale(locale) {
 						display :  "Ich habe gewonnen."
 					},
 					MAKE_YOUR_MOVE: { 
-						speechOut: "In welche Reihe wirfst Du?",
-						display :  "In welche Reihe wirfst Du?"
+						speechOut: "Welchen Zug machst Du?",
+						display :  "Welchen Zug machst Du?"
 					}
 				},
 				
@@ -493,8 +493,8 @@ function set_locale(locale) {
 						display :  "Ich werfe in Reihe %1 und habe gewonnen."
 					},
 					MAKE_YOUR_MOVE: { 
-						speechOut: "Ich werfe in Reihe %1, in welche Reihe wirfst Du?",
-						display :  "Ich werfe in Reihe %1, in welche Reihe wirfst Du?"
+						speechOut: "Ich ziehe %1, welchen Zug machst Du?",
+						display :  "Ich ziehe %1, welchen Zug machst Du?"
 					}
 				},
 				

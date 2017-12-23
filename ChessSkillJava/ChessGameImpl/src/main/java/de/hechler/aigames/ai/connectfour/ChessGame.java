@@ -19,6 +19,17 @@
  */
 package de.hechler.aigames.ai.connectfour;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alonsoruibal.chess.Config;
+import com.alonsoruibal.chess.Move;
+import com.alonsoruibal.chess.book.FileBook;
+import com.alonsoruibal.chess.search.SearchEngineThreaded;
+import com.alonsoruibal.chess.search.SearchObserver;
+import com.alonsoruibal.chess.search.SearchParameters;
+import com.alonsoruibal.chess.search.SearchStatusInfo;
+
 import de.hechler.aigames.ai.AIGame;
 import de.hechler.aigames.api.DoMoveResult;
 import de.hechler.aigames.api.ResultCodeEnum;
@@ -28,7 +39,35 @@ import de.hechler.aigames.api.move.ChessMove;
 
 public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 	
+	private static final int DEFAULT_MOVETIME_MS = 1000;
+	private static final int DEFAULT_ELO = 1000;
 	protected ChessField field;
+	private List<ChessMove> chessMoves;
+	
+	
+	private static class BestMoveReceiver implements SearchObserver {
+		private String ponderStr;
+		private String bestMoveStr;
+		
+		@Override public void info(SearchStatusInfo arg0) {}
+		
+		@Override
+		public void bestMove(int bestMove, int ponder) {
+			bestMoveStr = Move.toString(bestMove);
+			ponderStr = Move.toString(ponder);
+			synchronized (this) {
+				this.notify();
+			}
+		}
+
+		public String getBestMoveStr() {
+			return bestMoveStr;
+		}
+		public String getPonderStr() {
+			return ponderStr;
+		}
+		
+	}
 	
 	@Override
 	public DoMoveResult<ChessMove> doMove(ChessMove move) {
@@ -42,6 +81,7 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		if (!moveOK) {
 			return new DoMoveResult<ChessMove>(ResultCodeEnum.E_INVALID_MOVE);
 		}
+		chessMoves.add(move);
 		winner = field.checkForEndGame();
 		if (winner == -1) {
 			return new DoMoveResult<ChessMove>(ResultCodeEnum.S_DRAW);
@@ -71,20 +111,46 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 	
 	@Override
 	public ChessMove calcAIMove() {
-		return new ChessMove("a1a1");
-//		int best; 
-//		if (getWeak() && (field.getCountMoves() == 0)) {
-//			// first move by random
-//			best = RandUtils.randomInt(7) + 1; 
-//		}
-//		else {
-//			int xPlayer = ((currentPlayer==1) ? IField.PLAYER_1 : IField.PLAYER_2 );
-////			int calc = MiniMax.calcPosition(field, 0, xPlayer);
-////			System.out.println("Calc(0) = " + calc);
-//			best = MiniMax.selectBestMove(field, getEffectiveAILevel(), xPlayer);
-////			System.out.println("bestMove("+aiLevel+") = " + best);
-//		}
-//		return new ChessMove(best);
+//		BestMoveReceiver bestMoveRcv = new BestMoveReceiver();
+		Config config = new Config();
+		config.setBook(new FileBook("/book_small.bin"));
+		config.setElo(DEFAULT_ELO);
+		SearchEngineThreaded engine = new SearchEngineThreaded(config);
+//		engine.setObserver(bestMoveRcv);
+		SearchParameters searchParameters = new SearchParameters();
+		searchParameters.setMoveTime(DEFAULT_MOVETIME_MS);
+		
+		// new game
+		engine.getBoard().startPosition();
+		engine.clear();
+		
+		// replay
+		for (ChessMove chessMove:chessMoves) {
+			int move = Move.getFromString(engine.getBoard(), chessMove.getMove(), true);
+			engine.getBoard().doMove(move);
+		}
+
+		// search
+		engine.go(searchParameters);
+		
+		// wait for answer
+		try {
+			long timeout = System.currentTimeMillis() + DEFAULT_MOVETIME_MS;
+			while (engine.isSearching() && timeout > System.currentTimeMillis()) {
+				Thread.sleep(100);
+			}
+		} catch (InterruptedException e) {
+			return null;
+		}
+		
+		// stop
+		engine.stop();
+		
+		String bestMove = Move.toString(engine.getBestMove());
+		engine.destroy();
+		ChessMove result = new ChessMove(bestMove);
+		chessMoves.add(result);
+		return result;
 	} 
 	
 	
@@ -96,6 +162,8 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 	@Override
 	protected void createField() {
 		field = new ChessField();
+		chessMoves = new ArrayList<>();
 	}
+
 
 }

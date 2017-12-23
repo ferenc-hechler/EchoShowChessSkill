@@ -581,7 +581,7 @@ function execDoMove(intent, session, response) {
 function execDoAIMove(session, response) {
 	send(session, response, getSessionGameId(session), "doAIMove", "", "",
 			function successFunc(result) {
-				setSessionLastAIMove(session, result.move.slot);
+				setSessionLastAIMove(session, result.move.move);
 				execDisplayField(session, response);
 			});
 }
@@ -777,20 +777,30 @@ function createGameStatusInfo(gameData) {
 function createStatusMsg(winner, lastAIMove) {
 	var msg;
 	var status = !lastAIMove ? "STATUS" : "STATUS_AIMOVE";
+	var lastMoveText = move2text(lastMove);
 	if ((winner === 1) || (winner === 2)) {
 		if (!lastAIMove) {
-			msg = speech.createMsg(status, "PLAYER_WINS", lastAIMove);
+			msg = speech.createMsg(status, "PLAYER_WINS", lastMoveText);
 		}
 		else {
-			msg = speech.createMsg(status, "AI_PLAYER_WINS", lastAIMove);
+			msg = speech.createMsg(status, "AI_PLAYER_WINS", lastMoveText);
 		}
 	} else if (winner === -1) {
-		msg = speech.createMsg(status, "DRAW", lastAIMove);
+		msg = speech.createMsg(status, "DRAW", lastMoveText);
 	} else {
-		msg = speech.createMsg(status, "MAKE_YOUR_MOVE", lastAIMove);
+		msg = speech.createMsg(status, "MAKE_YOUR_MOVE", lastMoveText);
 	}
 	return msg;
 }
+
+function move2text(lastMove) {
+	if (!lastMove) {
+		return undefined;
+	}
+	return lastMove.charAt(0) + " " + lastMove.charAt(1) + " nach " + lastMove.charAt(2) + " " + lastMove.charAt(3); 
+}
+	
+
 
 function createHintMsg(winner, lastAIMove) {
 	var msg;
@@ -973,8 +983,8 @@ function setSessionGameMovesCount(session, gameMovesCount) {
 function setSessionLastAIMove(session, lastAIMove) {
 	setInSession(session, "lastAIMove", lastAIMove);
 }
-function setSessionYesNoQuery(session, lastAIMove) {
-	setInSession(session, "yesNoQuery", lastAIMove);
+function setSessionYesNoQuery(session, yesNoQuery) {
+	setInSession(session, "yesNoQuery", yesNoQuery);
 }
 function setRequestDisplayToken(session, displayToken) {
 	setInSessionRequest(session, "displayToken", displayToken);
