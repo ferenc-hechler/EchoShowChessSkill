@@ -25,6 +25,7 @@ import java.util.List;
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
 import com.alonsoruibal.chess.book.FileBook;
+import com.alonsoruibal.chess.search.SearchEngine;
 import com.alonsoruibal.chess.search.SearchEngineThreaded;
 import com.alonsoruibal.chess.search.SearchObserver;
 import com.alonsoruibal.chess.search.SearchParameters;
@@ -77,10 +78,12 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		if (hasWinner()) {
 			return new DoMoveResult<ChessMove>(ResultCodeEnum.E_GAME_FINISHED);
 		}
-		boolean moveOK = field.setFieldArray(move, currentPlayer);
+		
+		boolean moveOK = checkMove(move);
 		if (!moveOK) {
 			return new DoMoveResult<ChessMove>(ResultCodeEnum.E_INVALID_MOVE);
 		}
+		field.setFieldArray(move, currentPlayer);
 		chessMoves.add(move);
 		winner = field.checkForEndGame();
 		if (winner == -1) {
@@ -92,6 +95,29 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		return new DoMoveResult<ChessMove>(ResultCodeEnum.S_OK);
 	}
 	
+	
+	
+	private boolean checkMove(ChessMove playerMove) {
+		Config config = new Config();
+		SearchEngine engine = new SearchEngine(config);
+		// new game
+		engine.getBoard().startPosition();
+		engine.clear();
+		
+		// replay
+		for (ChessMove chessMove:chessMoves) {
+			int move = Move.getFromString(engine.getBoard(), chessMove.getMove(), true);
+			engine.getBoard().doMove(move);
+		}
+		
+		int move = Move.getFromString(engine.getBoard(), playerMove.getMove(), true);
+		engine.destroy();
+		boolean result = (move != Move.NONE);
+		return result;
+	}
+
+
+
 	@Override
 	public DoMoveResult<ChessMove> doAIMove() {
 		if (hasWinner()) {
