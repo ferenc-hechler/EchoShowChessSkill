@@ -1,0 +1,15 @@
+* Letzten Zug markieren
+* Fish
+* Schachansage
+* Gewinn / Unentschieden erkennen
+* Rochade, En-Passant
+* Spiel speichern
+* Hilfe-Texte
+* Einstellungen
+  - Anzeige Buchstabieralphabet
+  - Optimierte Anzeige für Echo Show
+  - Spielstärke (ELO/Zeit)
+* Spielzuganzeige als Liste
+* Zug Rückgängig machen
+* Alternative Zugeingabe, z.B. Springer nach E5
+ 

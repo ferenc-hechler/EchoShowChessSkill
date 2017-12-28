@@ -1,14 +1,14 @@
 /**
- * Diese Datei ist Teil des Alexa Skills 'Vier in einer Reihe'.
+ * Diese Datei ist Teil des Alexa Skills 'Carballo Chess'.
  * Copyright (C) 2016-2017 Ferenc Hechler (github@fh.anderemails.de)
  *
- * Der Alexa Skills 'Vier in einer Reihe' ist Freie Software: 
+ * Der Alexa Skills 'Carballo Chess' ist Freie Software: 
  * Sie koennen es unter den Bedingungen
  * der GNU General Public License, wie von der Free Software Foundation,
  * Version 3 der Lizenz oder (nach Ihrer Wahl) jeder spaeteren
  * veroeffentlichten Version, weiterverbreiten und/oder modifizieren.
  *
- * Der Alexa Skills 'Vier in einer Reihe' wird in der Hoffnung, 
+ * Der Alexa Skills 'Carballo Chess' wird in der Hoffnung, 
  * dass es nuetzlich sein wird, aber
  * OHNE JEDE GEWAEHRLEISTUNG, bereitgestellt; sogar ohne die implizite
  * Gewaehrleistung der MARKTFAEHIGKEIT oder EIGNUNG FUER EINEN BESTIMMTEN ZWECK.

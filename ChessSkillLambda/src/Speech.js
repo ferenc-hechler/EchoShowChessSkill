@@ -24,7 +24,7 @@ function set_locale(locale) {
 		}
 		if (locale.startsWith("de")) {
 
-			cardTitle = "Vierer-Reihe Skill";
+			cardTitle = "Carballo-Schach Skill";
 			messages = {
 					
 				SEND_getOrCreateUserByAppAndName: {
@@ -76,7 +76,7 @@ function set_locale(locale) {
 				
 				TEXT: {
 					HELP: {
-						title:     	"Vierer-Reihe Schnellhilfe",
+						title:     	"Carballo-Schach Schnellhilfe",
 						richText:   "Hier die Kurzhilfe: <br/><br/>" +
 									"Du kannst eines der Kommandos <br/>" +
 									" * 'Hilfe', <br/>" +
@@ -95,7 +95,7 @@ function set_locale(locale) {
 					},
 					
 					ActionHELP: {
-						title:     	"Vierer-Reihe Hilfe",
+						title:     	"Carballo-Schach Hilfe",
 						richText:   "<font size='5'>Wähle ein Thema:<br/>" +
 									"<br/>" +
 									"<action token='ActionHELP_REGELN'>Regeln</action><br/>" +
@@ -107,9 +107,9 @@ function set_locale(locale) {
 						speechOut: ""
 					},
 					ActionHELP_REGELN: {
-						title:     	"Vierer-Reihe Regeln",
+						title:     	"Carballo-Schach Regeln",
 						richText:   "<font size='3'>" +
-									"Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+									"Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								    "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								    "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden.<br/></font>" +
 									"<font size='2'><br/>" +
@@ -117,7 +117,7 @@ function set_locale(locale) {
 						speechOut: ""
 					},
 					ActionHELP_SPRACHSTEUERUNG: {
-						title:     "Vierer-Reihe Sprachsteuerung",
+						title:     "Carballo-Schach Sprachsteuerung",
 						richText:  "<font size='2'>" +
 									"Zurück zur <action token='ActionHELP'>Themenwahl</action> oder zum <action token='ActionHOME'>Spiel</action></font><br/>" +
 									"<br/>" +
@@ -128,13 +128,13 @@ function set_locale(locale) {
 								    "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
 								    "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
 								    "Also  zum Beispiel 'Alexa, Reihe ...'. " +
-								    "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Vierer-Reihe' zuerst wieder gestartet werden. " +
+								    "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								    "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								    "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet.",
 						speechOut: ""
 					},
 					ActionHELP_KOMMANDOS: {
-						title:     "Vierer-Reihe Sprachkommandos",
+						title:     "Carballo-Schach Sprachkommandos",
 						richText:  "<font size='3'>" +
 								   "'Hilfe': Starte die Hilfe.<br/>" +
 								   "'Starte ein neues Spiel': bricht das aktuelle Spiel ab und startet ein neues.<br/>" +
@@ -145,7 +145,7 @@ function set_locale(locale) {
 						speechOut: ""
 					},
 					ActionHELP_WEITERES: {
-						title:     "Vierer-Reihe Weiteres",
+						title:     "Carballo-Schach Weiteres",
 						richText:  "<font size='3'>" +
 								   "Links oben in der Anzeige wird die aktulle Zugzahl und die Spielstärke (AI) angezeigt.<br/>" +
 								   "<br/>" +
@@ -157,7 +157,7 @@ function set_locale(locale) {
 					},
 					
 					INTRO: {
-						title:     	"Willkommen zum Spiel 'Vierer-Reihe'",
+						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
 						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
 									" * 'Hilfe', <br/>" +
 									" * 'Starte ein neues Spiel', <br/>" +
@@ -166,16 +166,16 @@ function set_locale(locale) {
 									" * 'Setze die Spielstärke auf ...' oder <br/>" +
 									" * 'Stop'. <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
-						speechOut: "Willkommen zum Spiel Vierer-Reihe: " +
+						speechOut: "Willkommen zum Spiel Carballo-Schach: " +
 									"Das Spiel kann mit folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich werfe in Reihe', 'Du darfst anfangen', 'Setze die Spielstärke auf' oder Stop. " + 
 									"Möchtest Du eine ausführliche Anleitung?",
-						display:   	"Willkommen zum Spiel 'Vierer-Reihe': " +
+						display:   	"Willkommen zum Spiel 'Carballo-Schach': " +
 									"Das Spiel kann mit folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich werfe in Reihe ...', 'Du darfst anfangen', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 					
 					WELCOME: {
-						title:     	"Willkommen zum Spiel 'Vierer-Reihe'",
+						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
 						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
 									" * 'Hilfe', <br/>" +
 									" * 'Starte ein neues Spiel', <br/>" +
@@ -184,16 +184,16 @@ function set_locale(locale) {
 									" * 'Setze die Spielstärke auf ...' oder <br/>" +
 									" * 'Stop'. <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
-						speechOut: "Willkommen zum Spiel Vierer-Reihe: " +
+						speechOut: "Willkommen zum Spiel Carballo-Schach: " +
 									"Möchtest Du eine ausführliche Anleitung?",
-						display:   	"Willkommen zum Spiel 'Vierer-Reihe': " +
+						display:   	"Willkommen zum Spiel 'Carballo-Schach': " +
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 					
 					HELP_REGELN: {
-						title:     "Vierer-Reihe Hilfe",
+						title:     "Carballo-Schach Hilfe",
 						richText:  "Zuerst die Regeln: <br/>" +
-								   "Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. <br/><br/>" +
 								   
@@ -205,7 +205,7 @@ function set_locale(locale) {
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
 								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
 								   "Also  zum Beispiel 'Alexa, Reihe ...'. " +
-								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Vierer-Reihe' zuerst wieder gestartet werden. " +
+								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. <br/><br/>" +
 								   
@@ -219,7 +219,7 @@ function set_locale(locale) {
 								   
 								   "Soll ich den Text nochmal wiederholen?",
 						speechOut: "Zuerst die Regeln: " +
-								   "Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
 								   
@@ -231,7 +231,7 @@ function set_locale(locale) {
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
 								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
 								   "Also zum Beispiel: 'Alexa, Reihe punkt punkt punkt'. " +
-								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit: 'Alexa starte Vierer-Reihe' zuerst wieder gestartet werden. " +
+								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit: 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
@@ -246,7 +246,7 @@ function set_locale(locale) {
 								   "Soll ich den Text nochmal wiederholen?",
 								   
 						display:   "Zuerst die Regeln: " +
-								   "Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
 								   
@@ -258,7 +258,7 @@ function set_locale(locale) {
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
 								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
 								   "Also  zum Beispiel 'Alexa, Reihe ...'. " +
-								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Vierer-Reihe' zuerst wieder gestartet werden. " +
+								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
@@ -274,7 +274,7 @@ function set_locale(locale) {
 					},
 					HELP_REGELN_NOGUI: {
 						speechOut: "Zuerst die Regeln: " +
-								   "Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
 								   
@@ -288,7 +288,7 @@ function set_locale(locale) {
 								   "Nach Deinem Zug macht Alexa ihren Zug und wartet sofort auf eine Antwort von Dir. " +
 								   "Wenn Du sofort antwortest, dann kannst Du einfach 'Reihe punkt punkt punkt' sagen. " +
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort. " +
-								   "Das macht aber nichts, Du kannst das Spiel fortsetzen indem Du den Skill neu startest mit 'Alexa starte Vierer-Reihe'. " +
+								   "Das macht aber nichts, Du kannst das Spiel fortsetzen indem Du den Skill neu startest mit 'Alexa starte Schach'. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
@@ -303,7 +303,7 @@ function set_locale(locale) {
 								   "Soll ich den Text nochmal wiederholen?",
 								   
 						display:   "Zuerst die Regeln: " +
-								   "Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
 								   
@@ -318,7 +318,7 @@ function set_locale(locale) {
 								   "Nach Deinem Zug macht Alexa ihren Zug und wartet sofort auf eine Antwort von Dir. " +
 								   "Wenn Du sofort antwortest, dann kannst Du einfach 'Reihe ...' sagen. " +
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort. " +
-								   "Das macht aber nichts, Du kannst das Spiel fortsetzen indem Du den Skill neu startest mit 'Alexa starte Vierer-Reihe'. " +
+								   "Das macht aber nichts, Du kannst das Spiel fortsetzen indem Du den Skill neu startest mit 'Alexa starte Schach'. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
@@ -380,12 +380,12 @@ function set_locale(locale) {
 									"Möchtest Du eine ausführliche Anleitung?",
 					},
 					INTRO: {
-						speechOut: 	"Willkommen zum Vierer-Reihe Skill. Möchtest Du eine Einleitung zur Verwendung dieses Skills bekommen?",
+						speechOut: 	"Willkommen zum Carballo-Schach Skill. Möchtest Du eine Einleitung zur Verwendung dieses Skills bekommen?",
 						display: 	"Möchtest Du eine Einleitung zur Verwendung dieses Skills bekommen?"
 					},
 					HELP_REGELN: {
 						speechOut: "Zuerst die Regeln: " +
-								   "Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
 								   
@@ -397,7 +397,7 @@ function set_locale(locale) {
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
 								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
 								   "Also zum Beispiel: 'Alexa, Reihe punkt punkt punkt'. " +
-								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit: 'Alexa starte Vierer-Reihe' zuerst wieder gestartet werden. " +
+								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit: 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
@@ -412,7 +412,7 @@ function set_locale(locale) {
 								   "Soll ich den Text nochmal wiederholen?",
 								   
 						display:   "Zuerst die Regeln: " +
-								   "Beim Spiel Vierer-Reihe spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
+								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
 								   
@@ -424,7 +424,7 @@ function set_locale(locale) {
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
 								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
 								   "Also  zum Beispiel 'Alexa, Reihe ...'. " +
-								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Vierer-Reihe' zuerst wieder gestartet werden. " +
+								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   

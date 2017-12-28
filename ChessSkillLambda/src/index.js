@@ -1,13 +1,13 @@
 /**
- * Diese Datei ist Teil des Alexa Skills 'Vier in einer Reihe'. Copyright (C) 2016-2017
+ * Diese Datei ist Teil des Alexa Skills 'Carballo Chess'. Copyright (C) 2016-2017
  * Ferenc Hechler (github@fh.anderemails.de)
  * 
- * Der Alexa Skill 'Vier in einer Reihe' ist Freie Software: Sie koennen es unter den
+ * Der Alexa Skill 'Carballo Chess' ist Freie Software: Sie koennen es unter den
  * Bedingungen der GNU General Public License, wie von der Free Software
  * Foundation, Version 3 der Lizenz oder (nach Ihrer Wahl) jeder spaeteren
  * veroeffentlichten Version, weiterverbreiten und/oder modifizieren.
  * 
- * Der Alexa Skills 'Vier in einer Reihe' wird in der Hoffnung, dass es nuetzlich sein
+ * Der Alexa Skills 'Carballo Chess' wird in der Hoffnung, dass es nuetzlich sein
  * wird, aber OHNE JEDE GEWAEHRLEISTUNG, bereitgestellt; sogar ohne die
  * implizite Gewaehrleistung der MARKTFAEHIGKEIT oder EIGNUNG FUER EINEN
  * BESTIMMTEN ZWECK. Siehe die GNU General Public License fuer weitere Details.
@@ -19,7 +19,7 @@
 /* App ID for the skill */
 var APP_ID = process.env.APP_ID; // "amzn1.ask.skill.46c8454a-d474-4e38-a75e-c6c8017b1fe1"; 
 
-var endpoint = process.env.ENDPOINT; // 'http://calcbox.de/connfour/rest/c4';
+var endpoint = process.env.ENDPOINT; // 'http://calcbox.de/devchess/rest/chess';
 var dbEndpoint = process.env.DBENDPOINT; // 'http://calcbox.de/simdb/rest/db';
 
 var URL = require('url');
@@ -35,8 +35,15 @@ var querystring = require("querystring");
 
 var imgBaseUrl = "https://calcbox.de/chsimgs/48px/";
 var imgBaseSize = 48;
-var leftTopSpacer = "spacer_162x64";
-var leftTopSpacerWidth = 162;
+var headerWidth = 408;
+var headerHeight = 16; 
+var footerWidth = 408;
+var footerHeight = 17; 
+var spacerHWidth = 208;
+var spacerHHeight = 16;
+var spacerFWidth = 234;
+var spacerFHeight = 16;
+var leftWidth = 17;
 
 
 var TOKEN_TO_YESNOQUERY_MAPPING = {
@@ -180,39 +187,39 @@ var ANIMAL_MAPPING = {
 
 
 /**
- * ConnectFourSkill is a child of AlexaSkill.
+ * ChessSkill is a child of AlexaSkill.
  */
-var ConnectFourSkill = function() {
+var ChessSkill = function() {
 	AlexaSkill.call(this, APP_ID);
 };
 
 // Extend AlexaSkill
-ConnectFourSkill.prototype = Object.create(AlexaSkill.prototype);
-ConnectFourSkill.prototype.constructor = ConnectFourSkill;
+ChessSkill.prototype = Object.create(AlexaSkill.prototype);
+ChessSkill.prototype.constructor = ChessSkill;
 
-ConnectFourSkill.prototype.eventHandlers.onSessionStarted = function(
+ChessSkill.prototype.eventHandlers.onSessionStarted = function(
 		sessionStartedRequest, session) {
-	console.log("ConnectFourSkill onSessionStarted requestId: "
+	console.log("ChessSkill onSessionStarted requestId: "
 			+ sessionStartedRequest.requestId + ", sessionId: "
 			+ session.sessionId);
 	// any initialization logic goes here
 	clearSessionData(session);
 };
 
-ConnectFourSkill.prototype.eventHandlers.onSessionEnded = function(
+ChessSkill.prototype.eventHandlers.onSessionEnded = function(
 		sessionEndedRequest, session) {
-	console.log("ConnectFourSkill onSessionEnded requestId: "
+	console.log("ChessSkill onSessionEnded requestId: "
 			+ sessionEndedRequest.requestId + ", sessionId: "
 			+ session.sessionId);
 	// any cleanup logic goes here
 	clearSessionData(session);
 };
 
-ConnectFourSkill.prototype.eventHandlers.onLaunch = function(launchRequest, session, response) {
+ChessSkill.prototype.eventHandlers.onLaunch = function(launchRequest, session, response) {
 	doLaunch(session, response);
 };
 
-ConnectFourSkill.prototype.intentHandlers = {
+ChessSkill.prototype.intentHandlers = {
 
 	"NewGameIntent" : function(intent, session, response) {
 		doNewGame(intent, session, response);
@@ -259,7 +266,7 @@ ConnectFourSkill.prototype.intentHandlers = {
 };
 
 
-ConnectFourSkill.prototype.actionHandlers = {
+ChessSkill.prototype.actionHandlers = {
 	"ActionHELP" : doShowAction,
 	"ActionHELP_REGELN" : doShowAction,
 	"ActionHELP_SPRACHSTEUERUNG" : doShowAction,
@@ -275,12 +282,12 @@ exports.handler = function(event, context) {
 	
 	speech.set_locale(getEventLocale(event)); 
 	
-	// Create an instance of the ConnectFourSkill skill.
-	var connectFourSkill = new ConnectFourSkill();
+	// Create an instance of the ChessSkill skill.
+	var chessSkill = new ChessSkill();
 	removeSessionRequest(event.session);
 	setRequestHasDisplay(event.session, hasEventDisplay(event));
 	setRequestDisplayToken(event.session, getEventDisplayToken(event));
-	connectFourSkill.execute(event, context);
+	chessSkill.execute(event, context);
 };
 
 // initialize tests
@@ -821,27 +828,36 @@ function createHintMsg(winner, lastAIMove) {
 function createFieldText(fieldStr, optShow) {
 	var result = "";
 	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
-	result = result + addImage("space_4", 4);
-//	result = result + addImage("frameset_top", 7);
+	result = result + addImageWH("spacer_h", spacerHWidth, spacerHHeight);
+	result = result + addImageWH("header", headerWidth, headerHeight);
+
 	if (optShow) {
-		result = result + addImage("space_5", 5);
+		result = result + addImageWH("spacer_h", spacerHWidth, spacerHHeight); // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
 	}
+	else {
+		result = result + "<br/>";                   // this is the normal linebreak, but puts some extra pixels between the lines. 
+	}
+	
 	for (var y = 0; y < 8; y++) {
 		
-		if (optShow) {
-			result = result + addImage("space_5", 5);  // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
-		}
-		else {
-			result = result + "<br/>";                 // this is the normal linebreak, but puts some extra pixels between the lines. 
-		}
-		
 		result = result + addImage("space_5", 5);
+		result = result + addImageWH("left_"+(8-y), leftWidth, imgBaseSize);
 		for (var x = 0; x < 8; x++) {
 			var code = fieldStr.charAt(y*9+x);
 			var img = code2Img(code, x, y);
 			result = result + addImage(img, 1);
 		}
+		if (optShow) {
+			result = result + addImage("space_4", 4);  // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
+		}
+		else {
+			result = result + "<br/>";                 // this is the normal linebreak, but puts some extra pixels between the lines. 
+		}
 	}
+
+	
+	result = result + addImageWH("spacer_f", spacerFWidth, spacerFHeight);
+	result = result + addImageWH("footer", footerWidth, footerHeight);
 	result = result + "</font>";
 	return result;
 }
@@ -868,26 +884,6 @@ function code2Img(code, x, y) {
 		img = img + "d";
 	}
 	return img;
-}
-
-function createFieldTextOLD(field) {
-	var result = "";
-	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
-	result = result + addImageWH("space_162x64", 162, 64);
-	result = result + addImage("frameset_top", 7);
-	for (var y = 0; y < 6; y++) {
-		
-		result = result + "<br/>";
-//		result = result + addImage("space_3", 3);  // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
-		
-		result = result + addImage("space_3", 3);
-		for (var x = 0; x < 7; x++) {
-			var col = field[y][x]; // col = 0..4
-			result = result + addImage("circle-" + col, 1);
-		}
-	}
-	result = result + "</font>";
-	return result;
 }
 
 function addImage(imgName, size) {
@@ -1104,7 +1100,7 @@ function initUser(session, response, successCallback) {
 		if (!amzUserId) {
 			speech.respond("INTERN", "NO_AMZ_USERID", response);
 		} else {
-			sendDB(session, response, "getOrCreateUserByAppAndName", "C4.USER", amzUserId, function callback(result) {
+			sendDB(session, response, "getOrCreateUserByAppAndName", "CHESS.USER", amzUserId, function callback(result) {
 						var dbUser = result.user;
 						var userDataOk = unmarshallUserData(dbUser);
 						if (!userDataOk) {
