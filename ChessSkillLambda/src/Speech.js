@@ -60,7 +60,12 @@ function set_locale(locale) {
 					"E_INVALID_RANGE": { 
 						speechOut: "Bitte wiederhole den Zug, das war kein gültiger Zug.",
 						display :  "Bitte wiederhole den Zug, das war kein gültiger Zug."
+					},
+					"E_INVALID_MOVE": { 
+						speechOut: "Der Zug ist nicht erlaubt, welchen Zug möchteste du machen?",
+						display :  "Der Zug ist nicht erlaubt, welchen Zug möchteste du machen?"
 					}
+					
 				},
 				
 				SEND_setAILevel: {

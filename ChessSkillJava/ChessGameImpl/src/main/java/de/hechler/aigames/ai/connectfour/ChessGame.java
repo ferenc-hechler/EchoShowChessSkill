@@ -21,6 +21,8 @@ package de.hechler.aigames.ai.connectfour;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.alonsoruibal.chess.Config;
 import com.alonsoruibal.chess.Move;
@@ -41,8 +43,11 @@ import de.hechler.aigames.api.move.ChessMove;
 
 public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 	
-	private static final int DEFAULT_MOVETIME_MS = 1000;
-	private static final int DEFAULT_ELO = 1000;
+	private static final int DEFAULT_MOVETIME_MS = 10000;
+//	private static final int DEFAULT_ELO = 2000;
+	
+	private final static Logger logger = Logger.getLogger(ChessGame.class.getName());
+	
 	protected ChessField field;
 	private List<ChessMove> chessMoves;
 	
@@ -158,11 +163,11 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 //		BestMoveReceiver bestMoveRcv = new BestMoveReceiver();
 		Config config = new Config();
 		config.setBook(new FileBook("/book_small.bin"));
-		config.setElo(DEFAULT_ELO);
+//		config.setElo(DEFAULT_ELO);
 		SearchEngineThreaded engine = new SearchEngineThreaded(config);
 //		engine.setObserver(bestMoveRcv);
 		SearchParameters searchParameters = new SearchParameters();
-		searchParameters.setMoveTime(DEFAULT_MOVETIME_MS);
+//		searchParameters.setMoveTime(DEFAULT_MOVETIME_MS);
 		
 		// new game
 		engine.getBoard().startPosition();
@@ -179,7 +184,8 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		
 		// wait for answer
 		try {
-			long timeout = System.currentTimeMillis() + DEFAULT_MOVETIME_MS;
+			long startTime = System.currentTimeMillis();
+			long timeout = startTime + 50+(getAILevel()-1)*1000;
 			while (engine.isSearching() && timeout > System.currentTimeMillis()) {
 				Thread.sleep(100);
 			}
