@@ -1,10 +1,10 @@
-* Letzten Zug markieren
-* Fish
+[x] Letzten Zug markieren
+* Hilfe-Texte
+
 * Schachansage
 * Gewinn / Unentschieden erkennen
-* Rochade, En-Passant
-* Spiel speichern
-* Hilfe-Texte
+* Rochade, En-Passant 
+* Spiel speichern (Begrenzung auf 4 Stunden aufheben).
 * Einstellungen
   - Anzeige Buchstabieralphabet
   - Optimierte Anzeige für Echo Show
@@ -12,4 +12,7 @@
 * Spielzuganzeige als Liste
 * Zug Rückgängig machen
 * Alternative Zugeingabe, z.B. Springer nach E5
+ 
+ * Anzeige über Webseite
+ * Fish
  

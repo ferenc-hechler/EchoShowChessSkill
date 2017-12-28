@@ -33,6 +33,7 @@ import com.alonsoruibal.chess.search.SearchStatusInfo;
 
 import de.hechler.aigames.ai.AIGame;
 import de.hechler.aigames.api.DoMoveResult;
+import de.hechler.aigames.api.GenericResult;
 import de.hechler.aigames.api.ResultCodeEnum;
 import de.hechler.aigames.api.fieldview.ChessFieldView;
 import de.hechler.aigames.api.move.ChessMove;
@@ -93,6 +94,21 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		}
 		changePlayer();
 		return new DoMoveResult<ChessMove>(ResultCodeEnum.S_OK);
+	}
+	
+	
+	public GenericResult rollback(int numHalfMovesToRollback) {
+		if (chessMoves.size() < numHalfMovesToRollback) {
+			return GenericResult.genericInvalidRangeResult;
+		}
+		List<ChessMove> oldChessMoves = chessMoves;
+		int movesToReplay = chessMoves.size() -  numHalfMovesToRollback;
+		initGame();
+		for (ChessMove move:oldChessMoves) {
+			field.setFieldArray(move, currentPlayer);
+			changePlayer();
+		}
+		return GenericResult.genericOkResult;
 	}
 	
 	

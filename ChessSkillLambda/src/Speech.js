@@ -36,30 +36,30 @@ function set_locale(locale) {
 				
 				SEND_connect: {
 					S_OK: { 
-						speechOut: "Du bist am Zug. In welche Reihe wirfst Du?",
-						display :  "Du bist am Zug. In welche Reihe wirfst Du?"
+						speechOut: "Du bist am Zug. welchen Zug machst Du?",
+						display :  "Du bist am Zug. welchen Zug machst Du?"
 					}
 				},
 				
 				SEND_connectImage: {
 					E_IMAGE_NOT_FOUND: { 
-						speechOut: "Das Tier ist nicht zu sehen, versuche es noch einmal oder werfe in eine Reihe.",
-						display :  "Das Tier ist nicht zu sehen, versuche es noch einmal oder werfe in eine Reihe."
+						speechOut: "Das Tier ist nicht zu sehen, versuche es noch einmal oder mache einen Zug.",
+						display :  "Das Tier ist nicht zu sehen, versuche es noch einmal oder mache einen Zug."
 					},
 					"E_INVALID_PARAMETER": { 
-						speechOut: "Du musst den Namen des Tiers sagen, das auf der Webseite calcbox.de zu sehen ist, versuche es noch einmal oder werfe in eine Reihe.",
-						display :  "Du musst den Namen des Tiers sagen, das auf der Webseite https://calcbox.de zu sehen ist, versuche es noch einmal oder werfe in eine Reihe."
+						speechOut: "Du musst den Namen des Tiers sagen, das auf der Webseite calcbox.de zu sehen ist, versuche es noch einmal oder mache einen Zug.",
+						display :  "Du musst den Namen des Tiers sagen, das auf der Webseite https://calcbox.de zu sehen ist, versuche es noch einmal oder mache einen Zug."
 					},
 				},
 				
 				SEND_doMove: {
 					"E_INVALID_PARAMETER": { 
-						speechOut: "Bitte wiederhole die Reihe, ich habe das nicht richtig verstanden.",
-						display :  "Bitte wiederhole die Reihe, ich habe das nicht richtig verstanden."
+						speechOut: "Bitte wiederhole den Zug, ich habe das nicht richtig verstanden.",
+						display :  "Bitte wiederhole den Zug, ich habe das nicht richtig verstanden."
 					},
 					"E_INVALID_RANGE": { 
-						speechOut: "Bitte wiederhole die Reihe, sie muss einen Wert von 1 bis 7 haben.",
-						display :  "Bitte wiederhole die Reihe, sie muss einen Wert von 1 bis 7 haben."
+						speechOut: "Bitte wiederhole den Zug, das war kein gültiger Zug.",
+						display :  "Bitte wiederhole den Zug, das war kein gültiger Zug."
 					}
 				},
 				
@@ -81,16 +81,16 @@ function set_locale(locale) {
 									"Du kannst eines der Kommandos <br/>" +
 									" * 'Hilfe', <br/>" +
 									" * 'Starte ein neues Spiel', <br/>" +
-									" * 'Ich werfe in Reihe ...', <br/>" +
+									" * 'Ich ziehe von ... nach ...', <br/>" +
 									" * 'Du darfst anfangen', <br/>" +
 									" * 'Setze die Spielstärke auf ...' oder <br/>" +
 									" * 'Stop' verwenden. <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						speechOut: "Hier die Kurzhilfe: " +
-						   			"Du kannst eines der Kommandos 'Hilfe', 'Starte ein neues Spiel', 'Ich werfe in Reihe', 'Du darfst anfangen', 'Setze die Spielstärke auf' oder Stop verwenden. " + 
+						   			"Du kannst eines der Kommandos 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von - nach -', 'Du darfst anfangen', 'Setze die Spielstärke auf' oder Stop verwenden. " + 
 						   			"Möchtest Du eine ausführliche Anleitung?",
 						display:   	"Hier die Kurzhilfe: " +
-									"Du kannst eines der Kommandos 'Hilfe', 'Starte ein neues Spiel', 'Ich werfe in Reihe ...', 'Du darfst anfangen', 'Setze die Spielstärke auf ...' oder 'Stop' verwenden. " + 
+									"Du kannst eines der Kommandos 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Setze die Spielstärke auf ...' oder 'Stop' verwenden. " + 
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 					
@@ -109,9 +109,7 @@ function set_locale(locale) {
 					ActionHELP_REGELN: {
 						title:     	"Carballo-Schach Regeln",
 						richText:   "<font size='3'>" +
-									"Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
-								    "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
-								    "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden.<br/></font>" +
+									"Es wird nach den ganz normalen Schach Regeln gespielt. Da die Anzeige aber immer nur 30 Sekunden angezeigt wird, hat das ganze am ehesten den Character einer Partie Blitzschach. Auch Alexas Denkzeit ist auf 5 Sekunden begrenzt.<br/></font>" +
 									"<font size='2'><br/>" +
 									"Zurück zur <action token='ActionHELP'>Themenwahl</action> oder zum <action token='ActionHOME'>Spiel</action></font>",
 						speechOut: ""
@@ -122,15 +120,15 @@ function set_locale(locale) {
 									"Zurück zur <action token='ActionHELP'>Themenwahl</action> oder zum <action token='ActionHOME'>Spiel</action></font><br/>" +
 									"<br/>" +
 								    "Wenn ein neues Spiel startet, kannst Du entscheiden, ob Du anfangen möchtest, oder ob Alexa beginnen soll. " +
-								    "Sage dazu entweder 'Ich werfe in Reihe ...' oder 'Du darfst anfangen'. " +
+								    "Sage dazu entweder 'Ich ziehe von ... nach ...' oder 'Du darfst anfangen'. " +
 								    "Nach Deinem Zug macht Alexa ihren Zug und wartet sofort auf eine Antwort von Dir. " +
-								    "Wenn Du sofort antwortest, dann kannst Du einfach 'Reihe ...' sagen. " +
+								    "Wenn Du sofort antwortest, dann kannst Du einfach '... nach ...' sagen. " +
 								    "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
 								    "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
-								    "Also  zum Beispiel 'Alexa, Reihe ...'. " +
+								    "Also  zum Beispiel 'Alexa, ich ziehe von E2 nach E4'. " +
 								    "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								    "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
-								    "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet.",
+								    "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet.", 
 						speechOut: ""
 					},
 					ActionHELP_KOMMANDOS: {
@@ -344,32 +342,36 @@ function set_locale(locale) {
 						display: "Die Benutzerdaten sind nicht lesbar."
 					},
 					YOUR_MOVE: {
-						speechOut: "In welche Reihe wirfst Du?",
-						display: "In welche Reihe wirfst Du?"
+						speechOut: "welchen Zug machst Du?",
+						display: "welchen Zug machst Du?"
 					},
 					AI_LEVEL_CHANGED: {
-						speechOut: "Die Spielstärke wurde auf %1 gesetzt. In welche Reihe wirfst Du?",
-						display: "Die Spielstärke wurde auf %1 gesetzt. In welche Reihe wirfst Du?"
+						speechOut: "Die Spielstärke wurde auf %1 gesetzt. welchen Zug machst Du?",
+						display: "Die Spielstärke wurde auf %1 gesetzt. welchen Zug machst Du?"
+					},
+					LAST_MOVE_ROLLEDBACK: {
+						speechOut: "Dein letzter Zug wurde zurück genommen. Welchen Zug machst Du jetzt?",
+						display: "Dein letzter Zug wurde zurück genommen. Welchen Zug machst Du jetzt?"
 					},
 					OPT_SHOW_ACTIVATED: {
-						speechOut: "Die Anzeige ist jetzt für die Darstellung auf dem Echo Show optimiert. In welche Reihe wirfst Du?",
-						display: "Anzeige für Echo Show. In welche Reihe wirfst Du?"
+						speechOut: "Die Anzeige ist jetzt für die Darstellung auf dem Echo Show optimiert. welchen Zug machst Du?",
+						display: "Anzeige für Echo Show. welchen Zug machst Du?"
 					},
 					OPT_SHOW_DEACTIVATED: {
-						speechOut: "Anzeige auf Standard geschaltet. In welche Reihe wirfst Du?",
-						display: "Anzeige auf Standard geschaltet. In welche Reihe wirfst Du?"
+						speechOut: "Anzeige auf Standard geschaltet. welchen Zug machst Du?",
+						display: "Anzeige auf Standard geschaltet. welchen Zug machst Du?"
 					},
 					ANIMAL_CONNECTED: {
-						speechOut: "Du hast Dich erfolgreich mit der Webseite verbunden. In welche Reihe wirfst Du?",
-						display: "Du hast Dich erfolgreich mit der Webseite verbunden. In welche Reihe wirfst Du?"
+						speechOut: "Du hast Dich erfolgreich mit der Webseite verbunden. welchen Zug machst Du?",
+						display: "Du hast Dich erfolgreich mit der Webseite verbunden. welchen Zug machst Du?"
 					},
 					NEW_GAME_STARTED: {
-						speechOut: "Es wurde ein neues Spiel gestartet. In welche Reihe wirfst Du?",
-						display: "Es wurde ein neues Spiel gestartet. In welche Reihe wirfst Du?"
+						speechOut: "Es wurde ein neues Spiel gestartet. welchen Zug machst Du?",
+						display: "Es wurde ein neues Spiel gestartet. welchen Zug machst Du?"
 					},
 					GAME_CONTINUED: {
-						speechOut: "Dein letztes Spiel wird fortgesetzt, in welche Reihe wirfst Du?",
-						display: "Dein letztes Spiel wird fortgesetzt, in welche Reihe wirfst Du?"
+						speechOut: "Dein letztes Spiel wird fortgesetzt, welchen Zug machst Du?",
+						display: "Dein letztes Spiel wird fortgesetzt, welchen Zug machst Du?"
 					},
 					HELP: {
 						speechOut: "Hier die Kurzhilfe: " +
@@ -447,16 +449,16 @@ function set_locale(locale) {
 						display: "Sage 'Setze die Spielstärke auf ... (1..7)'. "
 					},
 					AI_STARTS_NOT_ALLOWED: {
-						speechOut: "Die Seiten können nur vor dem ersten Zug gewechselt werden. In welche Reihe wirfst Du?",
-						display: "Die Seiten können nur vor dem ersten Zug gewechselt werden. In welche Reihe wirfst Du?"
+						speechOut: "Die Seiten können nur vor dem ersten Zug gewechselt werden. welchen Zug machst Du?",
+						display: "Die Seiten können nur vor dem ersten Zug gewechselt werden. welchen Zug machst Du?"
 					},
 					NOT_YES_NO_ANSWER: {
-						speechOut: "Das war keine Antwort auf meine Frage, ich werte das jetzt mal als 'Nein'. In welche Reihe wirfst Du?",
-						display: "Das war keine Antwort auf meine Frage, ich werte das jetzt mal als 'Nein'. In welche Reihe wirfst Du?"
+						speechOut: "Das war keine Antwort auf meine Frage, ich werte das jetzt mal als 'Nein'. welchen Zug machst Du?",
+						display: "Das war keine Antwort auf meine Frage, ich werte das jetzt mal als 'Nein'. welchen Zug machst Du?"
 					},
 					NO_QUESTION_ASKED: {
-						speechOut: "Ich hatte keine Ja/Nein Frage gestellt. In welche Reihe wirfst Du?",
-						display: "Ich hatte keine Ja/Nein Frage gestellt. In welche Reihe wirfst Du?"
+						speechOut: "Ich hatte keine Ja/Nein Frage gestellt. welchen Zug machst Du?",
+						display: "Ich hatte keine Ja/Nein Frage gestellt. welchen Zug machst Du?"
 					}
 				},
 				
@@ -559,8 +561,8 @@ function set_locale(locale) {
 						display :  "Die Spielstärke wurde auf %1 gesetzt. Du bist am Zug."
 					},
 					E_INVALID_PARAMETER: { 
-						speechOut: "Die Spielstärke muss eine Zahl von 1 bis 7 sein. In welche Reihe wirfst Du?",
-						display :  "Die Spielstärke muss eine Zahl von 1 bis 7 sein. In welche Reihe wirfst Du?"
+						speechOut: "Die Spielstärke muss eine Zahl von 1 bis 7 sein. welchen Zug machst Du?",
+						display :  "Die Spielstärke muss eine Zahl von 1 bis 7 sein. welchen Zug machst Du?"
 					},
 				}, 
 				

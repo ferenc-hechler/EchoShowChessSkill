@@ -119,6 +119,10 @@ public class ChessRestService extends HttpServlet {
 				responseString = doAIMove(gameId);
 				break;
 			}
+			case "rollback": {
+				responseString = rollback(gameId, param1);
+				break;
+			}
 			case "getGameData": {
 				responseString = getGameData(gameId);
 				break;
@@ -337,6 +341,17 @@ public class ChessRestService extends HttpServlet {
 	private String doAIMove(String gameId) {
 		return gson.toJson(chessImpl.doAIMove(gameId));
 	}
+
+	private String rollback(String gameId, String numberOfHalfMoves) {
+		try { 
+			int numHalfMoves = Integer.parseInt(numberOfHalfMoves);
+			return gson.toJson(chessImpl.rollback(gameId, numHalfMoves));
+		}
+		catch (NumberFormatException e) {
+			return gson.toJson(GenericResult.genericInvalidParameterResult);
+		} 
+	}
+
 
 	private String hasChanges(HttpSession session, String versionStr) {
 		if (session == null) {

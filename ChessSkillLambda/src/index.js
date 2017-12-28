@@ -230,6 +230,8 @@ ChessSkill.prototype.intentHandlers = {
 	},
     
 	"AIStartsIntent" : doAIStarts,
+	
+	"RollbackIntent" : doRollbackIntent,
 
 	"ActivateShowDisplayIntent" : doActivateShowDisplay,
 	"DeactivateShowDisplayIntent" : doDeactivateShowDisplay,
@@ -332,6 +334,14 @@ function doPlayerMove(intent, session, response) {
 		execDoMove(intent, session, response);
 	});
 }
+
+
+function doRollbackIntent(intent, session, response) {
+	initUserAndConnect(session, response, function successFunc() {
+		execDoRollback(session, response);
+	});
+}
+
 
 function doAIStarts(intent, session, response) {
 	initUserAndConnect(session, response, function successFunc() {
@@ -592,6 +602,17 @@ function execDoAIMove(session, response) {
 				execDisplayField(session, response);
 			});
 }
+
+function execDoRollback(intent, session, response) {
+	send(session, response, getSessionGameId(session), "rollback",
+			"2", "", function successFunc(result) {
+				msg = speech.createMsg("INTERN", "LAST_MOVE_ROLLEDBACK");
+				execDisplayField(session, response, msg);
+			});
+}
+
+
+
 
 function execIntro(session, response) {
 	setUserHadIntro(session, true);

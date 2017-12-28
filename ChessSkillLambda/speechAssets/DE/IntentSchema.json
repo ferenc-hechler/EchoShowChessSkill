@@ -32,6 +32,11 @@
     },
 
     {
+      "intent": "RollbackIntent"
+    },
+
+
+    {
       "intent": "ActivateShowDisplayIntent"
     },
 

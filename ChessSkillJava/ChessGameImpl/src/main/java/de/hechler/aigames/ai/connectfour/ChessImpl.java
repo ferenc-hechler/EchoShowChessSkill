@@ -152,6 +152,16 @@ public class ChessImpl implements GameAPI<ChessFieldView, ChessMove> {
 		return result;
 	}
 
+	public GenericResult rollback(String gameId, int numHalfMoves) {
+		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
+		if (gameState == null) {
+			return new DoMoveResult<ChessMove>(ResultCodeEnum.E_UNKNOWN_GAMEID);
+		}
+		GenericResult result = gameState.getGame().rollback(numHalfMoves);
+		gameState.update();
+		return result;
+	}
+
 	@Override
 	public GenericResult switchPlayers(String gameId) {
 		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);

@@ -27,5 +27,9 @@ AnimalConnectIntent Ich sehe ein {animal}
 AnimalConnectIntent Ich sehe eine {animal}
 AnimalConnectIntent Ich sehe einen {animal}
 
+RollbackIntent Den letzten Zug hast Du falsch verstanden
+RollbackIntent Nimm den letzten Zug zurück
+RollbackIntent Der letzte Zug war falsch
+
 AMAZON.StopIntent Stop
 AMAZON.StopIntent abbrechen
