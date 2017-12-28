@@ -737,7 +737,7 @@ function createFieldDirectives(session, gameData, msg, lastAIMove, gameStatusInf
 	}
 	var optShow = getUserOptShow(session);
 	var hintMsg = createHintMsg(gameData.winner, lastAIMove);
-	var fieldText = createFieldText(gameData.fieldView.fen, optShow);
+	var fieldText = createFieldText(gameData.fieldView.fen, gameData.fieldView.lastMove, optShow);
 	var directives = [ {
 		"type" : "Display.RenderTemplate",
 		"template" : {
@@ -825,8 +825,9 @@ function createHintMsg(winner, lastAIMove) {
 	return msg;
 }
 
-function createFieldText(fieldStr, optShow) {
+function createFieldText(fieldStr, lastMove, optShow) {
 	var result = "";
+	var numericMove = move2numeric(lastMove);
 	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
 	result = result + addImageWH("spacer_h", spacerHWidth, spacerHHeight);
 	result = result + addImageWH("header", headerWidth, headerHeight);
@@ -838,13 +839,13 @@ function createFieldText(fieldStr, optShow) {
 		result = result + "<br/>";                   // this is the normal linebreak, but puts some extra pixels between the lines. 
 	}
 	
-	for (var y = 0; y < 8; y++) {
-		
+	for (var row = 7; row >= 0; row--) {
+		var y = 7-row;
 		result = result + addImage("space_5", 5);
-		result = result + addImageWH("left_"+(8-y), leftWidth, imgBaseSize);
-		for (var x = 0; x < 8; x++) {
-			var code = fieldStr.charAt(y*9+x);
-			var img = code2Img(code, x, y);
+		result = result + addImageWH("left_"+(row+1), leftWidth, imgBaseSize);
+		for (var col = 0; col < 8; col++) {
+			var code = fieldStr.charAt(y*9+col);
+			var img = code2Img(code, col, row, numericMove);
 			result = result + addImage(img, 1);
 		}
 		if (optShow) {
@@ -862,7 +863,23 @@ function createFieldText(fieldStr, optShow) {
 	return result;
 }
 
-function code2Img(code, x, y) {
+function move2numeric(move) {
+	if (move === undefined) {
+		return undefined;
+	}
+	colFrom = move.charCodeAt(0) - "a".charCodeAt(0); 
+	rowFrom = move.charCodeAt(1) - "1".charCodeAt(0);
+	colTo = move.charCodeAt(2) - "a".charCodeAt(0); 
+	rowTo = move.charCodeAt(3) - "1".charCodeAt(0);
+	return {
+		"colFrom": colFrom,
+		"rowFrom": rowFrom,
+		"colTo": colTo,
+		"rowTo": rowTo
+	}
+}
+
+function code2Img(code, col, row, numericMove) {
 	var img;
 	if (code == '1') {
 		img = "00";
@@ -876,12 +893,20 @@ function code2Img(code, x, y) {
 			img = "w"+lowerCase;  
 		}
 	}
-	var odd = ((x+y) % 2 === 1);
+	var odd = ((col+row) % 2 === 1);
 	if (odd) {
 		img = img + "l";
 	}
 	else {
 		img = img + "d";
+	}
+	if (numericMove !== undefined) {
+		if ((col === numericMove.colFrom) && (row === numericMove.rowFrom)) {
+			img = img + "m"
+		}
+		else if ((col === numericMove.colTo) && (row === numericMove.rowTo)) {
+			img = img + "m"
+		}
 	}
 	return img;
 }
