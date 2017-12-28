@@ -104,8 +104,10 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		List<ChessMove> oldChessMoves = chessMoves;
 		int movesToReplay = chessMoves.size() -  numHalfMovesToRollback;
 		initGame();
-		for (ChessMove move:oldChessMoves) {
+		for (int i=0; i<movesToReplay; i++) {
+			ChessMove move = oldChessMoves.get(i);
 			field.setFieldArray(move, currentPlayer);
+			chessMoves.add(move);
 			changePlayer();
 		}
 		return GenericResult.genericOkResult;

@@ -603,7 +603,7 @@ function execDoAIMove(session, response) {
 			});
 }
 
-function execDoRollback(intent, session, response) {
+function execDoRollback(session, response) {
 	send(session, response, getSessionGameId(session), "rollback",
 			"2", "", function successFunc(result) {
 				msg = speech.createMsg("INTERN", "LAST_MOVE_ROLLEDBACK");
