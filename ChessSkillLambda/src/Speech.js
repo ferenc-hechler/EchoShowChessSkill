@@ -159,31 +159,34 @@ function set_locale(locale) {
 						speechOut: ""
 					},
 					
-					INTRO: {
+					
+					INTRO: {   		// Allererste Begrüßung, danach nie wieder.   
 						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
 						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
 									" * 'Hilfe', <br/>" +
 									" * 'Starte ein neues Spiel', <br/>" +
-									" * 'Ich werfe in Reihe ...', <br/>" +
+									" * 'Ich ziehe von ... nach ...', <br/>" +
 									" * 'Du darfst anfangen', <br/>" +
+									" * 'Nimm meinen letzten Zug zurück', <br/>" +
 									" * 'Setze die Spielstärke auf ...' oder <br/>" +
 									" * 'Stop'. <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						speechOut: "Willkommen zum Spiel Carballo-Schach: " +
-									"Das Spiel kann mit folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich werfe in Reihe', 'Du darfst anfangen', 'Setze die Spielstärke auf' oder Stop. " + 
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', Ich ziehe von - nach, 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf' oder Stop. " + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						display:   	"Willkommen zum Spiel 'Carballo-Schach': " +
-									"Das Spiel kann mit folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich werfe in Reihe ...', 'Du darfst anfangen', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 					
-					WELCOME: {
+					WELCOME: {		// Begrüßung, wenn kein Spiel fortgesetzt wird
 						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
 						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
 									" * 'Hilfe', <br/>" +
 									" * 'Starte ein neues Spiel', <br/>" +
-									" * 'Ich werfe in Reihe ...', <br/>" +
+									" * 'Ich ziehe von ... nach ...', <br/>" +
 									" * 'Du darfst anfangen', <br/>" +
+									" * 'Nimm meinen letzten Zug zurück', <br/>" +
 									" * 'Setze die Spielstärke auf ...' oder <br/>" +
 									" * 'Stop'. <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
@@ -193,54 +196,64 @@ function set_locale(locale) {
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 					
-					HELP_REGELN: {
+					HELP_REGELN: { // Ausführliche Hilfe nach INTRO oder WELCOME
 						title:     "Carballo-Schach Hilfe",
-						richText:  "Zuerst die Regeln: <br/>" +
-								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
-								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
-								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. <br/><br/>" +
-								   
-								   "Jetzt zur Sprachsteuerung: <br/>" +
+						richText:  "Zuerst zur Sprachsteuerung: <br/>" +
 								   "Wenn ein neues Spiel startet, kannst Du entscheiden, ob Du anfangen möchtest, oder ob Alexa beginnen soll. " +
-								   "Sage dazu entweder 'Ich werfe in Reihe ...' oder 'Du darfst anfangen'. " +
+								   "Sage dazu entweder 'Ich ziehe E2 nach E4' oder 'Du darfst anfangen'. " +
 								   "Nach Deinem Zug macht Alexa ihren Zug und wartet sofort auf eine Antwort von Dir. " +
-								   "Wenn Du sofort antwortest, dann kannst Du einfach 'Reihe ...' sagen. " +
+								   "Wenn Du sofort antwortest, dann kannst Du einfach 'D2 nach D4' sagen. " +
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
-								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
-								   "Also  zum Beispiel 'Alexa, Reihe ...'. " +
+								   "Dann musst Du vor Deinen Zug noch das Aktivierungswort setzen, also  zum Beispiel 'Alexa, D2 nach D4'. " +
 								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. <br/><br/>" +
+
+								   "Zu den Zügen: <br/>" +
+								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben 'B', 'D' hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
+								   "Also zum Beispiel 'Berta 1 nach Dora 2'. <br/><br/>" +
+
+								   "Jetzt zur Anzeige: <br/>" +
+								   "Es gibt zwei Modi für die Anzeige: Entweder optimiert für das Echo Show oder die Standardanzeige. " +
+								   "Wenn Du Carballo-Schach auf einem Echo Show spielst, dann solltest Du auf die Anzeige für Echo Show umschalten. " +
+								   "Dies kannst Du mit dem Kommando 'Optimiere die Anzeige für Echo Show' mache. " +
+								   "Um wieder zurückzuschalten sage 'Verwende die Standardanzeige'. <br/><br/>" +
 								   
 								   "Und nun zu den weiteren Kommandos: <br/>" +
 								   "Mit dem Kommando 'Hilfe' kannst Du Dir jederzeit den Hilfetext anzeigen lassen. <br/>" +
 								   "Mit dem Kommando 'Starte ein neues Spiel' kannst Du das aktuelle Spiel abbrechen und ein neues Spiel starten. <br/>" +
+								   "Mit dem Kommando 'Nimm meinen letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. <br/>" +
 								   "Mit dem Kommando 'Setze die Spielstärke auf ...' kannst Du die Spielstärke von Alexa ändern. 1 ist am leichtesten und 7 am schwersten. <br/><br/>" +
 								   
 								   "Ein Hinweis noch zum Schluss: <br/>" +
 								   "Jede Form von Verbesserungsvorschlägen, Lob oder Kritik ist willkommen, am einfachsten per Mail an ferenc.hechler@gmail.com. <br/><br/>" +
 								   
 								   "Soll ich den Text nochmal wiederholen?",
-						speechOut: "Zuerst die Regeln: " +
-								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
-								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
-								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
-								   
-								   "Jetzt zur Sprachsteuerung: " +
+						speechOut: "Zuerst zur Sprachsteuerung: " +
 								   "Wenn ein neues Spiel startet, kannst Du entscheiden, ob Du anfangen möchtest, oder ob Alexa beginnen soll. " +
-								   "Sage dazu entweder: 'Ich werfe in Reihe punkt punkt punkt' oder: 'Du darfst anfangen'. " +
+								   "Sage dazu entweder 'Ich ziehe E2 nach E4' oder 'Du darfst anfangen'. " +
 								   "Nach Deinem Zug macht Alexa ihren Zug und wartet sofort auf eine Antwort von Dir. " +
-								   "Wenn Du sofort antwortest, dann kannst Du einfach 'Reihe punkt punkt punkt' sagen. " +
+								   "Wenn Du sofort antwortest, dann kannst Du einfach 'D2 nach D4' sagen. " +
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
-								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
-								   "Also zum Beispiel: 'Alexa, Reihe punkt punkt punkt'. " +
+								   "Dann musst Du vor Deinen Zug noch das Aktivierungswort setzen, also  zum Beispiel 'Alexa, D2 nach D4'. " +
 								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit: 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
+								   "Zu den Zügen: " +
+								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben 'B', 'D' hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
+								   "Also zum Beispiel 'Berta 1 nach Dora 2'. " +
+
+								   "Jetzt zur Anzeige: <br/>" +
+								   "Es gibt zwei Modi für die Anzeige: Entweder optimiert für das Echo Show oder die Standardanzeige. " +
+								   "Wenn Du Carballo-Schach auf einem Echo Show spielst, dann solltest Du auf die Anzeige für Echo Show umschalten. " +
+								   "Dies kannst Du mit dem Kommando 'Optimiere die Anzeige für Echo Show' mache. " +
+								   "Um wieder zurückzuschalten sage 'Verwende die Standardanzeige'. " +
+								   
 								   "Und nun zu den weiteren Kommandos: " +
 								   "Mit dem Kommando 'Hilfe' kannst Du Dir jederzeit den Hilfe Text anzeigen lassen. " +
 								   "Mit dem Kommando 'Starte ein neues Spiel' kannst Du das aktuelle Spiel abbrechen und ein neues Spiel starten. " +
+								   "Mit dem Kommando 'Nimm meinen letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. " +
 								   "Mit dem Kommando 'Setze die Spielstärke auf punkt punkt punkt' kannst Du die Spielstärke von Alexa ändern. 1 ist dabei am leichtesten und 7 am schwersten. " +
 								   
 								   "Ein Hinweis noch zum Schluss: " +
@@ -248,26 +261,31 @@ function set_locale(locale) {
 								   
 								   "Soll ich den Text nochmal wiederholen?",
 								   
-						display:   "Zuerst die Regeln: " +
-								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
-								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
-								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
-								   
-								   "Jetzt zur Sprachsteuerung: " +
+						display:   "Zuerst zur Sprachsteuerung: " +
 								   "Wenn ein neues Spiel startet, kannst Du entscheiden, ob Du anfangen möchtest, oder ob Alexa beginnen soll. " +
-								   "Sage dazu entweder 'Ich werfe in Reihe ...' oder 'Du darfst anfangen'. " +
+								   "Sage dazu entweder 'Ich ziehe E2 nach E4' oder 'Du darfst anfangen'. " +
 								   "Nach Deinem Zug macht Alexa ihren Zug und wartet sofort auf eine Antwort von Dir. " +
-								   "Wenn Du sofort antwortest, dann kannst Du einfach 'Reihe ...' sagen. " +
+								   "Wenn Du sofort antwortest, dann kannst Du einfach 'D2 nach D4' sagen. " +
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
-								   "Dann musst Du vor Deine Antwort noch das Aktivierungswort setzen, meist 'Alexa'. " +
-								   "Also  zum Beispiel 'Alexa, Reihe ...'. " +
+								   "Dann musst Du vor Deinen Zug noch das Aktivierungswort setzen, also  zum Beispiel 'Alexa, D2 nach D4'. " +
 								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
-								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
+								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. <br/><br/>" +
+		
+								   "Zu den Zügen: " +
+								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben 'B', 'D' hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
+								   "Also zum Beispiel 'Berta 1 nach Dora 2'. " +
+		
+								   "Jetzt zur Anzeige: " +
+								   "Es gibt zwei Modi für die Anzeige: Entweder optimiert für das Echo Show oder die Standardanzeige. " +
+								   "Wenn Du Carballo-Schach auf einem Echo Show spielst, dann solltest Du auf die Anzeige für Echo Show umschalten. " +
+								   "Dies kannst Du mit dem Kommando 'Optimiere die Anzeige für Echo Show' mache. " +
+								   "Um wieder zurückzuschalten sage 'Verwende die Standardanzeige'. " +
 								   
 								   "Und nun zu den weiteren Kommandos: " +
 								   "Mit dem Kommando 'Hilfe' kannst Du Dir jederzeit den Hilfetext anzeigen lassen. " +
 								   "Mit dem Kommando 'Starte ein neues Spiel' kannst Du das aktuelle Spiel abbrechen und ein neues Spiel starten. " +
+								   "Mit dem Kommando 'Nimm meinen letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. " +
 								   "Mit dem Kommando 'Setze die Spielstärke auf ...' kannst Du die Spielstärke von Alexa ändern. 1 ist am leichtesten und 7 am schwersten. " +
 								   
 								   "Ein Hinweis noch zum Schluss: " +
@@ -276,7 +294,7 @@ function set_locale(locale) {
 								   "Soll ich den Text nochmal wiederholen?"
 					},
 					HELP_REGELN_NOGUI: {
-						speechOut: "Zuerst die Regeln: " +
+						speechOut: "ZZZ Zuerst die Regeln: " +
 								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
@@ -305,7 +323,7 @@ function set_locale(locale) {
 								   
 								   "Soll ich den Text nochmal wiederholen?",
 								   
-						display:   "Zuerst die Regeln: " +
+						display:   "ZZZ Zuerst die Regeln: " +
 								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
@@ -391,7 +409,7 @@ function set_locale(locale) {
 						display: 	"Möchtest Du eine Einleitung zur Verwendung dieses Skills bekommen?"
 					},
 					HELP_REGELN: {
-						speechOut: "Zuerst die Regeln: " +
+						speechOut: "XXX Zuerst die Regeln: " +
 								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +
@@ -418,7 +436,7 @@ function set_locale(locale) {
 								   
 								   "Soll ich den Text nochmal wiederholen?",
 								   
-						display:   "Zuerst die Regeln: " +
+						display:   "XXX Zuerst die Regeln: " +
 								   "Beim Spiel Carballo-Schach spielen zwei Spieler gegeneinander, indem sie abwechselnd Steine in eine der 7 Reihen werfen. " +
 								   "Ziel des Spieles ist es eine Reihe (horizontal, vertikal oder diagonal) von vier Steinen zu bekommen. " +
 								   "Sind alle Reihen belegt, ohne dass eine vierer Reihe gebildet wurde, dann endet das Spiel unentschieden. " +

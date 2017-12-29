@@ -604,6 +604,7 @@ function execDoAIMove(session, response) {
 	send(session, response, getSessionGameId(session), "doAIMove", "", "",
 			function successFunc(result) {
 				setSessionLastAIMove(session, result.move.move);
+				setSessionLastAIMoveCheck(session, result.move.check);
 				execDisplayField(session, response);
 			});
 }
@@ -736,12 +737,14 @@ function createTextDirective(session, msg, token) {
 
 function respondField(session, response, gameData, msg) {
 	var lastAIMove = getSessionLastAIMove(session);
+	var lastAIMoveCheck = getSessionLastAIMoveCheck(session);
 	removeSessionLastAIMove(session);
+	removeSessionLastAIMoveCheck(session);
 	if (!msg) {
-		msg = createStatusMsg(gameData.winner, lastAIMove);
+		msg = createStatusMsg(gameData.winner, lastAIMove, lastAIMoveCheck);
 	}
 	var gameStatusInfo = createGameStatusInfo(gameData);
-	var directives = createFieldDirectives(session, gameData, msg, lastAIMove, gameStatusInfo);
+	var directives = createFieldDirectives(session, gameData, msg, lastAIMove, lastAIMoveCheck, gameStatusInfo);
 	if (gameData.winner != 0) {
 		closeGame(session, response, function closedCallback() {
 			outputMsgWithDirectives(session, response, msg, directives);
@@ -756,7 +759,7 @@ function respondField(session, response, gameData, msg) {
 	}
 }
 
-function createFieldDirectives(session, gameData, msg, lastAIMove, gameStatusInfo) {
+function createFieldDirectives(session, gameData, msg, lastAIMove, lastAIMoveCheck, gameStatusInfo) {
 	if (!getRequestHasDisplay(session)) {
 		logObject("createFieldDirectives-session", session)
 		return undefined;
@@ -807,10 +810,10 @@ function createGameStatusInfo(gameData) {
 	return "[Zug:"+(gameData.movesCount+1)+"/AI:"+gameData.aiLevel+"] - ";
 }
 
-function createStatusMsg(winner, lastAIMove) {
+function createStatusMsg(winner, lastAIMove, lastAIMoveCheck) {
 	var msg;
 	var status = !lastAIMove ? "STATUS" : "STATUS_AIMOVE";
-	var lastMoveText = move2text(lastAIMove);
+	var lastMoveText = move2text(lastAIMove, lastAIMoveCheck);
 	if ((winner === 1) || (winner === 2)) {
 		if (!lastAIMove) {
 			msg = speech.createMsg(status, "PLAYER_WINS", lastMoveText);
@@ -826,11 +829,15 @@ function createStatusMsg(winner, lastAIMove) {
 	return msg;
 }
 
-function move2text(lastMove) {
+function move2text(lastMove, lastMoveCheck) {
 	if (!lastMove) {
 		return undefined;
 	}
-	return lastMove.charAt(0) + " " + lastMove.charAt(1) + " nach " + lastMove.charAt(2) + " " + lastMove.charAt(3); 
+	var result = lastMove.charAt(0) + " " + lastMove.charAt(1) + " nach " + lastMove.charAt(2) + " " + lastMove.charAt(3);
+	if (lastMoveCheck) {
+		result = result + " (SCHACH)"
+	}
+	return result;
 }
 	
 
@@ -1019,6 +1026,9 @@ function getSessionGameMovesCount(session, defaultValue) {
 function getSessionLastAIMove(session, defaultValue) {
 	return getFromSession(session, "lastAIMove", defaultValue);
 }
+function getSessionLastAIMoveCheck(session, defaultValue) {
+	return getFromSession(session, "lastAIMoveCheck", defaultValue);
+}
 function getSessionYesNoQuery(session, defaultValue) {
 	return getFromSession(session, "yesNoQuery", defaultValue);
 }
@@ -1038,6 +1048,9 @@ function setSessionGameMovesCount(session, gameMovesCount) {
 function setSessionLastAIMove(session, lastAIMove) {
 	setInSession(session, "lastAIMove", lastAIMove);
 }
+function setSessionLastAIMoveCheck(session, lastAIMoveCheck) {
+	setInSession(session, "lastAIMoveCheck", lastAIMoveCheck);
+}
 function setSessionYesNoQuery(session, yesNoQuery) {
 	setInSession(session, "yesNoQuery", yesNoQuery);
 }
@@ -1050,6 +1063,9 @@ function setRequestHasDisplay(session, hasDisplay) {
 
 function removeSessionLastAIMove(session) {
 	removeFromSession(session, "lastAIMove");
+}
+function removeSessionLastAIMoveCheck(session) {
+	removeFromSession(session, "lastAIMoveCheck");
 }
 function removeSessionYesNoQuery(session) {
 	removeFromSession(session, "yesNoQuery");
