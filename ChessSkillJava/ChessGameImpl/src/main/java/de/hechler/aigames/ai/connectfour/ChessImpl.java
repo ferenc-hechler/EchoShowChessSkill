@@ -176,6 +176,15 @@ public class ChessImpl implements GameAPI<ChessFieldView, ChessMove> {
 		return new GenericResult(ResultCodeEnum.S_OK);
 	}
 
+	private static String[] initialMoves = {
+			"e2e4",
+			"e7e5",
+			"f1c4",
+			"a7a6",
+			"d1f3",
+			"a6a5"
+	};
+	
 	@Override
 	public GenericResult restart(String gameId) {
 		GameState<ChessGame> gameState = gameRepository.getGameStateByGameId(gameId);
@@ -183,6 +192,9 @@ public class ChessImpl implements GameAPI<ChessFieldView, ChessMove> {
 			return new GenericResult(ResultCodeEnum.E_UNKNOWN_GAMEID);
 		}
 		gameState.getGame().restartGame();
+		for (String move:initialMoves) {
+			doMove(gameId, new ChessMove(move));
+		}
 		gameState.update();
 		return new GenericResult(ResultCodeEnum.S_OK);
 	}

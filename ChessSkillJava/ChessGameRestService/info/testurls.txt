@@ -6,10 +6,14 @@ http://localhost:8080/ChessGameRestService/rest/chess?cmd=enableDebugLogging&par
 http://localhost:8080/ChessGameRestService/rest/chess?cmd=connect&param1=feri
 
 http://localhost:8080/ChessGameRestService/rest/chess?cmd=doMove&param1=e-2:e-4&gameId=C4
-http://localhost:8080/ChessGameRestService/rest/chess?cmd=doMove&param1=d-7:d-5&gameId=C4
-http://localhost:8080/ChessGameRestService/rest/chess?cmd=doMove&param1=e.4-d.5&gameId=C4
+http://localhost:8080/ChessGameRestService/rest/chess?cmd=doMove&param1=e-7:e-5&gameId=C4
+http://localhost:8080/ChessGameRestService/rest/chess?cmd=doMove&param1=f-1:c-4&gameId=C4
+http://localhost:8080/ChessGameRestService/rest/chess?cmd=doMove&param1=a-7:a-6&gameId=C4
+http://localhost:8080/ChessGameRestService/rest/chess?cmd=doMove&param1=d-1:f-3&gameId=C4
 http://localhost:8080/ChessGameRestService/rest/chess?cmd=doAIMove&gameId=O8
 http://localhost:8080/ChessGameRestService/rest/chess?cmd=getGameData&gameId=C4
+
+http://localhost:8080/ChessGameRestService/rest/chess?cmd=restartGame&gameId=L8
 
 ###
 # Verbinden

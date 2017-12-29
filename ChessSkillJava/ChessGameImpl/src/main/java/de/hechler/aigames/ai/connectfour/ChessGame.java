@@ -91,7 +91,7 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		}
 		field.setFieldArray(move, currentPlayer);
 		chessMoves.add(move);
-		winner = field.checkForEndGame();
+		winner = checkForEndGame();
 		if (winner == -1) {
 			return new DoMoveResult<ChessMove>(ResultCodeEnum.S_DRAW);
 		} else  if (winner != 0) {
@@ -139,7 +139,28 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		return result;
 	}
 
-
+	private int checkForEndGame() {
+		Config config = new Config();
+		SearchEngine engine = new SearchEngine(config);
+		// new game
+		engine.getBoard().startPosition();
+		engine.clear();
+		
+		// replay
+		for (ChessMove chessMove:chessMoves) {
+			int move = Move.getFromString(engine.getBoard(), chessMove.getMove(), true);
+			engine.getBoard().doMove(move);
+		}
+		int result = 0;
+		if (engine.getBoard().isDraw()) {
+			result = -1;
+		}
+		else if (engine.getBoard().isEndGame() != 0) {
+			result = 1;
+		}
+		engine.destroy();
+		return result;
+	}
 
 	@Override
 	public DoMoveResult<ChessMove> doAIMove() {
@@ -148,7 +169,7 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		}
 		ChessMove aiMove = calcAIMove();
 		field.setFieldArray(aiMove, currentPlayer);
-		winner = field.checkForEndGame();
+		winner = checkForEndGame();
 		if (winner == -1) {
 			return new DoMoveResult<ChessMove>(ResultCodeEnum.S_AI_DRAW, aiMove);
 		} else  if (winner != 0) {
@@ -197,8 +218,9 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		engine.stop();
 		
 		String bestMove = Move.toString(engine.getBestMove());
+		boolean check = engine.getBoard().getCheck();
 		engine.destroy();
-		ChessMove result = new ChessMove(bestMove);
+		ChessMove result = new ChessMove(bestMove, check);
 		chessMoves.add(result);
 		return result;
 	} 

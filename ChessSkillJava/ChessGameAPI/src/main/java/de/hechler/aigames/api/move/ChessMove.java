@@ -23,8 +23,13 @@ import de.hechler.aigames.api.Move;
 
 public class ChessMove extends Move {
 	public String move;
+	public boolean check;
 	public ChessMove(String move) {
+		this(move, false);
+	}
+	public ChessMove(String move, boolean check) {
 		this.move = move;
+		this.check = check;
 	}
 
 	public boolean isValid() {
@@ -58,9 +63,13 @@ public class ChessMove extends Move {
 	public int getToRow() {
 		return move.charAt(3) - '1';
 	}
+
+	public boolean isCheck() {
+		return check;
+	}
 	
 	@Override
 	public String toString() {
-		return "move="+move;
+		return "move="+move + (check?"#":"");
 	}
 }
