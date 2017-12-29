@@ -585,14 +585,19 @@ function execDoNewGame(intent, session, response) {
 }
 
 function execDoMove(intent, session, response) {
-	send(session, response, getSessionGameId(session), "doMove",
-			getMove(intent), "", function successFunc(result) {
+	send(session, response, getSessionGameId(session), "doMove", getMove(intent), "", 
+			function successFunc(result) {
 				if (result.code === "S_OK") {
 					execDoAIMove(session, response);
 				} else {
 					execDisplayField(session, response);
 				}
-			});
+			},
+			function errorFunc(result, code) {
+				var moveText = getMoveText(intent);
+				speech.respond("SEND_doMove", code, response, moveText);
+			}
+	);
 }
 
 function execDoAIMove(session, response) {
@@ -950,6 +955,14 @@ function getMove(intent) {
 	var to_col = getFromIntent(intent, "to_col", "?");
 	var to_row = getFromIntent(intent, "to_row", 0);
 	return from_col + "-" + from_row + ":" + to_col + "-" + to_row;
+}
+
+function getMoveText(intent) {
+	var from_col = getFromIntent(intent, "from_col", "?");
+	var from_row = getFromIntent(intent, "from_row", "?");
+	var to_col = getFromIntent(intent, "to_col", "?");
+	var to_row = getFromIntent(intent, "to_row", "?");
+	return from_col + " " + from_row + " nach " + to_col + " " + to_row;
 }
 
 function getAILevel(intent) {
@@ -1321,12 +1334,14 @@ function setDBUserInSession(session, dbUser) {
 /* REST CALL */
 /* ========= */
 
-function send(session, response, gameId, cmd, param1, param2, successCallback) {
+function send(session, response, gameId, cmd, param1, param2, successCallback, errorCallback) {
 	sendCommand(session, gameId, cmd, param1, param2, function callbackFunc(
 			result) {
 		var code = ((!result) || (!result.code)) ? "?" : result.code;
 		if (code.startsWith("S_")) {
 			successCallback(result);
+		} else if (errorCallback !== undefined) {
+			errorCallback(result, code);
 		} else {
 			speech.respond("SEND_" + cmd, code, response);
 		}

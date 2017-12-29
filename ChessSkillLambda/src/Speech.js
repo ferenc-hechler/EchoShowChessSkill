@@ -42,7 +42,7 @@ function set_locale(locale) {
 				},
 				
 				SEND_connectImage: {
-					E_IMAGE_NOT_FOUND: { 
+					"E_IMAGE_NOT_FOUND": { 
 						speechOut: "Das Tier ist nicht zu sehen, versuche es noch einmal oder mache einen Zug.",
 						display :  "Das Tier ist nicht zu sehen, versuche es noch einmal oder mache einen Zug."
 					},
@@ -54,16 +54,16 @@ function set_locale(locale) {
 				
 				SEND_doMove: {
 					"E_INVALID_PARAMETER": { 
-						speechOut: "Bitte wiederhole den Zug, ich habe das nicht richtig verstanden.",
-						display :  "Bitte wiederhole den Zug, ich habe das nicht richtig verstanden."
+						speechOut: "Bitte wiederhole den Zug, ich habe %1 verstanden.",
+						display :  "Bitte wiederhole den Zug, ich habe %1 verstanden."
 					},
 					"E_INVALID_RANGE": { 
-						speechOut: "Bitte wiederhole den Zug, das war kein gültiger Zug.",
-						display :  "Bitte wiederhole den Zug, das war kein gültiger Zug."
+						speechOut: "Der Zug %1 ist nicht gültig, welchen Zug möchteste du machen?",
+						display :  "Der Zug %1 ist nicht gültig, welchen Zug möchteste du machen?"
 					},
 					"E_INVALID_MOVE": { 
-						speechOut: "Der Zug ist nicht erlaubt, welchen Zug möchteste du machen?",
-						display :  "Der Zug ist nicht erlaubt, welchen Zug möchteste du machen?"
+						speechOut: "Der Zug %1 ist nicht erlaubt, welchen Zug möchteste du machen?",
+						display :  "Der Zug %1 ist nicht erlaubt, welchen Zug möchteste du machen?"
 					}
 					
 				},
