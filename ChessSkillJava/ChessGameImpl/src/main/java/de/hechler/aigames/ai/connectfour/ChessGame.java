@@ -184,7 +184,12 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 //		BestMoveReceiver bestMoveRcv = new BestMoveReceiver();
 		Config config = new Config();
 		config.setBook(new FileBook("/book_small.bin"));
-//		config.setElo(DEFAULT_ELO);
+		int ai = getAILevel();
+		long thinkTime = ai2thinkTime(ai);
+		int elo = ai2elo(ai);
+		if (elo != 0) {
+			config.setElo(elo);
+		}
 		SearchEngineThreaded engine = new SearchEngineThreaded(config);
 //		engine.setObserver(bestMoveRcv);
 		SearchParameters searchParameters = new SearchParameters();
@@ -205,8 +210,7 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		
 		// wait for answer
 		try {
-			long startTime = System.currentTimeMillis();
-			long timeout = startTime + 50+(getAILevel()-1)*1000;
+			long timeout = System.currentTimeMillis() + thinkTime;
 			while (engine.isSearching() && timeout > System.currentTimeMillis()) {
 				Thread.sleep(100);
 			}
@@ -218,6 +222,7 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		engine.stop();
 		
 		String bestMove = Move.toString(engine.getBestMove());
+		engine.getBoard().doMove(engine.getBestMove());
 		boolean check = engine.getBoard().getCheck();
 		engine.destroy();
 		ChessMove result = new ChessMove(bestMove, check);
@@ -226,6 +231,25 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 	} 
 	
 	
+	private int ai2elo(int ai) {
+		if (ai == 1) {
+			return 500;
+		}
+		if (ai == 2) {
+			return 1000;
+		}
+		if (ai == 3) {
+			return 1500;
+		}
+		return 0;
+	}
+
+
+	private long ai2thinkTime(int ai) {
+		return 50+(ai-1)*1000;
+	}
+
+
 	@Override
 	public ChessFieldView getField() {
 		return field.createExportField();

@@ -492,12 +492,12 @@ function set_locale(locale) {
 						display :  "Herzlichen Glückwunsch, Du hast gewonnen."
 					},
 					DRAW: { 
-						speechOut: "Ich werfe in Reihe %1, das Spiel endet unentschieden.",
-						display :  "Ich werfe in Reihe %1, das Spiel endet unentschieden."
+						speechOut: "Ich ziehe %1, das Spiel endet unentschieden.",
+						display :  "Ich ziehe %1, das Spiel endet unentschieden."
 					},
 					AI_PLAYER_WINS: { 
-						speechOut: "Ich werfe in Reihe %1 und habe gewonnen.",
-						display :  "Ich werfe in Reihe %1 und habe gewonnen."
+						speechOut: "Ich ziehe %1 und habe gewonnen.",
+						display :  "Ich ziehe %1 und habe gewonnen."
 					},
 					MAKE_YOUR_MOVE: { 
 						speechOut: "Ich ziehe %1, welchen Zug machst Du?",
