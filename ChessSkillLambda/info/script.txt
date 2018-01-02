@@ -1,0 +1,44 @@
+[INTRO.1]
+Willkommen zum Spiel 'Carballo-Schach'.
+Da Du das Spiel das erste mal startest, werde ich Dich ein paar Fragen stellen, 
+um das Spiel an Deine Wünsche anzupassen.
+Du kannst Diese Einstellungen später jederzeit wieder ändern, 
+indem Du das Kommando 'Ändere die Einstellungen' aufrufest.
+Aber nun zu den Fragen:
+
+Die Anzeige: 
+Es gibt zwei Modi für die Anzeige. 
+Die Standardanzeige und eine Anzeige, die für das Geräte Echo Show optimiert wurde.
+Spielst Du Carballo-Schach auf einem Echo Show?
+Bitte antworte mit 'Ja' oder 'Nein'.
+
+
+
+USER: JA/NEIN -> ["AMAZON.YesIntent", "AMAZON.NoIntent"]
+
+
+
+[INTRO.2]
+Danke für die Antwort, die Anzeige wurde auf ... gesetzt.
+
+Zur Spielstärke:
+Die Spielstärke von Alexa hängt von der Bedenkzeit ab.
+Die Bedenkzeit kann von 1 bis 7 Sekunden eingestellt werden.
+Gegen welche Spielstärke möchtest Du spielen?
+Sage eine Zahl zwischen 1 und 7.
+
+
+
+USER: 1-7 -> ["NumberAnswerIntent"]
+
+
+
+[INTRO.3]
+Danke für Deine Antwort, die Spielstärke wurde auf ... gesetzt.
+
+Noch ein Hinweis zu den Zügen:
+Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben 'B', 'D' hat, 
+kann alternativ auch das Buchstabieralphabet verwendet werden. 
+Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2' statt 'B1 nach D2'.
+
+ 

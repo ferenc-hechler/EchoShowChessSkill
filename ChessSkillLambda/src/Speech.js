@@ -92,7 +92,7 @@ function set_locale(locale) {
 									" * 'Stop' verwenden. <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						speechOut: "Hier die Kurzhilfe: " +
-						   			"Du kannst eines der Kommandos 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von - nach -', 'Du darfst anfangen', 'Setze die Spielstärke auf' oder Stop verwenden. " + 
+						   			"Du kannst eines der Kommandos 'Hilfe', 'Starte ein neues Spiel', Ich ziehe von - nach, 'Du darfst anfangen', 'Setze die Spielstärke auf' oder Stop verwenden. " + 
 						   			"Möchtest Du eine ausführliche Anleitung?",
 						display:   	"Hier die Kurzhilfe: " +
 									"Du kannst eines der Kommandos 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Setze die Spielstärke auf ...' oder 'Stop' verwenden. " + 
@@ -178,6 +178,87 @@ function set_locale(locale) {
 									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
+
+					"INTRO.1": {
+						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
+						richText:   "Fragen zum ersten Start des Skills. <br/><br/>" +
+									"Anzeige: <br/>" +
+									"Es gibt zwei Modi: Standard oder Optimiert für Echo Show. <br/><br/>" +
+									"Spielst Du Carballo-Schach auf einem Echo Show? ",
+						speechOut:  "Willkommen zum Spiel Carballo-Schach: " +
+									"Da Du das Spiel das erste Mal startest, werde ich Dir ein paar Fragen stellen, " + 
+									"um das Spiel an Deine Wünsche anzupassen. " + 
+									"Du kannst Diese Einstellungen später jederzeit wieder ändern, " + 
+									"indem Du das Kommando 'Ändere die Einstellungen' aufrufst. " + 
+									"Aber nun zu den Fragen. " + 
+									"Die Anzeige: " + 
+									"Es gibt zwei Modi für die Anzeige. " + 
+									"Die standard Anzeige und eine Anzeige, die für das Gerät Echo Show optimiert wurde. " + 
+									"Spielst Du Carballo-Schach auf einem Echo Show? " + 
+									"Bitte antworte mit 'Ja' oder 'Nein'. ",
+						display:   	"Willkommen zum Spiel Carballo-Schach: " +
+									"Da Du das Spiel das erste mal startest, werde ich Dich ein paar Fragen stellen, " + 
+									"um das Spiel an Deine Wünsche anzupassen. " + 
+									"Du kannst Diese Einstellungen später jederzeit wieder ändern, " + 
+									"indem Du das Kommando \'Ändere die Einstellungen\' aufrufest. " + 
+									"Aber nun zu den Fragen, " + 
+									"Die Anzeige: " + 
+									"Es gibt zwei Modi für die Anzeige. " + 
+									"Die Standardanzeige und eine Anzeige, die für das Geräte Echo Show optimiert wurde. " + 
+									"Spielst Du Carballo-Schach auf einem Echo Show? " + 
+									"Bitte antworte mit 'Ja' oder 'Nein'. "
+					},
+					"INTRO.2": {
+						title:     	"Einstellungen Spielstärke",
+						richText:   "Spielstärke: <br/>" +
+									"Die Bedenkzeit (Spielstärke) kann von 1 bis 7 Sekunden eingestellt werden. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? ",
+						speechOut:  "Nun zur Spielstärke: " + 
+									"Die Spielstärke von Alexa hängt von der Bedenkzeit ab. " + 
+									"Die Bedenkzeit kann von 1 bis 7 Sekunden eingestellt werden. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? " + 
+									"Sage eine Zahl zwischen 1 und 7.",
+						display:   	"Nun zur Spielstärke: " + 
+									"Die Spielstärke von Alexa hängt von der Bedenkzeit ab. " + 
+									"Die Bedenkzeit kann zwischen 1 und 7 Sekunden eingestellt werden. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? " + 
+									"Sage eine Zahl zwischen 1 und 7.",
+					},
+					"INTRO.2b": {
+						title:     	"Einstellungen Spielstärke",
+						richText:   "Spielstärke: <br/>" +
+									"Die Bedenkzeit (Spielstärke) kann von 1 bis 7 Sekunden eingestellt werden. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? ",
+						speechOut:  "Das war leider kein gültiger Wert für die Spielstärke. " + 
+									"Sage eine Zahl zwischen 1 und 7.",
+						display:   	"Das war leider kein gültiger Wert für die Spielstärke. " + 
+									"Sage eine Zahl zwischen 1 und 7.",
+					},
+					"INTRO.3": {
+						title:     	"Befehlsübersicht Carballo-Schach",
+						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
+									" * 'Hilfe', <br/>" +
+									" * 'Starte ein neues Spiel', <br/>" +
+									" * 'Ich ziehe von ... nach ...', <br/>" +
+									" * 'Du darfst anfangen', <br/>" +
+									" * 'Nimm meinen letzten Zug zurück', <br/>" +
+									" * 'Setze die Spielstärke auf ...' oder <br/>" +
+									" * 'Stop'. <br/><br/>" + 
+									"Möchtest Du eine ausführliche Anleitung?",
+						speechOut:  "Noch ein Hinweis zu den Zügen: " + 
+									"Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben Be und Deh hat, " + 
+									"kann alternativ auch das Buchstabieralphabet verwendet werden. " + 
+									"Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2' statt Be-1 nach De-2 ." +
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', Ich ziehe von - nach, 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf' oder Stop. " + 
+									"Möchtest Du eine ausführliche Anleitung?",
+						display:   	"Noch ein Hinweis zu den Zügen: " + 
+									"Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben Be und De hat, " + 
+									"kann alternativ auch das Buchstabieralphabet verwendet werden. " + 
+									"Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2' statt B1 nach D2 ." +
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
+									"Möchtest Du eine ausführliche Anleitung?"
+						
+					},
 					
 					WELCOME: {		// Begrüßung, wenn kein Spiel fortgesetzt wird
 						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
@@ -196,7 +277,7 @@ function set_locale(locale) {
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 					
-					HELP_REGELN: { // Ausführliche Hilfe nach INTRO oder WELCOME
+					HELP_DETAIL: { // Ausführliche Hilfe nach INTRO oder WELCOME
 						title:     "Carballo-Schach Hilfe",
 						richText:  "Zuerst zur Sprachsteuerung: <br/>" +
 								   "Wenn ein neues Spiel startet, kannst Du entscheiden, ob Du anfangen möchtest, oder ob Alexa beginnen soll. " +
@@ -211,7 +292,7 @@ function set_locale(locale) {
 
 								   "Zu den Zügen: <br/>" +
 								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben 'B', 'D' hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
-								   "Also zum Beispiel 'Berta 1 nach Dora 2'. <br/><br/>" +
+								   "Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2'. <br/><br/>" +
 
 								   "Jetzt zur Anzeige: <br/>" +
 								   "Es gibt zwei Modi für die Anzeige: Entweder optimiert für das Echo Show oder die Standardanzeige. " +
@@ -231,23 +312,23 @@ function set_locale(locale) {
 								   "Soll ich den Text nochmal wiederholen?",
 						speechOut: "Zuerst zur Sprachsteuerung: " +
 								   "Wenn ein neues Spiel startet, kannst Du entscheiden, ob Du anfangen möchtest, oder ob Alexa beginnen soll. " +
-								   "Sage dazu entweder 'Ich ziehe E2 nach E4' oder 'Du darfst anfangen'. " +
+								   "Sage dazu entweder Ich ziehe E2 nach E4 oder 'Du darfst anfangen'. " +
 								   "Nach Deinem Zug macht Alexa ihren Zug und wartet sofort auf eine Antwort von Dir. " +
-								   "Wenn Du sofort antwortest, dann kannst Du einfach 'D2 nach D4' sagen. " +
+								   "Wenn Du sofort antwortest, dann kannst Du einfach D2 nach D4 sagen. " +
 								   "Allerdings wartet die Spracherkennung nur kurz auf Deine Antwort, danach wird nur noch das Spielfeld angezeigt. " +
-								   "Dann musst Du vor Deinen Zug noch das Aktivierungswort setzen, also  zum Beispiel 'Alexa, D2 nach D4'. " +
+								   "Dann musst Du vor Deinen Zug noch das Aktivierungswort setzen, also  zum Beispiel Alexa, D2 nach D4. " +
 								   "Wenn auch das Spielfeld nicht mehr angezeigt wird, dann muss der Skill neu mit: 'Alexa starte Schach' zuerst wieder gestartet werden. " +
 								   "Das Spiel wird dann an der Stelle fortgesetzt, an der es zuletzt beendet wurde. " +
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
 								   "Zu den Zügen: " +
-								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben 'B', 'D' hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
-								   "Also zum Beispiel 'Berta 1 nach Dora 2'. " +
+								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben Be und De hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
+								   "Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2'. " +
 
 								   "Jetzt zur Anzeige: <br/>" +
 								   "Es gibt zwei Modi für die Anzeige: Entweder optimiert für das Echo Show oder die Standardanzeige. " +
 								   "Wenn Du Carballo-Schach auf einem Echo Show spielst, dann solltest Du auf die Anzeige für Echo Show umschalten. " +
-								   "Dies kannst Du mit dem Kommando 'Optimiere die Anzeige für Echo Show' mache. " +
+								   "Dies kannst Du mit dem Kommando 'Optimiere die Anzeige für Echo Show' machen. " +
 								   "Um wieder zurückzuschalten sage 'Verwende die Standardanzeige'. " +
 								   
 								   "Und nun zu den weiteren Kommandos: " +
@@ -372,6 +453,10 @@ function set_locale(locale) {
 						speechOut: "Die Spielstärke wurde auf %1 gesetzt. welchen Zug machst Du?",
 						display: "Die Spielstärke wurde auf %1 gesetzt. welchen Zug machst Du?"
 					},
+					MAKE_YOUR_MOVE: {
+						speechOut: "Welchen Zug machst Du?",
+						display: "Welchen Zug machst Du?"
+					},
 					LAST_MOVE_ROLLEDBACK: {
 						speechOut: "Dein letzter Zug wurde zurück genommen. Welchen Zug machst Du jetzt?",
 						display: "Dein letzter Zug wurde zurück genommen. Welchen Zug machst Du jetzt?"
@@ -478,6 +563,10 @@ function set_locale(locale) {
 					NOT_YES_NO_ANSWER: {
 						speechOut: "Das war keine Antwort auf meine Frage, ich werte das jetzt mal als 'Nein'. welchen Zug machst Du?",
 						display: "Das war keine Antwort auf meine Frage, ich werte das jetzt mal als 'Nein'. welchen Zug machst Du?"
+					},
+					NO_ANSWER_TO_QUESTION: {
+						speechOut: "Das war keine Antwort auf meine Frage.",
+						display: "Das war keine Antwort auf meine Frage."
 					},
 					NO_QUESTION_ASKED: {
 						speechOut: "Ich hatte keine Ja/Nein Frage gestellt. welchen Zug machst Du?",
@@ -621,8 +710,12 @@ function set_locale(locale) {
 						display:   "Es gibt Verbindungsprobleme zum Server." 
 					},
 					E_MISSING: { 
-						speechOut: "Sorry, Es fehlt die Sprachausgabe für Intent-code %1 .",
-						display:   "Sorry, Es fehlt die Sprachausgabe für Intent-code %1 ." 
+						speechOut: "Sorry, es fehlt die Sprachausgabe für Intent-code %1 .",
+						display:   "Sorry, es fehlt die Sprachausgabe für Intent-code %1 ." 
+					},
+					E_QUESTION: { 
+						speechOut: "Sorry, es fehlt der Handler für den Frage-code %1 .",
+						display:   "Sorry, es fehlt der Handler für den Frage-code '%1'." 
 					}
 
 				}
@@ -1210,6 +1303,10 @@ function set_locale(locale) {
 					E_MISSING: { 
 						speechOut: "Sorry, missing speech output for Intent-code %1 .",
 						display:   "Sorry, missing speech output for Intent-code '%1'." 
+					},
+					E_QUESTION: { 
+						speechOut: "Sorry, missing handler for Question-code %1 .",
+						display:   "Sorry, missing handler for Question-code '%1'." 
 					}
 
 				}

@@ -2,6 +2,7 @@ NewGameIntent Starte ein neues Spiel
 NewGameIntent Ich möchte ein neues Spiel starten
 NewGameIntent Bitte starte ein neues Spiel
 
+PlayerMoveIntent {from_col} {from_row} {to_col} {to_row}   
 PlayerMoveIntent {from_col} {from_row} nach {to_col} {to_row}   
 PlayerMoveIntent ziehe {from_col} {from_row} nach {to_col} {to_row}   
 PlayerMoveIntent Ich ziehe von {from_col} {from_row} nach {to_col} {to_row}   
@@ -11,6 +12,10 @@ AIStartsIntent Du darfst anfangen
 AIStartsIntent Fang Du an
 AIStartsIntent Mach Du den ersten Zug
 AIStartsIntent Du hast den ersten Zug
+
+SettingsIntent Ändere die Einstellungen
+
+NumberAnswerIntent {num}   
 
 ChangeAILevelIntent Setze die Spielstärke auf {aiLevel}
 ChangeAILevelIntent Ändere die Spielstärke auf {aiLevel}

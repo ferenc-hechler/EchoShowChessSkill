@@ -37,6 +37,20 @@
 
 
     {
+      "intent": "SettingsIntent"
+    },
+
+    {
+      "intent": "NumberAnswerIntent",
+      "slots": [
+        {
+          "name": "num",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+
+    {
       "intent": "ActivateShowDisplayIntent"
     },
 

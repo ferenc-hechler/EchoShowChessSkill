@@ -46,7 +46,13 @@ var spacerFHeight = 16;
 var leftWidth = 17;
 
 
-var TOKEN_TO_YESNOQUERY_MAPPING = {
+var QUESTION_TO_INTENTS_MAPPING = {
+		"INTRO.1" : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
+		"INTRO.2" : ["NumberAnswerIntent"],
+		"INTRO.3" : ["AMAZON.YesIntent", "AMAZON.NoIntent"]
+}
+
+var TOKEN_TO_QUESTION_MAPPING = {
 		"TOK_HELP" : "HELP_REGELN",
 		"TOK_INTRO": "HELP_REGELN",
 		"TOK_WELCOME": "HELP_REGELN",
@@ -87,7 +93,6 @@ var ANIMAL_MAPPING = {
 		  "elefanten":		"ELEFANT",
 		  "ente": 			"ENTE",
 		  "esel": 			"ESEL",
-		  "fish": 			"FISCH",
 		  "fisch": 			"FISCH",
 		  "fliege": 		"FLIEGE",
 		  "frosch": 		"FROSCH",
@@ -221,33 +226,31 @@ ChessSkill.prototype.eventHandlers.onLaunch = function(launchRequest, session, r
 
 ChessSkill.prototype.intentHandlers = {
 
-	"NewGameIntent" : function(intent, session, response) {
-		doNewGame(intent, session, response);
-	},
+	"NewGameIntent" : doNewGameIntent,
 
-	"PlayerMoveIntent" : function(intent, session, response) {
-		doPlayerMove(intent, session, response);
-	},
+	"PlayerMoveIntent" : doPlayerMoveIntent,
     
-	"AIStartsIntent" : doAIStarts,
+	"AIStartsIntent" : doAIStartsIntent,
 	
 	"RollbackIntent" : doRollbackIntent,
 
-	"ActivateShowDisplayIntent" : doActivateShowDisplay,
-	"DeactivateShowDisplayIntent" : doDeactivateShowDisplay,
+	"ActivateShowDisplayIntent" : doActivateShowDisplayIntent,
+	"DeactivateShowDisplayIntent" : doDeactivateShowDisplayIntent,
 
-	"ChangeAILevelIntent" : doChangeAILevel,
+	"ChangeAILevelIntent" : doChangeAILevelIntent,
 	
-	"AnimalConnectIntent" : doAnimalConnect, 
+	"AnimalConnectIntent" : doAnimalConnectIntent, 
 		
-	"ActivateInstantAnswerIntent" : doActivateInstantAnswer,
-	"DeactivateInstantAnswerIntent" : doDeactivateInstantAnswer,
+	"ActivateInstantAnswerIntent" : doActivateInstantAnswerIntent,
+	"DeactivateInstantAnswerIntent" : doDeactivateInstantAnswerIntent,
 
 	"AMAZON.HelpIntent" : doHelpIntent,
 
 	"AMAZON.StartOverIntent" : doStartOverIntent,
 	"AMAZON.YesIntent" : doYesIntent,
 	"AMAZON.NoIntent" : doNoIntent,
+	
+	"NumberAnswerIntent" : doNumberAnswerIntent,
 	
 	"AMAZON.PreviousIntent" : doPreviousIntent,
 	"AMAZON.NextIntent" : doNextIntent,
@@ -306,8 +309,8 @@ exports.initTests = function(url, param, callback) {
 /* ============== */
 
 function doLaunch(session, response) {
-	initUserAndConnect(session, response, function successFunc() {
-		if (!getUserHadIntro(session)) {
+	initUserAndConnect(undefined, session, response, function successFunc() {
+		if (!getUserPhase(session)) {
 			execIntro(session, response);
 		}
 		else {
@@ -322,29 +325,29 @@ function doLaunch(session, response) {
 	});
 }
 
-function doNewGame(intent, session, response) {
+function doNewGameIntent(intent, session, response) {
 	// TODO: confirm with yes / no
-	initUserAndConnect(session, response, function successFunc() {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		execDoNewGame(intent, session, response);
 	});
 }
 
-function doPlayerMove(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doPlayerMoveIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		execDoMove(intent, session, response);
 	});
 }
 
 
 function doRollbackIntent(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		execDoRollback(session, response);
 	});
 }
 
 
-function doAIStarts(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doAIStartsIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		if (getSessionGameMovesCount(session) === 0) {
 			execDoAIMove(session, response);
 		}
@@ -355,59 +358,59 @@ function doAIStarts(intent, session, response) {
 	});
 }
 
-function doActivateShowDisplay(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doActivateShowDisplayIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		execSetOptShow(intent, session, response, true);
 	});
 }
 
-function doDeactivateShowDisplay(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doDeactivateShowDisplayIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		execSetOptShow(intent, session, response, false);
 	});
 }
 
-function doChangeAILevel(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doChangeAILevelIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		execChangeAILevel(intent, session, response);
 	});
 }
 
-function doAnimalConnect(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doAnimalConnectIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		execAnimalConnect(intent, session, response);
 	});
 }
 
-function doActivateInstantAnswer(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doActivateInstantAnswerIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		setUserInstantAnswer(session, true);
 		execDisplayField(session, response);
 	});
 }
 
-function doDeactivateInstantAnswer(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
+function doDeactivateInstantAnswerIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
 		setUserInstantAnswer(session, false);
 		execDisplayField(session, response);
 	});
 }
 
 function doHelpIntent(intent, session, response) {
-	initUserAndConnect(session, response, function successFunc() {
-		askYesNoText(session, response, "HELP");
+	initUserAndConnect(intent, session, response, function successFunc() {
+		askQuestion(session, response, "HELP");
 	});
 }
 
 function doShowAction(actionName, session, response) {
-	handleYesNoQuery(session);
-	initUserAndConnect(session, response, function successFunc() {
+	handleQuestion(session);
+	initUserAndConnect(intent, session, response, function successFunc() {
 		showAction(session, response, actionName);
 	});
 }
 
 function doActionHOME(actionName, session, response) {
-	handleYesNoQuery(session);
+	handleQuestion(session);
 	execDisplayField(session, response);
 }
 
@@ -416,19 +419,8 @@ function doStartOverIntent(intent, session, response) {
 }
 
 function doYesIntent(intent, session, response) {
-	var yesNoQuery = handleYesNoQuery(session);
-	initUserAndConnect(session, response, function successFunc() {
-		if (yesNoQuery === undefined) {
-			noQuestionAsked(session, response);
-		}
-		else if (yesNoQuery === "ActionHOME") {
-			execDisplayField(session, response);
-		}
-		else {
-			var MSG_KEY = NEXT_MSG_KEY_FOR_YES[yesNoQuery]; 
-			MSG_KEY = mapNoGUIMsg(session, MSG_KEY);
-			askYesNoText(session, response, MSG_KEY);
-		}
+	initUserAndConnect(intent, session, response, function successFunc() {
+		noQuestionAsked(session, response);
 	});
 }
 
@@ -444,21 +436,21 @@ function mapNoGUIMsg(session, msgKey) {
 
 
 function doNoIntent(intent, session, response) {
-	var yesNoQuery = handleYesNoQuery(session);
-	initUserAndConnect(session, response, function successFunc() {
-		if (yesNoQuery === undefined) {
-			noQuestionAsked(session, response);
-		}
-		else {
-			execDisplayField(session, response)
-		}
+	initUserAndConnect(intent, session, response, function successFunc() {
+		noQuestionAsked(session, response);
+	});
+}
+
+function doNumberAnswerIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
+		noQuestionAsked(session, response);
 	});
 }
 
 function doPreviousIntent(intent, session, response) {
-	var yesNoQuery = handleYesNoQuery(session);
-	initUserAndConnect(session, response, function successFunc() {
-		if (yesNoQuery === undefined) {
+	var question = handleQuestion(session);
+	initUserAndConnect(intent, session, response, function successFunc() {
+		if (question === undefined) {
 			didNotUnterstand(intent, session, response);
 		}
 		else {
@@ -469,28 +461,28 @@ function doPreviousIntent(intent, session, response) {
 }
 
 
-function handleYesNoQuery(session) {
-	var yesNoQuery = getSessionYesNoQuery(session);
+function handleQuestion(session) {
+	var question = getSessionQuestion(session);
 	var displayToken = getRequestDisplayToken(session);
 	if (displayToken !== undefined) {
-		yesNoQuery = TOKEN_TO_YESNOQUERY_MAPPING[displayToken];
+		question = TOKEN_TO_QUESTION_MAPPING[displayToken];
 	}
-	setSessionYesNoQuery(session, "handled");
-	logObject("YESNO", yesNoQuery);
-	return yesNoQuery;
+	setSessionQuestion(session, "handled");
+	logObject("QUESTION", question);
+	return question;
 }
 
-function checkUnhandledYesNoQuery(session) {
-	var yesNoQuery = getSessionYesNoQuery(session);
-	if (yesNoQuery === "handled") {
-		removeSessionYesNoQuery(session);
+function checkUnhandledQuestion(session) {
+	var question = getSessionQuestion(session);
+	if (question === "handled") {
+		removeSessionQuestion(session);
 		return undefined;
 	}
 	var displayToken = getRequestDisplayToken(session);
 	if (displayToken !== undefined) {
-		yesNoQuery = TOKEN_TO_YESNOQUERY_MAPPING[displayToken];
+		question = TOKEN_TO_QUESTION_MAPPING[displayToken];
 	}
-	return yesNoQuery;
+	return question;
 }
 
 
@@ -536,23 +528,84 @@ function doNavigateSettingsIntent(intent, session, response) {
 	changeSettings(intent, session, response);
 }
 
+/* ============= */
+/* SEND METHODEN */
+/* ============= */
+
+function handleSessionQuestion(intent, session, response) {
+	var question = getSessionQuestion(session);
+	if (!question) { 
+		// no question set in session
+		return false;
+	}
+	// check if intent is valid for question
+	var validIntents = QUESTION_TO_INTENTS_MAPPING[question];
+	if (!validIntents) {
+		return false;
+	}
+	if (validIntents.indexOf(intent.name) === -1) {
+		var prefixMsg = speech.createMsg("INTERN", "NO_ANSWER_TO_QUESTION");
+		askQuestion(session, response, question, prefixMsg)
+		return true;
+	}
+	execAnswer(question, intent, session, response);
+	return true;
+}
+
+function execAnswer(question, intent, session, response) {
+	switch (question) {
+	case "INTRO.1": {
+		var optShow = (intent.name === "AMAZON.YesIntent");
+		setUserOptShow(session, optShow);
+		var msg_code = (optShow) ? "OPT_SHOW_ACTIVATED" : "OPT_SHOW_DEACTIVATED";
+		var prefixMsg = speech.createMsg("INTERN", msg_code, optShow);
+		askQuestion(session, response, "INTRO.2", prefixMsg);
+		break;
+	}
+	case "INTRO.2":
+	case "INTRO.2b": {
+		var aiLevel = getFromIntent(intent, "num");
+		console.log("aiLevel=" + aiLevel);
+		if ((!aiLevel) || (aiLevel < 1) || (aiLevel > 7)) {
+			askQuestion(session, response, "INTRO.2b");
+		}
+		else {
+			send(session, response, getSessionGameId(session), "setAILevel", aiLevel, "", function successFunc(result) {
+				setUserAILevel(session, aiLevel);
+				var prefixMsg = speech.createMsg("INTERN", "AI_LEVEL_CHANGED", aiLevel);
+				askQuestion(session, response, "INTRO.3", prefixMsg);
+			});
+		}
+		break;
+	}
+	case "INTRO.3": {
+		var detailHelp = (intent.name === "AMAZON.YesIntent");
+		if (detailHelp) {
+			askQuestion(session, response, "HELP_DETAIL");
+		}
+		else {
+			execDisplayField(session, response, msg)
+		}
+		break;
+	}
+	default: {
+		speech.respond("Generic", "E_QUESTION", response, question);
+		break;
+	}
+	}
+}
 
 /* ============= */
 /* SEND METHODEN */
 /* ============= */
 
-function initUserAndConnect(session, response, successCallback) {
+function initUserAndConnect(intent, session, response, successCallback) {
 	initUser(session, response, function successFunc1() {
 		connect(session, response, function successFunc2() {
-			var yesNoQuery = checkUnhandledYesNoQuery(session);
-			if (yesNoQuery === undefined) {
+			var handled = handleSessionQuestion(intent, session, response);
+			if (!handled) {
 				successCallback();
-			}
-			else {
-				removeSessionYesNoQuery(session);
-				var msg = speech.createMsg("INTERN", "NOT_YES_NO_ANSWER");
-				execDisplayField(session, response, msg)
-			}
+			};
 		});
 	});
 }
@@ -577,7 +630,7 @@ function execDoNewGame(intent, session, response) {
 	var gameId = getSessionGameId(session);
 	sendCommand(session, gameId, "restartGame", "", "", function callbackFunc(result) {
 		clearSessionData(session);
-		initUserAndConnect(session, response, function successCallback() {
+		initUserAndConnect(intent, session, response, function successCallback() {
 			msg = speech.createMsg("INTERN", "NEW_GAME_STARTED");
 			execDisplayField(session, response, msg);
 		});
@@ -621,18 +674,33 @@ function execDoRollback(session, response) {
 
 
 function execIntro(session, response) {
-	setUserHadIntro(session, true);
-	askYesNoText(session, response, "INTRO");
+	// TODO: set phase to INTRO
+//	setUserPhase(session, "INTRO");
+	askQuestion(session, response, "INTRO.1");
 }
 
 function execWelcome(session, response) {
-	askYesNoText(session, response, "WELCOME");
+	askQuestion(session, response, "WELCOME");
 }
 
-function askYesNoText(session, response, MSG_KEY) {
+function askQuestion(session, response, MSG_KEY, prefixMsg) {
 	var msg = speech.createMsg("TEXT", MSG_KEY);
-	setSessionYesNoQuery(session, MSG_KEY);
+	addPrefixMsg(msg, prefixMsg);
+	setSessionQuestion(session, MSG_KEY);
 	respondText(session, response, msg, "TOK_" + MSG_KEY, true);
+}
+
+
+function addPrefixMsg(baseMsg, prefixMsg) {
+	if (!prefixMsg) {
+		return;
+	}
+	if (prefixMsg.speechOut && baseMsg.speechOut) {
+		baseMsg.speechOut = prefixMsg.speechOut + " " + baseMsg.speechOut;
+	}
+	if (prefixMsg.display && baseMsg.display) {
+		baseMsg.display = prefixMsg.display + " " + baseMsg.display;
+	}
 }
 
 
@@ -655,16 +723,20 @@ function execChangeAILevel(intent, session, response) {
 	var aiLevel = getAILevel(intent);
 	send(session, response, getSessionGameId(session), "setAILevel", aiLevel, "", function successFunc(result) {
 		setUserAILevel(session, aiLevel);
-		msg = speech.createMsg("INTERN", "AI_LEVEL_CHANGED", aiLevel);
-		execDisplayField(session, response, msg);
+		var prefixMsg = speech.createMsg("INTERN", "AI_LEVEL_CHANGED", aiLevel);
+		var prefixMsg2 = speech.createMsg("INTERN", "MAKE_YOUR_MOVE");
+		addPrefixMsg(prefixMsg, prefixMsg2);
+		execDisplayField(session, response, prefixMsg);
 	});
 }
 
 function execSetOptShow(intent, session, response, optShow) {
 	setUserOptShow(session, optShow);
 	var msg_code = (optShow) ? "OPT_SHOW_ACTIVATED" : "OPT_SHOW_DEACTIVATED";
-	var msg = speech.createMsg("INTERN", msg_code, optShow);
-	execDisplayField(session, response, msg);
+	var prefixMsg = speech.createMsg("INTERN", msg_code, optShow);
+	var prefixMsg2 = speech.createMsg("INTERN", "MAKE_YOUR_MOVE");
+	addPrefixMsg(prefixMsg, prefixMsg2);
+	execDisplayField(session, response, prefixMsg);
 }
 
 function execAnimalConnect(intent, session, response) {
@@ -1029,8 +1101,8 @@ function getSessionLastAIMove(session, defaultValue) {
 function getSessionLastAIMoveCheck(session, defaultValue) {
 	return getFromSession(session, "lastAIMoveCheck", defaultValue);
 }
-function getSessionYesNoQuery(session, defaultValue) {
-	return getFromSession(session, "yesNoQuery", defaultValue);
+function getSessionQuestion(session, defaultValue) {
+	return getFromSession(session, "question", defaultValue);
 }
 function getRequestDisplayToken(session, defaultValue) {
 	return getFromSessionRequest(session, "displayToken", defaultValue);
@@ -1051,8 +1123,8 @@ function setSessionLastAIMove(session, lastAIMove) {
 function setSessionLastAIMoveCheck(session, lastAIMoveCheck) {
 	setInSession(session, "lastAIMoveCheck", lastAIMoveCheck);
 }
-function setSessionYesNoQuery(session, yesNoQuery) {
-	setInSession(session, "yesNoQuery", yesNoQuery);
+function setSessionQuestion(session, questionKey) {
+	setInSession(session, "question", questionKey);
 }
 function setRequestDisplayToken(session, displayToken) {
 	setInSessionRequest(session, "displayToken", displayToken);
@@ -1067,8 +1139,8 @@ function removeSessionLastAIMove(session) {
 function removeSessionLastAIMoveCheck(session) {
 	removeFromSession(session, "lastAIMoveCheck");
 }
-function removeSessionYesNoQuery(session) {
-	removeFromSession(session, "yesNoQuery");
+function removeSessionQuestion(session) {
+	removeFromSession(session, "question");
 }
 
 
@@ -1243,6 +1315,9 @@ function getMarshalledUserData(session) {
 function getUserInstantAnswer(session, defaultValue) {
 	return getUserProperty(session, "instantAnswer", defaultValue);
 }
+function getUserPhase(session, defaultValue) {
+	return getUserProperty(session, "phase", defaultValue);
+}
 function getUserHadIntro(session, defaultValue) {
 	return getUserProperty(session, "hadIntro", defaultValue);
 }
@@ -1260,6 +1335,9 @@ function setUserAILevel(session, value) {
 }
 function setUserOptShow(session, value) {
 	return setUserProperty(session, "optShow", value);
+}
+function setUserPhase(session, value) {
+	return setUserProperty(session, "phase", value);
 }
 function setUserHadIntro(session, value) {
 	return setUserProperty(session, "hadIntro", value);
