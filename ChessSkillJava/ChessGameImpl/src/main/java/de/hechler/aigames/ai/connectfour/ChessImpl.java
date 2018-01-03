@@ -197,18 +197,22 @@ public class ChessImpl implements GameAPI<ChessFieldView, ChessMove> {
 //			// "h5g5"
 //	};
 	
-	// initial moves to rochade
+//	// initial moves to rochade
+//	private static String[] initialMoves = {
+//			"d2d4",
+//			"g8h6",
+//			"d4d5",
+//			"e7e5",
+//			"d5e6",
+//			"f8a3",
+//			"b2a3",
+//			// "e8g8"
+//	};
+
+	// no initial moves 
 	private static String[] initialMoves = {
-			"d2d4",
-			"g8h6",
-			"d4d5",
-			"e7e5",
-			"d5e6",
-			"f8a3",
-			"b2a3",
-			// "e8g8"
 	};
-	
+
 	
 	
 	@Override

@@ -186,10 +186,10 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		config.setBook(new FileBook("/book_small.bin"));
 		int ai = getAILevel();
 		long thinkTime = ai2thinkTime(ai);
-		int elo = ai2elo(ai);
-		if (elo != 0) {
-			config.setElo(elo);
-		}
+//		int elo = ai2elo(ai);
+//		if (elo != 0) {
+//			config.setElo(elo);
+//		}
 		SearchEngineThreaded engine = new SearchEngineThreaded(config);
 //		engine.setObserver(bestMoveRcv);
 		SearchParameters searchParameters = new SearchParameters();
@@ -231,18 +231,18 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 	} 
 	
 	
-	private int ai2elo(int ai) {
-		if (ai == 1) {
-			return 500;
-		}
-		if (ai == 2) {
-			return 1000;
-		}
-		if (ai == 3) {
-			return 1500;
-		}
-		return 0;
-	}
+//	private int ai2elo(int ai) {
+//		if (ai == 1) {
+//			return 500;
+//		}
+//		if (ai == 2) {
+//			return 1000;
+//		}
+//		if (ai == 3) {
+//			return 1500;
+//		}
+//		return 0;
+//	}
 
 
 	private long ai2thinkTime(int ai) {
