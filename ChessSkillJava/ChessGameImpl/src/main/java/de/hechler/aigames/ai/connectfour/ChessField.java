@@ -92,6 +92,17 @@ public class ChessField {
 		if (((cFrom == 'p') || (cFrom == 'P')) && (move.getFromCol() != move.getToCol())) {
 			fieldArray[move.getFromRow()][move.getToCol()] = '1';
 		}
+		// rochade
+		if (((cFrom == 'k') || (cFrom == 'K')) && (Math.abs(move.getFromCol() - move.getToCol())) == 2) {
+			if (move.getToCol() == 2) {
+				fieldArray[move.getFromRow()][3] = fieldArray[move.getFromRow()][0];
+				fieldArray[move.getFromRow()][0] = '1';
+			}
+			else {
+				fieldArray[move.getFromRow()][5] = fieldArray[move.getFromRow()][7];
+				fieldArray[move.getFromRow()][7] = '1';
+			}
+		}
 		fieldArray[move.getToRow()][move.getToCol()] = cFrom;
 		fieldArray[move.getFromRow()][move.getFromCol()] = '1';
 		lastMove = move;
