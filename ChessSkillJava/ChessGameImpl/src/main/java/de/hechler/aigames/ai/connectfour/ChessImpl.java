@@ -176,14 +176,40 @@ public class ChessImpl implements GameAPI<ChessFieldView, ChessMove> {
 		return new GenericResult(ResultCodeEnum.S_OK);
 	}
 
+//	// initial moves to mate
+//	private static String[] initialMoves = {
+//			"e2e4",
+//			"e7e5",
+//			"f1c4",
+//			"a7a6",
+//			"d1f3",
+//			"a6a5"
+//	};
+	
+	// initial moves to en-passant 
 	private static String[] initialMoves = {
-			"e2e4",
-			"e7e5",
-			"f1c4",
-			"a7a6",
-			"d1f3",
-			"a6a5"
+			"h2h4",
+			"h7h6",
+			"h4h5",
+			"f7f6",
+			"h1h2",
+			"g7g5",
+//			"h5g5"
 	};
+	
+//	// initial moves to rochade
+//	private static String[] initialMoves = {
+//			"d2d4",
+//			"g8h6",
+//			"d4d5",
+//			"e7e5",
+//			"d5e6",
+//			"f8a3",
+//			"b2a3",
+////			"e8g8"
+//	};
+	
+	
 	
 	@Override
 	public GenericResult restart(String gameId) {

@@ -88,6 +88,10 @@ public class ChessField {
 		if (cFrom == '1') {
 			return false;
 		}
+		// en-passant
+		if (((cFrom == 'p') || (cFrom == 'P')) && (move.getFromCol() != move.getToCol())) {
+			fieldArray[move.getFromRow()][move.getToCol()] = '1';
+		}
 		fieldArray[move.getToRow()][move.getToCol()] = cFrom;
 		fieldArray[move.getFromRow()][move.getFromCol()] = '1';
 		lastMove = move;

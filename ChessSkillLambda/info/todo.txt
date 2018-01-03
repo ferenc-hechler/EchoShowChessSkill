@@ -1,16 +1,17 @@
 [x] Letzten Zug markieren
+[x] Intro
+[x] Zug Rückgängig machen
+[x] Schachansage
+[x] Gewinn / Unentschieden erkennen
 * Hilfe-Texte
 
-* Schachansage
-* Gewinn / Unentschieden erkennen
-* Rochade, En-Passant 
-* Spiel speichern (Begrenzung auf 4 Stunden aufheben).
 * Einstellungen
   - Anzeige Buchstabieralphabet
-  - Optimierte Anzeige für Echo Show
-  - Spielstärke (ELO/Zeit)
+  [x] Optimierte Anzeige für Echo Show
+  [x] Spielstärke (ELO/Zeit)
+* Rochade, En-Passant, Bauer umwandeln
+* Spiel speichern (Begrenzung auf 4 Stunden aufheben).
 * Spielzuganzeige als Liste
-* Zug Rückgängig machen
 * Alternative Zugeingabe, z.B. Springer nach E5
  
  * Anzeige über Webseite

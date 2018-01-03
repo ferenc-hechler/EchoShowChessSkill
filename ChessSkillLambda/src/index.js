@@ -47,9 +47,15 @@ var leftWidth = 17;
 
 
 var QUESTION_TO_INTENTS_MAPPING = {
-		"INTRO.1" : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
-		"INTRO.2" : ["NumberAnswerIntent"],
-		"INTRO.3" : ["AMAZON.YesIntent", "AMAZON.NoIntent"]
+		"INTRO.0"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
+		"INTRO.1"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
+		"INTRO.2"  : ["NumberAnswerIntent"],
+		"INTRO.2b" : ["NumberAnswerIntent"],
+		"INTRO.3"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
+		
+		"WELCOME"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
+		"HELP"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
+		"HELP_DETAIL"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
 }
 
 var TOKEN_TO_QUESTION_MAPPING = {
@@ -310,8 +316,9 @@ exports.initTests = function(url, param, callback) {
 
 function doLaunch(session, response) {
 	initUserAndConnect(undefined, session, response, function successFunc() {
-		if (!getUserPhase(session)) {
-			execIntro(session, response);
+		var phase = getUserPhase(session);
+		if ((!phase) || (phase === "INTRO")) {
+			execIntro(session, response, phase);
 		}
 		else {
 			if (getSessionGameMovesCount(session) === 0) {
@@ -403,19 +410,17 @@ function doHelpIntent(intent, session, response) {
 }
 
 function doShowAction(actionName, session, response) {
-	handleQuestion(session);
 	initUserAndConnect(intent, session, response, function successFunc() {
 		showAction(session, response, actionName);
 	});
 }
 
 function doActionHOME(actionName, session, response) {
-	handleQuestion(session);
 	execDisplayField(session, response);
 }
 
 function doStartOverIntent(intent, session, response) {
-	doNewGame(session, response);
+	doNewGameIntent(session, response);
 }
 
 function doYesIntent(intent, session, response) {
@@ -423,17 +428,6 @@ function doYesIntent(intent, session, response) {
 		noQuestionAsked(session, response);
 	});
 }
-
-function mapNoGUIMsg(session, msgKey) {
-	if (getRequestHasDisplay(session)) {
-		return msgKey;
-	}
-	if (msgKey === "HELP_REGELN") {
-		return "HELP_REGELN_NOGUI";
-	}
-	return msgKey;
-}
-
 
 function doNoIntent(intent, session, response) {
 	initUserAndConnect(intent, session, response, function successFunc() {
@@ -448,7 +442,7 @@ function doNumberAnswerIntent(intent, session, response) {
 }
 
 function doPreviousIntent(intent, session, response) {
-	var question = handleQuestion(session);
+	var question = getSessionQuestion(session);
 	initUserAndConnect(intent, session, response, function successFunc() {
 		if (question === undefined) {
 			didNotUnterstand(intent, session, response);
@@ -461,29 +455,16 @@ function doPreviousIntent(intent, session, response) {
 }
 
 
-function handleQuestion(session) {
-	var question = getSessionQuestion(session);
-	var displayToken = getRequestDisplayToken(session);
-	if (displayToken !== undefined) {
-		question = TOKEN_TO_QUESTION_MAPPING[displayToken];
-	}
-	setSessionQuestion(session, "handled");
-	logObject("QUESTION", question);
-	return question;
-}
-
-function checkUnhandledQuestion(session) {
-	var question = getSessionQuestion(session);
-	if (question === "handled") {
-		removeSessionQuestion(session);
-		return undefined;
-	}
-	var displayToken = getRequestDisplayToken(session);
-	if (displayToken !== undefined) {
-		question = TOKEN_TO_QUESTION_MAPPING[displayToken];
-	}
-	return question;
-}
+//function handleQuestion(session) {
+//	var question = getSessionQuestion(session);
+//	var displayToken = getRequestDisplayToken(session);
+//	if (displayToken !== undefined) {
+//		question = TOKEN_TO_QUESTION_MAPPING[displayToken];
+//	}
+//	setSessionQuestion(session, "handled");
+//	logObject("QUESTION", question);
+//	return question;
+//}
 
 
 function noQuestionAsked(session, response) {
@@ -544,9 +525,9 @@ function handleSessionQuestion(intent, session, response) {
 		return false;
 	}
 	if (validIntents.indexOf(intent.name) === -1) {
-		var prefixMsg = speech.createMsg("INTERN", "NO_ANSWER_TO_QUESTION");
-		askQuestion(session, response, question, prefixMsg)
-		return true;
+		if (!question.endsWith(".RETRY")) {
+			question = question + ".RETRY";
+		}
 	}
 	execAnswer(question, intent, session, response);
 	return true;
@@ -554,6 +535,25 @@ function handleSessionQuestion(intent, session, response) {
 
 function execAnswer(question, intent, session, response) {
 	switch (question) {
+
+	// INTRO
+	case "INTRO.0": {
+		var startIntro = (intent.name === "AMAZON.YesIntent");
+		if (startIntro) {
+			askQuestion(session, response, "INTRO.1");
+		}
+		else {
+			setUserPhase(session, "PLAY");
+			var prefixMsg = speech.createMsg("INTERN", "LETS_GO");
+			execDisplayField(session, response, prefixMsg);
+		}
+		break;
+	}
+	case "INTRO.0.RETRY": {
+		var prefixMsg = speech.createMsg("INTERN", "NOT_YES_NO_ANSWER");
+		execDisplayField(session, response, prefixMsg);
+		break;
+	}
 	case "INTRO.1": {
 		var optShow = (intent.name === "AMAZON.YesIntent");
 		setUserOptShow(session, optShow);
@@ -573,23 +573,59 @@ function execAnswer(question, intent, session, response) {
 			send(session, response, getSessionGameId(session), "setAILevel", aiLevel, "", function successFunc(result) {
 				setUserAILevel(session, aiLevel);
 				var prefixMsg = speech.createMsg("INTERN", "AI_LEVEL_CHANGED", aiLevel);
+				setUserPhase(session, "PLAY");
 				askQuestion(session, response, "INTRO.3", prefixMsg);
 			});
 		}
 		break;
 	}
-	case "INTRO.3": {
+	
+	// HELP
+	case "INTRO.3":
+	case "WELCOME":
+	case "HELP": {
 		var detailHelp = (intent.name === "AMAZON.YesIntent");
 		if (detailHelp) {
 			askQuestion(session, response, "HELP_DETAIL");
 		}
 		else {
-			execDisplayField(session, response, msg)
+			var prefixMsg = speech.createMsg("INTERN", "LETS_GO");
+			execDisplayField(session, response, prefixMsg);
 		}
 		break;
 	}
+	case "INTRO.3.RETRY":
+	case "WELCOME.RETRY":
+	case "HELP.RETRY": {
+		var prefixMsg = speech.createMsg("INTERN", "NOT_YES_NO_ANSWER");
+		execDisplayField(session, response, prefixMsg);
+		break;
+	}
+	case "HELP_DETAIL": {
+		var detailHelp = (intent.name === "AMAZON.YesIntent");
+		if (detailHelp) {
+			askQuestion(session, response, "HELP_DETAIL");
+		}
+		else {
+			var prefixMsg = speech.createMsg("INTERN", "LETS_GO");
+			execDisplayField(session, response, prefixMsg);
+		}
+		break;
+	}
+	case "HELP_DETAIL.RETRY": {
+		var prefixMsg = speech.createMsg("INTERN", "NOT_YES_NO_ANSWER");
+		execDisplayField(session, response, prefixMsg);
+		break;
+	}
+
+	// handle RETRIES 
 	default: {
-		speech.respond("Generic", "E_QUESTION", response, question);
+		if (question.endsWith(".RETRY")) {
+			askQuestion(session, response, question);
+		} 
+		else {
+			speech.respond("Generic", "E_QUESTION", response, question);
+		}
 		break;
 	}
 	}
@@ -673,10 +709,10 @@ function execDoRollback(session, response) {
 
 
 
-function execIntro(session, response) {
-	// TODO: set phase to INTRO
-//	setUserPhase(session, "INTRO");
-	askQuestion(session, response, "INTRO.1");
+function execIntro(session, response, phase) {
+	var introCode = (!phase) ? "INTRO.1" : "INTRO.0";
+	setUserPhase(session, "INTRO");
+	askQuestion(session, response, introCode);
 }
 
 function execWelcome(session, response) {
@@ -685,6 +721,11 @@ function execWelcome(session, response) {
 
 function askQuestion(session, response, MSG_KEY, prefixMsg) {
 	var msg = speech.createMsg("TEXT", MSG_KEY);
+	logObject("MSG_KEY 1", MSG_KEY)
+	if (MSG_KEY.endsWith(".RETRY")) {
+		MSG_KEY = MSG_KEY.substring(0, MSG_KEY.length - 6);
+	}
+	logObject("MSG_KEY 2", MSG_KEY)
 	addPrefixMsg(msg, prefixMsg);
 	setSessionQuestion(session, MSG_KEY);
 	respondText(session, response, msg, "TOK_" + MSG_KEY, true);
@@ -711,6 +752,7 @@ function showAction(session, response, ACTION_KEY) {
 
 
 function execDisplayField(session, response, msg) {
+	removeSessionQuestion(session);
 	var gameId = getSessionGameId(session);
 	send(session, response, gameId, "getGameData", "", "",
 			function callbackFunc(result) {
@@ -723,8 +765,8 @@ function execChangeAILevel(intent, session, response) {
 	var aiLevel = getAILevel(intent);
 	send(session, response, getSessionGameId(session), "setAILevel", aiLevel, "", function successFunc(result) {
 		setUserAILevel(session, aiLevel);
-		var prefixMsg = speech.createMsg("INTERN", "AI_LEVEL_CHANGED", aiLevel);
-		var prefixMsg2 = speech.createMsg("INTERN", "MAKE_YOUR_MOVE");
+		var prefixMsg = speech.createMsg("INTERN", "MAKE_YOUR_MOVE");
+		var prefixMsg2 = speech.createMsg("INTERN", "AI_LEVEL_CHANGED", aiLevel);
 		addPrefixMsg(prefixMsg, prefixMsg2);
 		execDisplayField(session, response, prefixMsg);
 	});
@@ -733,8 +775,8 @@ function execChangeAILevel(intent, session, response) {
 function execSetOptShow(intent, session, response, optShow) {
 	setUserOptShow(session, optShow);
 	var msg_code = (optShow) ? "OPT_SHOW_ACTIVATED" : "OPT_SHOW_DEACTIVATED";
-	var prefixMsg = speech.createMsg("INTERN", msg_code, optShow);
-	var prefixMsg2 = speech.createMsg("INTERN", "MAKE_YOUR_MOVE");
+	var prefixMsg = speech.createMsg("INTERN", "MAKE_YOUR_MOVE");
+	var prefixMsg2 = speech.createMsg("INTERN", msg_code, optShow);
 	addPrefixMsg(prefixMsg, prefixMsg2);
 	execDisplayField(session, response, prefixMsg);
 }

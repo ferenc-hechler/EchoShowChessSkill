@@ -179,6 +179,18 @@ function set_locale(locale) {
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 
+					"INTRO.0": {
+						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
+						richText:   "Möchtest Du das Intro nochmal starten? ",
+						speechOut:  "Willkommen zum Spiel Carballo-Schach: " +
+									"Du hast das Intro das letzte mal nicht abgeschlossen. "+
+									"Möchtest Du das Intro nochmal starten? " +
+									"Bitte antworte mit 'Ja' oder 'Nein'. ",
+						display:   	"Willkommen zum Spiel Carballo-Schach: " +
+									"Du hast das Intro das letzte mal nicht abgeschlossen. " +
+									"Möchtest Du das Intro nochmal starten? " + 
+									"Bitte antworte mit 'Ja' oder 'Nein'. ",
+					},
 					"INTRO.1": {
 						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
 						richText:   "Fragen zum ersten Start des Skills. <br/><br/>" +
@@ -206,6 +218,14 @@ function set_locale(locale) {
 									"Es gibt zwei Modi für die Anzeige. " + 
 									"Die Standardanzeige und eine Anzeige, die für das Geräte Echo Show optimiert wurde. " + 
 									"Spielst Du Carballo-Schach auf einem Echo Show? " + 
+									"Bitte antworte mit 'Ja' oder 'Nein'. ",
+						speechOutRetry: 
+									"Das war keine Antwort auf meine Frage. " + 
+									"Spielst Du Carballo-Schach auf einem Echo Show? " + 
+									"Bitte antworte mit 'Ja' oder 'Nein'. ",
+						displayRetry:   	
+									"Das war keine Antwort auf meine Frage. " + 
+									"Spielst Du Carballo-Schach auf einem Echo Show? " + 
 									"Bitte antworte mit 'Ja' oder 'Nein'. "
 					},
 					"INTRO.2": {
@@ -223,6 +243,14 @@ function set_locale(locale) {
 									"Die Bedenkzeit kann zwischen 1 und 7 Sekunden eingestellt werden. " + 
 									"Gegen welche Spielstärke möchtest Du spielen? " + 
 									"Sage eine Zahl zwischen 1 und 7.",
+						speechOutRetry: 
+									"Das war keine Antwort auf meine Frage. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? " + 
+									"Sage eine Zahl zwischen 1 und 7.",
+						displayRetry:   	
+									"Das war keine Antwort auf meine Frage. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? " + 
+									"Sage eine Zahl zwischen 1 und 7.",
 					},
 					"INTRO.2b": {
 						title:     	"Einstellungen Spielstärke",
@@ -233,31 +261,38 @@ function set_locale(locale) {
 									"Sage eine Zahl zwischen 1 und 7.",
 						display:   	"Das war leider kein gültiger Wert für die Spielstärke. " + 
 									"Sage eine Zahl zwischen 1 und 7.",
+						speechOutRetry: 
+									"Das war keine Antwort auf meine Frage. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? " + 
+									"Sage eine Zahl zwischen 1 und 7.",
+						displayRetry:   	
+									"Das war keine Antwort auf meine Frage. " + 
+									"Gegen welche Spielstärke möchtest Du spielen? " + 
+									"Sage eine Zahl zwischen 1 und 7.",
 					},
 					"INTRO.3": {
 						title:     	"Befehlsübersicht Carballo-Schach",
 						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
-									" * 'Hilfe', <br/>" +
-									" * 'Starte ein neues Spiel', <br/>" +
-									" * 'Ich ziehe von ... nach ...', <br/>" +
-									" * 'Du darfst anfangen', <br/>" +
-									" * 'Nimm meinen letzten Zug zurück', <br/>" +
-									" * 'Setze die Spielstärke auf ...' oder <br/>" +
-									" * 'Stop'. <br/><br/>" + 
+									" * Hilfe <br/>" +
+									" * Starte ein neues Spiel <br/>" +
+									" * Ich ziehe von ... nach ... <br/>" +
+									" * Du darfst anfangen <br/>" +
+									" * Nimm den letzten Zug zurück <br/>" +
+									" * Setze die Spielstärke auf ...<br/>" +
+									" * Stop <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						speechOut:  "Noch ein Hinweis zu den Zügen: " + 
 									"Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben Be und Deh hat, " + 
 									"kann alternativ auch das Buchstabieralphabet verwendet werden. " + 
-									"Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2' statt Be-1 nach De-2 ." +
-									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', Ich ziehe von - nach, 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf' oder Stop. " + 
+									"Also zum Beispiel: Ich ziehe von Berta 1 nach Dora 2 statt Be-1 nach Deh-2 ." +
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', Ich ziehe von - nach, 'Du darfst anfangen', 'Nimm den letzten Zug zurück', 'Setze die Spielstärke auf' oder Stop. " + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						display:   	"Noch ein Hinweis zu den Zügen: " + 
 									"Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben Be und De hat, " + 
 									"kann alternativ auch das Buchstabieralphabet verwendet werden. " + 
 									"Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2' statt B1 nach D2 ." +
-									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Nimm den letzten Zug zurück', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
 									"Möchtest Du eine ausführliche Anleitung?"
-						
 					},
 					
 					WELCOME: {		// Begrüßung, wenn kein Spiel fortgesetzt wird
@@ -450,8 +485,8 @@ function set_locale(locale) {
 						display: "welchen Zug machst Du?"
 					},
 					AI_LEVEL_CHANGED: {
-						speechOut: "Die Spielstärke wurde auf %1 gesetzt. welchen Zug machst Du?",
-						display: "Die Spielstärke wurde auf %1 gesetzt. welchen Zug machst Du?"
+						speechOut: "Die Spielstärke wurde auf %1 gesetzt.",
+						display: "Die Spielstärke wurde auf %1 gesetzt."
 					},
 					MAKE_YOUR_MOVE: {
 						speechOut: "Welchen Zug machst Du?",
@@ -462,12 +497,12 @@ function set_locale(locale) {
 						display: "Dein letzter Zug wurde zurück genommen. Welchen Zug machst Du jetzt?"
 					},
 					OPT_SHOW_ACTIVATED: {
-						speechOut: "Die Anzeige ist jetzt für die Darstellung auf dem Echo Show optimiert. welchen Zug machst Du?",
-						display: "Anzeige für Echo Show. welchen Zug machst Du?"
+						speechOut: "Die Anzeige ist jetzt für die Darstellung auf dem Echo Show optimiert.",
+						display: "Anzeige für Echo Show."
 					},
 					OPT_SHOW_DEACTIVATED: {
-						speechOut: "Anzeige auf Standard geschaltet. welchen Zug machst Du?",
-						display: "Anzeige auf Standard geschaltet. welchen Zug machst Du?"
+						speechOut: "Anzeige auf Standard geschaltet.",
+						display: "Anzeige auf Standard geschaltet."
 					},
 					ANIMAL_CONNECTED: {
 						speechOut: "Du hast Dich erfolgreich mit der Webseite verbunden. welchen Zug machst Du?",
@@ -559,6 +594,10 @@ function set_locale(locale) {
 					AI_STARTS_NOT_ALLOWED: {
 						speechOut: "Die Seiten können nur vor dem ersten Zug gewechselt werden. welchen Zug machst Du?",
 						display: "Die Seiten können nur vor dem ersten Zug gewechselt werden. welchen Zug machst Du?"
+					},
+					LETS_GO: {
+						speechOut: "Auf gehts. Welchen Zug machst Du? ",
+						display: "Welchen Zug machst Du? "
 					},
 					NOT_YES_NO_ANSWER: {
 						speechOut: "Das war keine Antwort auf meine Frage, ich werte das jetzt mal als 'Nein'. welchen Zug machst Du?",
@@ -1337,6 +1376,10 @@ function respond(intentName, resultCode, response, param1) {
 }
 
 function createMsg(intentName, resultCode, param1) {
+	if (resultCode && resultCode.endsWith(".RETRY")) {
+		var origResultCode = resultCode.substring(0, resultCode.length-6);
+		return createRetryMsg(intentName, origResultCode, param1);
+	}
 	var msg;
 	if (messages[intentName]) {
 		msg = messages[intentName][resultCode];
@@ -1350,6 +1393,33 @@ function createMsg(intentName, resultCode, param1) {
 	}
 	msg = setParams(msg, param1);
 	return msg;
+}
+
+function createRetryMsg(intentName, resultCode, param1) {
+	var msg = createMsg(intentName, resultCode, param1);
+	if (!msg) {
+		return undefined;
+	}
+	var result = {};
+	if (msg.title) {
+		result.title = msg.title;
+	}
+	if (msg.richText) {
+		result.richText = msg.richText;
+	}
+	if (msg.speechOut) {
+		result.speechOut = msg.speechOut;
+	}
+	if (msg.speechOutRetry) {
+		result.speechOut = msg.speechOutRetry;
+	}
+	if (msg.display) {
+		result.display = msg.display;
+	}
+	if (msg.displayRetry) {
+		result.display = msg.displayRetry;
+	}
+	return result;
 }
 
 function respondMsg(response, msg) {
