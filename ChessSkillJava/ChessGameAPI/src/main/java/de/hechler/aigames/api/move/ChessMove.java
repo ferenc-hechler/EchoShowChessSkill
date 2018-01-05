@@ -33,7 +33,7 @@ public class ChessMove extends Move {
 	}
 
 	public boolean isValid() {
-		return (move != null) && move.matches("[a-h][1-8][a-h][1-8]");
+		return (move != null) && move.matches("[a-h][1-8][a-h][1-8][rbnq]?");
 	}
 	
 	public String getMove() {
@@ -66,6 +66,14 @@ public class ChessMove extends Move {
 
 	public boolean isCheck() {
 		return check;
+	}
+	
+	public String getPromotion() {
+		String result = (move.length() < 5) ? "" : move.substring(4, 5);
+		if (getToRow() == 7) {
+			result = result.toUpperCase();
+		}
+		return result;
 	}
 	
 	@Override

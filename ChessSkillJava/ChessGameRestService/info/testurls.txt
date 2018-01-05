@@ -15,6 +15,9 @@ http://localhost:8080/ChessGameRestService/rest/chess?cmd=getGameData&gameId=C4
 
 http://localhost:8080/ChessGameRestService/rest/chess?cmd=restartGame&gameId=L8
 
+
+http://localhost:8080/ChessGameRestService/rest/chess?cmd=setAILevel&param1=7&gameId=
+
 ###
 # Verbinden
 #

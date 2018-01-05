@@ -85,11 +85,12 @@ public class ChessField {
 			return false;
 		}
 		char cFrom = fieldArray[move.getFromRow()][move.getFromCol()];
+		char cTo = fieldArray[move.getToRow()][move.getToCol()];
 		if (cFrom == '1') {
 			return false;
 		}
 		// en-passant
-		if (((cFrom == 'p') || (cFrom == 'P')) && (move.getFromCol() != move.getToCol())) {
+		if (((cFrom == 'p') || (cFrom == 'P')) && (move.getFromCol() != move.getToCol()) && (cTo == '1')) {
 			fieldArray[move.getFromRow()][move.getToCol()] = '1';
 		}
 		// rochade
@@ -101,6 +102,16 @@ public class ChessField {
 			else {
 				fieldArray[move.getFromRow()][5] = fieldArray[move.getFromRow()][7];
 				fieldArray[move.getFromRow()][7] = '1';
+			}
+		}
+		// pawn promotion
+		if (((cFrom == 'p') || (cFrom == 'P')) && ((move.getToRow() == 0) || (move.getToRow() == 7))) {
+			String promotion = move.getPromotion();
+			if (promotion.isEmpty()) {
+				cFrom = (char) (((int) cFrom) + 1);  // P->Q / p -> q
+			}
+			else {
+				cFrom = promotion.charAt(0);
 			}
 		}
 		fieldArray[move.getToRow()][move.getToCol()] = cFrom;
