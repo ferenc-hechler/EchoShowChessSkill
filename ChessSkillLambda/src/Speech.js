@@ -357,8 +357,8 @@ function set_locale(locale) {
 								   "Wird ein Spiel nach 4 Stunden nicht fortgesetzt, so wird es automatisch beendet. " +
 								   
 								   "Zu den Zügen: " +
-								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben Be und De hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
-								   "Also zum Beispiel 'Ich ziehe von Berta 1 nach Dora 2'. " +
+								   "Da die Spracherkennung Probleme mit der Unterscheidung der Buchstaben Be und Deh hat, kann alternativ auch das Buchstabieralphabet verwendet werden. " +
+								   "Also zum Beispiel: Ich ziehe von Berta 1 nach Dora 2. " +
 
 								   "Jetzt zur Anzeige: <br/>" +
 								   "Es gibt zwei Modi für die Anzeige: Entweder optimiert für das Echo Show oder die Standardanzeige. " +

@@ -1,0 +1,15 @@
+Example for pawn to knight:
+8/P1k1N3/8/8/8/8/8/1R1RK3 w Q - 0 1
+
+uci
+> uciok
+isready
+> readyok
+position fen 8/P1k1N3/8/8/8/8/8/1R1RK3 w Q - 0 1
+go
+> bestmove a7a8q
+go depth 3
+> bestmove a7a8n
+
+(531967 - 0x81DFFh) a7a8q
+(728575 - 0xB1DFFh) a7a8n
