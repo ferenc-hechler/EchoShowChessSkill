@@ -209,22 +209,22 @@ public class ChessImpl implements GameAPI<ChessFieldView, ChessMove> {
 //			// "e8g8"
 //	};
 
-	// initial moves to pawn promotion 
-	private static String[] initialMoves = {
-			"a2a4",
-			"b7b5",
-			"a4b5",
-			"a7a5",
-			"b5a6",
-			"c8b7",
-			"a6b7",
-			"c7c6",
-			// "b7a8Q"
-	};
-	
-//	// no initial moves 
+//	// initial moves to pawn promotion 
 //	private static String[] initialMoves = {
+//			"a2a4",
+//			"b7b5",
+//			"a4b5",
+//			"a7a5",
+//			"b5a6",
+//			"c8b7",
+//			"a6b7",
+//			"c7c6",
+//			// "b7a8q"
 //	};
+	
+	// no initial moves 
+	private static String[] initialMoves = {
+	};
 
 	
 	
