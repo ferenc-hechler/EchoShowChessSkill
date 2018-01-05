@@ -53,6 +53,8 @@ var QUESTION_TO_INTENTS_MAPPING = {
 		"INTRO.2b" : ["NumberAnswerIntent"],
 		"INTRO.3"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
 		
+		"SETTINGS" : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
+		
 		"WELCOME"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
 		"HELP"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
 		"HELP_DETAIL"  : ["AMAZON.YesIntent", "AMAZON.NoIntent"],
@@ -243,6 +245,8 @@ ChessSkill.prototype.intentHandlers = {
 	"ActivateShowDisplayIntent" : doActivateShowDisplayIntent,
 	"DeactivateShowDisplayIntent" : doDeactivateShowDisplayIntent,
 
+	"SettingsIntent" : doSettingsIntent,
+
 	"ChangeAILevelIntent" : doChangeAILevelIntent,
 	
 	"AnimalConnectIntent" : doAnimalConnectIntent, 
@@ -377,6 +381,12 @@ function doDeactivateShowDisplayIntent(intent, session, response) {
 	});
 }
 
+function doSettingsIntent(intent, session, response) {
+	initUserAndConnect(intent, session, response, function successFunc() {
+		execSettingsIntent(intent, session, response);
+	});
+}
+
 function doChangeAILevelIntent(intent, session, response) {
 	initUserAndConnect(intent, session, response, function successFunc() {
 		execChangeAILevel(intent, session, response);
@@ -410,7 +420,7 @@ function doHelpIntent(intent, session, response) {
 }
 
 function doShowAction(actionName, session, response) {
-	initUserAndConnect(intent, session, response, function successFunc() {
+	initUserAndConnect(undefined, session, response, function successFunc() {
 		showAction(session, response, actionName);
 	});
 }
@@ -580,6 +590,24 @@ function execAnswer(question, intent, session, response) {
 		break;
 	}
 	
+	// INTRO
+	case "SETTINGS": {
+		var startIntro = (intent.name === "AMAZON.YesIntent");
+		if (startIntro) {
+			askQuestion(session, response, "INTRO.1");
+		}
+		else {
+			var prefixMsg = speech.createMsg("INTERN", "LETS_GO");
+			execDisplayField(session, response, prefixMsg);
+		}
+		break;
+	}
+	case "SETTINGS.RETRY": {
+		var prefixMsg = speech.createMsg("INTERN", "NOT_YES_NO_ANSWER");
+		execDisplayField(session, response, prefixMsg);
+		break;
+	}
+	
 	// HELP
 	case "INTRO.3":
 	case "WELCOME":
@@ -636,6 +664,10 @@ function execAnswer(question, intent, session, response) {
 /* ============= */
 
 function initUserAndConnect(intent, session, response, successCallback) {
+	if (!getRequestHasDisplay(session)) {
+		speech.goodbye("INTERN", "UNSUPPORTED_DEVICE", response);
+		return;
+	}
 	initUser(session, response, function successFunc1() {
 		connect(session, response, function successFunc2() {
 			var handled = handleSessionQuestion(intent, session, response);
@@ -759,6 +791,10 @@ function execDisplayField(session, response, msg) {
 				setSessionGameMovesCount(session, result.movesCount);
 				respondField(session, response, result, msg);
 			});
+}
+
+function execSettingsIntent(intent, session, response) {
+	askQuestion(session, response, "SETTINGS");
 }
 
 function execChangeAILevel(intent, session, response) {

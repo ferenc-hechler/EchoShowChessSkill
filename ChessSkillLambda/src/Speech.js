@@ -114,7 +114,7 @@ function set_locale(locale) {
 					ActionHELP_REGELN: {
 						title:     	"Carballo-Schach Regeln",
 						richText:   "<font size='3'>" +
-									"Es wird nach den ganz normalen Schach Regeln gespielt. Da die Anzeige aber immer nur 30 Sekunden angezeigt wird, hat das ganze am ehesten den Character einer Partie Blitzschach. Auch Alexas Denkzeit ist auf 5 Sekunden begrenzt.<br/></font>" +
+									"Es wird nach den ganz normalen Schach Regeln gespielt. Da die Anzeige aber immer nur 30 Sekunden angezeigt wird, hat das ganze am ehesten den Character einer Partie Blitzschach. <br/></font>" +
 									"<font size='2'><br/>" +
 									"Zurück zur <action token='ActionHELP'>Themenwahl</action> oder zum <action token='ActionHOME'>Spiel</action></font>",
 						speechOut: ""
@@ -163,19 +163,19 @@ function set_locale(locale) {
 					INTRO: {   		// Allererste Begrüßung, danach nie wieder.   
 						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
 						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
-									" * 'Hilfe', <br/>" +
-									" * 'Starte ein neues Spiel', <br/>" +
-									" * 'Ich ziehe von ... nach ...', <br/>" +
-									" * 'Du darfst anfangen', <br/>" +
-									" * 'Nimm meinen letzten Zug zurück', <br/>" +
-									" * 'Setze die Spielstärke auf ...' oder <br/>" +
-									" * 'Stop'. <br/><br/>" + 
+									" * Hilfe <br/>" +
+									" * Starte ein neues Spiel <br/>" +
+									" * Ich ziehe von ... nach ... <br/>" +
+									" * Du darfst anfangen <br/>" +
+									" * Nimm den letzten Zug zurück <br/>" +
+									" * Setze die Spielstärke auf ... <br/>" +
+									" * Stop <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						speechOut: "Willkommen zum Spiel Carballo-Schach: " +
-									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', Ich ziehe von - nach, 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf' oder Stop. " + 
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', Ich ziehe von - nach, 'Du darfst anfangen', 'Nimm den letzten Zug zurück', 'Setze die Spielstärke auf' oder Stop. " + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						display:   	"Willkommen zum Spiel 'Carballo-Schach': " +
-									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Nimm meinen letzten Zug zurück', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
+									"Das Spiel kann mit den folgenden Kommandos gesteuert werden: 'Hilfe', 'Starte ein neues Spiel', 'Ich ziehe von ... nach ...', 'Du darfst anfangen', 'Nimm den letzten Zug zurück', 'Setze die Spielstärke auf ...' oder 'Stop'. " + 
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 
@@ -295,16 +295,30 @@ function set_locale(locale) {
 									"Möchtest Du eine ausführliche Anleitung?"
 					},
 					
+					"SETTINGS": {
+						title:     	"Einstellungen ändern",
+						richText:   "Möchtest Du das Intro nochmal starten um die Einstellungen zu ändern? ",
+						speechOut:  "Die Einstellungen wurden im Rahmen des Intros gesetzt. " +
+									"Um diese neu zu setzen, kannst Du das Intro nochmal ausführen. " +
+									"Möchtest Du das Intro nochmal starten? " +
+									"Bitte antworte mit 'Ja' oder 'Nein'. ",
+						display:   	"Die Einstellungen wurden im Rahmen des Intros gesetzt. " +
+									"Um diese neu zu setzen, kannst Du das Intro nochmal ausführen. " +
+									"Möchtest Du das Intro nochmal starten? " +
+									"Bitte antworte mit 'Ja' oder 'Nein'. ",
+					},
+					
 					WELCOME: {		// Begrüßung, wenn kein Spiel fortgesetzt wird
 						title:     	"Willkommen zum Spiel 'Carballo-Schach'",
-						richText:   "Das Spiel kann mit den folgenden Kommandos gesteuert werden: <br/><br/>" +
-									" * 'Hilfe', <br/>" +
-									" * 'Starte ein neues Spiel', <br/>" +
-									" * 'Ich ziehe von ... nach ...', <br/>" +
-									" * 'Du darfst anfangen', <br/>" +
-									" * 'Nimm meinen letzten Zug zurück', <br/>" +
-									" * 'Setze die Spielstärke auf ...' oder <br/>" +
-									" * 'Stop'. <br/><br/>" + 
+						richText:   "Kommandos zur Spielsteuerung: <br/><br/>" +
+									" * Hilfe <br/>" +
+									" * Starte ein neues Spiel <br/>" +
+									" * Ich ziehe von ... nach ... <br/>" +
+									" * Du darfst anfangen <br/>" +
+									" * Nimm den letzten Zug zurück <br/>" +
+									" * Setze die Spielstärke auf ... <br/>" +
+									" * Ändere die Einstellungen <br/>" +
+									" * Stop <br/><br/>" + 
 									"Möchtest Du eine ausführliche Anleitung?",
 						speechOut: "Willkommen zum Spiel Carballo-Schach: " +
 									"Möchtest Du eine ausführliche Anleitung?",
@@ -338,7 +352,7 @@ function set_locale(locale) {
 								   "Und nun zu den weiteren Kommandos: <br/>" +
 								   "Mit dem Kommando 'Hilfe' kannst Du Dir jederzeit den Hilfetext anzeigen lassen. <br/>" +
 								   "Mit dem Kommando 'Starte ein neues Spiel' kannst Du das aktuelle Spiel abbrechen und ein neues Spiel starten. <br/>" +
-								   "Mit dem Kommando 'Nimm meinen letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. <br/>" +
+								   "Mit dem Kommando 'Nimm den letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. <br/>" +
 								   "Mit dem Kommando 'Setze die Spielstärke auf ...' kannst Du die Spielstärke von Alexa ändern. 1 ist am leichtesten und 7 am schwersten. <br/><br/>" +
 								   
 								   "Ein Hinweis noch zum Schluss: <br/>" +
@@ -369,7 +383,7 @@ function set_locale(locale) {
 								   "Und nun zu den weiteren Kommandos: " +
 								   "Mit dem Kommando 'Hilfe' kannst Du Dir jederzeit den Hilfe Text anzeigen lassen. " +
 								   "Mit dem Kommando 'Starte ein neues Spiel' kannst Du das aktuelle Spiel abbrechen und ein neues Spiel starten. " +
-								   "Mit dem Kommando 'Nimm meinen letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. " +
+								   "Mit dem Kommando 'Nimm den letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. " +
 								   "Mit dem Kommando 'Setze die Spielstärke auf punkt punkt punkt' kannst Du die Spielstärke von Alexa ändern. 1 ist dabei am leichtesten und 7 am schwersten. " +
 								   
 								   "Ein Hinweis noch zum Schluss: " +
@@ -401,7 +415,7 @@ function set_locale(locale) {
 								   "Und nun zu den weiteren Kommandos: " +
 								   "Mit dem Kommando 'Hilfe' kannst Du Dir jederzeit den Hilfetext anzeigen lassen. " +
 								   "Mit dem Kommando 'Starte ein neues Spiel' kannst Du das aktuelle Spiel abbrechen und ein neues Spiel starten. " +
-								   "Mit dem Kommando 'Nimm meinen letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. " +
+								   "Mit dem Kommando 'Nimm den letzten Zug zurück' kannst Du Deinen letzten Zug zurücknehmen. " +
 								   "Mit dem Kommando 'Setze die Spielstärke auf ...' kannst Du die Spielstärke von Alexa ändern. 1 ist am leichtesten und 7 am schwersten. " +
 								   
 								   "Ein Hinweis noch zum Schluss: " +
@@ -610,6 +624,10 @@ function set_locale(locale) {
 					NO_QUESTION_ASKED: {
 						speechOut: "Ich hatte keine Ja/Nein Frage gestellt. welchen Zug machst Du?",
 						display: "Ich hatte keine Ja/Nein Frage gestellt. welchen Zug machst Du?"
+					},
+					UNSUPPORTED_DEVICE: {
+						speechOut: "Leider kann der Skill Carballo Schach aktuell nur auf Geräten mit einem Display dargestellt werden. Geräte ohne Anzeige werden vermutlich im Februar unterstützt. Bitte habe bis dahin noch Geduld. ",
+						display: "Leider kann der Skill Carballo Schach aktuell nur auf Geräten mit einem Display dargestellt werden. Geräte ohne Anzeige werden vermutlich im Februar unterstützt. Bitte habe bis dahin noch Geduld. "
 					}
 				},
 				
