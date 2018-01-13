@@ -430,7 +430,7 @@ public class ChessRestService extends HttpServlet {
 	/* ==== */
 
 
-	private final static String DEFAULT_AUTH = System.getProperty("c4.rest.auth", "rest:geheim");
+	private final static String DEFAULT_AUTH = System.getProperty("chess.rest.auth", "rest:geheim");
 
 	private boolean checkAuth(HttpServletRequest request) throws IOException {
 		String cmd = request.getParameter("cmd");
