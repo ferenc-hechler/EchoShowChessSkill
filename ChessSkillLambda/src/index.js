@@ -33,17 +33,13 @@ var speech = require('./Speech');
 var http = require('http');
 var querystring = require("querystring");
 
-var imgBaseUrl = "https://calcbox.de/chsimgs/48px/";
-var imgBaseSize = 48;
-var headerWidth = 408;
-var headerHeight = 16; 
-var footerWidth = 408;
-var footerHeight = 17; 
-var spacerHWidth = 208;
-var spacerHHeight = 16;
-var spacerFWidth = 234;
-var spacerFHeight = 16;
-var leftWidth = 17;
+var imgBaseUrl = "https://calcbox.de/chsimgs/60px/";
+var imgBaseSize = 60;
+var footerWidth = 500;
+var footerHeight = 20; 
+var spacerFWidth = 180;
+var spacerFHeight = 20;
+var leftWidth = 20;
 
 
 var QUESTION_TO_INTENTS_MAPPING = {
@@ -917,6 +913,7 @@ function createFieldDirectives(session, gameData, msg, lastAIMove, lastAIMoveChe
 	var optShow = getUserOptShow(session);
 	var hintMsg = createHintMsg(gameData.winner, lastAIMove);
 	var fieldText = createFieldText(gameData.fieldView.fen, gameData.fieldView.lastMove, optShow);
+//	fieldText = createTestFieldText();
 	var directives = [ {
 		"type" : "Display.RenderTemplate",
 		"template" : {
@@ -929,11 +926,7 @@ function createFieldDirectives(session, gameData, msg, lastAIMove, lastAIMoveChe
 					"text" : fieldText
 				}
 			},
-			"backButton" : "HIDDEN",
-			"hint" : {
-				"type" : "PlainText",
-				"text" : hintMsg.display
-			}
+			"backButton" : "HIDDEN"
 		}
 	} ];
 	return directives;
@@ -1008,7 +1001,50 @@ function createHintMsg(winner, lastAIMove) {
 	return msg;
 }
 
+
+function createTestFieldText() {
+	var result = "";
+	result = result + "<font size='2'>";
+	for (var i=0; i<8; i++) {
+		result = result + addImageWH("../test/blueBlock", 880, 490);
+		result = result + addImageWH("../test/yellowBlock", 880, 10);
+	}
+	result = result + "</font>";
+	return result;
+}
+
+
+
 function createFieldText(fieldStr, lastMove, optShow) {
+	var result = "";
+	var numericMove = move2numeric(lastMove);
+	result = result + "<font size='2'>";
+	
+	for (var row = 7; row >= 0; row--) {
+		var y = 7-row;
+		result = result + addImage("space_3", 3);
+		result = result + addImageWH("left_"+(row+1), leftWidth, imgBaseSize);
+		for (var col = 0; col < 8; col++) {
+			var code = fieldStr.charAt(y*9+col);
+			var img = code2Img(code, col, row, numericMove);
+			result = result + addImage(img, 1);
+		}
+		if (optShow) {
+			result = result + addImage("space_3", 3);  // use this as linebreak to avoid a gap between lines. Does not work on simulator (no 1024px width?)
+		}
+		else {
+			result = result + "<br/>";                 // this is the normal linebreak, but puts some extra pixels between the lines. 
+		}
+	}
+
+	
+	result = result + addImageWH("space_footer", spacerFWidth, spacerFHeight);
+	result = result + addImageWH("footer", footerWidth, footerHeight);
+	result = result + "</font>";
+	return result;
+}
+
+function createFieldTextOLD(fieldStr, lastMove, optShow) {
 	var result = "";
 	var numericMove = move2numeric(lastMove);
 	result = result + "<font size='3'><action token='ActionHELP'>(?)</action></font><font size='2'>";
