@@ -184,15 +184,14 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 		Config config = new Config();
 		config.setBook(new FileBook("/book_small.bin"));
 		int ai = getAILevel();
-		long thinkTime = ai2thinkTime(ai);
+		int thinkTime = ai2thinkTime(ai);
 		int elo = ai2elo(ai);
 		if (elo > 0) {
 			config.setElo(elo);
 		}
-		SearchEngineThreaded engine = new SearchEngineThreaded(config);
-//		engine.setObserver(bestMoveRcv);
+		SearchEngine engine = new SearchEngine(config);
 		SearchParameters searchParameters = new SearchParameters();
-//		searchParameters.setMoveTime(DEFAULT_MOVETIME_MS);
+		searchParameters.setMoveTime(thinkTime);
 		
 		// new game
 		engine.getBoard().startPosition();
@@ -206,19 +205,6 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 
 		// search
 		engine.go(searchParameters);
-		
-		// wait for answer
-		try {
-			long timeout = System.currentTimeMillis() + thinkTime;
-			while (engine.isSearching() && timeout > System.currentTimeMillis()) {
-				Thread.sleep(100);
-			}
-		} catch (InterruptedException e) {
-			return null;
-		}
-		
-		// stop
-		engine.stop();
 		
 		String bestMove = Move.toString(engine.getBestMove());
 		engine.getBoard().doMove(engine.getBestMove());
@@ -244,7 +230,7 @@ public class ChessGame extends AIGame<ChessFieldView, ChessMove> {
 	}
 
 
-	private long ai2thinkTime(int ai) {
+	private int ai2thinkTime(int ai) {
 		return 50+(ai-1)*1000;
 	}
 
